@@ -599,8 +599,8 @@ function cleanValues () {
       //~ Limpieza y formateo de columans ~//
       //* Capitalización de Nombres *//
       if ([2, 3, 4, 30, 45, 60].includes(currentColumn)) {
-        currentValue = currentValue.toLowerCase().replace(/\w+/g, function(word) {
-          return word.charAt(0).toUpperCase() + word.slice(1);
+        currentValue = currentValue.toLowerCase().replace(/(?:^|\s)\S/g, function(word) {
+          return word.toUpperCase();
         });
       }
 
