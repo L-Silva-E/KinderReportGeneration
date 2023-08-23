@@ -582,42 +582,61 @@ function cleanValues () {
   //~ Creación o actualización del respaldo ~//
   createOrUpdateBackup();
 
+
   //~ Limpieza de valores ~//
   const activeSpreadsheet = SpreadsheetApp.getActiveSpreadsheet();
   const sheetBackup = activeSpreadsheet.getSheetByName(env().SHEET_BACKUP);
 
   for (let currentRow = 2; currentRow <= sheetBackup.getLastRow(); currentRow++) {
-    for (let currentColumn = 2; currentColumn <= sheetBackup.getLastColumn(); currentColumn++) {
-      let currentValue = sheetBackup.getRange(currentRow, currentColumn).getValue();
+    const rut = sheetBackup.getRange(currentRow, 6).getValue();
+    console.log(currentRow + ' - ' + rut);
 
-      if (!currentValue) { break; }
+
+    let columns = [];
+
+    //~ Limpieza y formateo de columans ~//
+    //* Capitalización de Nombres *//
+    columns = [2, 3, 4, 30, 45, 60];
+    columns.forEach((column) => {
+      let currentValue = sheetBackup.getRange(currentRow, column).getValue();
+      if (!currentValue) { return; }
 
       currentValue = currentValue.trim();
+      currentValue = currentValue.toLowerCase().replace(/(?:^|\s)\S/g, function(word) {
+        return word.toUpperCase();
+      });
 
-      console.log(currentValue);
+      sheetBackup.getRange(currentRow, column).setValue(currentValue);
+    });
 
-      //~ Limpieza y formateo de columans ~//
-      //* Capitalización de Nombres *//
-      if ([2, 3, 4, 30, 45, 60].includes(currentColumn)) {
-        currentValue = currentValue.toLowerCase().replace(/(?:^|\s)\S/g, function(word) {
-          return word.toUpperCase();
-        });
-      }
 
-      //* Fechas *//
-      if ([5].includes(currentColumn)) {
-        let arrayDate = currentValue.split("/");
-        if (arrayDate[0].length === 1) { arrayDate[0] = '0' + arrayDate[0] }
-        currentValue = arrayDate[1] + "/" + arrayDate[0] + "/" + arrayDate[2]
-      }
+    //* Fechas *//
+    columns = [5];
+    columns.forEach((column) => {
+      let currentValue = sheetBackup.getRange(currentRow, column).getValue();
+      if (!currentValue) { return; }
 
-      //* Renta *//
-      if ([37, 52, 68].includes(currentColumn)) {
-        currentValue += '.000'
-      }
+      currentValue = currentValue.trim();
+      let arrayDate = currentValue.split('/');
+      if (arrayDate[0].length === 1) { arrayDate[0] = '0' + arrayDate[0]; }
+      currentValue = arrayDate[1] + '/' + arrayDate[0] + '/' + arrayDate[2];
 
-      sheetBackup.getRange(currentRow, currentColumn).setValue(currentValue);
-    }
+      sheetBackup.getRange(currentRow, column).setValue(currentValue);
+    });
+
+
+    //* Renta *//
+    columns = [37, 52, 68];
+
+    columns.forEach((column) => {
+      let currentValue = sheetBackup.getRange(currentRow, column).getValue();
+      if (!currentValue) { return; }
+
+      currentValue = currentValue.trim();
+      if (currentValue.length === 3) { currentValue += '.000'; }
+
+      sheetBackup.getRange(currentRow, column).setValue(currentValue);
+    });
   }
 }
 
@@ -648,9 +667,9 @@ function createOrUpdateBackup () {
   sheetDestination = sheetBackup.getRange(1, 1, sheetBackup.getMaxRows(), sheetBackup.getMaxColumns());
   sheetDestination.setNumberFormat("@");
 
-  ui.alert(
-    'Respaldo de Datos',
-    alertMessage,
-    ui.ButtonSet.OK
-  );
+  // ui.alert(
+  //   'Respaldo de Datos',
+  //   alertMessage,
+  //   ui.ButtonSet.OK
+  // );
 }
