@@ -121,3 +121,16 @@ function getStyle(style) {
   if (style === 'ParagraphFull') { return styleParagraphFull() }
   if (style === 'EndDate') { return styleEndDate() }
 }
+
+function editFile () {
+  const doc = DocumentApp.openById(env().ID_FILE);
+  const fileBody = doc.getBody();
+
+  let paras = fileBody.getParagraphs();
+  for (let i = 0; i < paras.length-1; i++) {
+    paras[i].removeFromParent();
+  }
+  fileBody.appendParagraph('Temporal');
+  paras = fileBody.getParagraphs();
+  paras[0].removeFromParent();
+}
