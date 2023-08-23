@@ -7,32 +7,70 @@ function onOpen(e) {
 }
 
 
-function generateDocument() {
-  // //~ Destino y creación de Archivo base ~//
-  // const destination = DriveApp.getFolderById(env().ID_FOLDER);
+function generateAllDocuments () {
+  const sheetData = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(env().SHEET_BACKUP);
 
-  // // const fileName = (new Date()).getFullYear() + " - Crisolito"
-  // const fileName = (new Date()).toString();
-  // const doc = DocumentApp.create(fileName);
-  // const idDoc = doc.getId();
-  // const file = DriveApp.getFileById(idDoc);
-  // file.moveTo(destination);
+  const arrayLevel = [
+    { key: 'PREKINDER (nivel de transición I)', value: 'Pre-Kinder'},
+    { key: 'KINDER (nivel de transición II)',   value: 'Kinder'}
+  ];
+  const arrayType = [
+    { key: 'JORNADA DE MAÑANA', value: "Jornada Mañana"},
+    { key: 'JORNADA DE TARDE',  value: "Jornada Tarde"}
+  ];
 
-  // const fileBody = doc.getBody();
-  // --------------------------------------------------
+  const dataAllRows = [];
+  let messageAlert = 'Se han generado 4 documentos: \n\n';
 
-  //! Temporal, dejar lo de arriba finalizando pruebas !//
-  const doc = DocumentApp.openById(env().ID_FILE);
-  const fileBody = doc.getBody();
-
-  let paras = fileBody.getParagraphs();
-  for (let i = 0; i < paras.length-1; i++) {
-    paras[i].removeFromParent();
+  if (sheetData === null) {
+    SpreadsheetApp.getUi().alert(
+      'Alerta',
+      'No se encontró la hoja de respaldo.',
+      SpreadsheetApp.getUi().ButtonSet.OK
+    );
+    return;
   }
-  fileBody.appendParagraph('Temporal');
-  paras = fileBody.getParagraphs();
-  paras[0].removeFromParent();
-  //! Temporal, dejar lo de arriba finalizando pruebas !//
+
+  for (let currentRow = 2; currentRow <= sheetData.getLastRow(); currentRow++) {
+    console.log('Getting Row: ' + currentRow);
+    const data = getDataRow(sheetData, currentRow);
+    dataAllRows.push(data);
+  }
+
+  arrayLevel.forEach((level) => {
+    arrayType.forEach((type) => {
+      const filteredData = dataAllRows.filter((item) =>
+        item.enrollment.level === level.key && item.enrollment.type === type.key
+      );
+
+      const formattedAmount = filteredData.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false });
+      console.log('( ' + formattedAmount + ' ) | ' + level.value + ' - ' + type.value);
+      messageAlert += '• ' + formattedAmount + ' - ' + level.value + ' - ' + type.value + '\n';
+      generateDocument(filteredData, level.key, type.key);
+    });
+  });
+
+  messageAlert += '\n\nLos documentos se generaron con datos de ' + dataAllRows.length + ' párvulos en total.\n';
+
+  SpreadsheetApp.getUi().alert(
+    'Ejecución Finalizada',
+    messageAlert,
+    SpreadsheetApp.getUi().ButtonSet.OK
+  );
+}
+
+
+function generateDocument(filteredData, level, type) {
+  // //~ Destino y creación de Archivo base ~//
+  const destination = DriveApp.getFolderById(env().ID_FOLDER);
+
+  const fileName = (new Date()).getFullYear() + ' - Crisolito - ' + level + ' - ' + type
+  const doc = DocumentApp.create(fileName);
+  const idDoc = doc.getId();
+  const file = DriveApp.getFileById(idDoc);
+  file.moveTo(destination);
+
+  const fileBody = doc.getBody();
 
 
   //~ Configuración del Documento ~//
@@ -46,11 +84,9 @@ function generateDocument() {
 
 
   //~ Generación del Texto ~//
-  const sheetData = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(env().SHEET_BACKUP);
+  let flagRemoveFisrtParagraph = true;
 
-  for (let currentRow = 2; currentRow <= sheetData.getLastRow(); currentRow++) {
-    const data = getDataRow(sheetData, currentRow);
-
+  filteredData.forEach((data) => {
     let dataDocument = [
       {
         configuration: {
@@ -569,13 +605,14 @@ function generateDocument() {
       });
     });
 
-    if (currentRow === 2) {
+    if (flagRemoveFisrtParagraph) {
+      flagRemoveFisrtParagraph = false;
       let paras = fileBody.getParagraphs();
       paras[0].removeFromParent();
     }
 
     fileBody.appendPageBreak();
-  }
+  });
 }
 
 function cleanValues () {
