@@ -702,11 +702,11 @@ function createOrUpdateBackup () {
   sheetSource.copyTo(sheetDestination);
 
   sheetDestination = sheetBackup.getRange(1, 1, sheetBackup.getMaxRows(), sheetBackup.getMaxColumns());
-  sheetDestination.setNumberFormat("@");
+  sheetDestination.setNumberFormat('@');
 
-  // ui.alert(
-  //   'Respaldo de Datos',
-  //   alertMessage,
-  //   ui.ButtonSet.OK
-  // );
+  ui.alert(
+    'Respaldo de Datos',
+    alertMessage,
+    ui.ButtonSet.OK
+  );
 }
