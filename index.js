@@ -671,6 +671,7 @@ function cleanValues () {
       currentValue = currentValue.trim();
       let arrayDate = currentValue.split('/');
       if (arrayDate[0].length === 1) { arrayDate[0] = '0' + arrayDate[0]; }
+      if (arrayDate[1].length === 1) { arrayDate[1] = '0' + arrayDate[1]; }
       currentValue = arrayDate[1] + '/' + arrayDate[0] + '/' + arrayDate[2];
 
       sheetBackup.getRange(currentRow, column).setValue(currentValue);
@@ -700,6 +701,7 @@ function cleanValues () {
     SpreadsheetApp.getUi().ButtonSet.OK
   );
 }
+
 
 function createOrUpdateBackup () {
   const sheetResponses = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(env().SHEET_RESPONSES);
