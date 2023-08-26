@@ -582,8 +582,6 @@ function generateDocument(filteredData, level, type) {
       paragraphObjetcDataChild.setAttributes(getStyle(section.configuration.type));
 
       section.values.forEach((item) => {
-        // console.log(JSON.stringify(item, null, 2));
-
         if (item.key !== null) {
           paragraphObjetcDataChild
             .appendText(item.key.text + ' ')
