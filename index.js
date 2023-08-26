@@ -613,14 +613,16 @@ function generateDocument(filteredData, level, type) {
   });
 }
 
+
 function cleanValues () {
   //~ Creación o actualización del respaldo ~//
   createOrUpdateBackup();
 
 
   //~ Limpieza de valores ~//
-  const activeSpreadsheet = SpreadsheetApp.getActiveSpreadsheet();
-  const sheetBackup = activeSpreadsheet.getSheetByName(env().SHEET_BACKUP);
+  const sheetBackup = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(env().SHEET_BACKUP);
+  sheetBackup.getRange(1, 1).setValue('Limpieza');
+  let countCleaned = 0;
 
   for (let currentRow = 2; currentRow <= sheetBackup.getLastRow(); currentRow++) {
     const rut = sheetBackup.getRange(currentRow, 6).getValue();
@@ -672,39 +674,47 @@ function cleanValues () {
 
       sheetBackup.getRange(currentRow, column).setValue(currentValue);
     });
+
+    sheetBackup.getRange(currentRow, 1).setValue('✅');
+    countCleaned++;
   }
+
+  SpreadsheetApp.getUi().alert(
+    'Limpieza Finalizada',
+    'Se limpiaron los datos de ' + countCleaned + ' párvulos en total.',
+    SpreadsheetApp.getUi().ButtonSet.OK
+  );
 }
 
 function createOrUpdateBackup () {
-  const ui = SpreadsheetApp.getUi();
-  const activeSpreadsheet = SpreadsheetApp.getActiveSpreadsheet();
-  const sheetResponses = activeSpreadsheet.getSheetByName(env().SHEET_RESPONSES);
-  let sheetBackup = activeSpreadsheet.getSheetByName(env().SHEET_BACKUP);
-  let alertMessage = '';
+  const sheetResponses = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(env().SHEET_RESPONSES);
+  let sheetBackup = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(env().SHEET_BACKUP);
+  let alertMessage = '🔃 Se actualizará el respaldo 🔃';
 
   //~ En caso de no existir, se crea la pestaña de respaldo ~//
-  //~ En caso contrario, se limpiará el contenido ~//
   if (sheetBackup === null) {
-    alertMessage = '⚠️ Se creó el respaldo ⚠️';
-    sheetBackup = activeSpreadsheet.insertSheet();
+    alertMessage = '⚠️ Se creará el respaldo ⚠️';
+    sheetBackup = SpreadsheetApp.getActiveSpreadsheet().insertSheet();
     sheetBackup.setName(env().SHEET_BACKUP);
-
-  } else {
-    alertMessage = '🔃 Se actualizó el respaldo 🔃';
-    let sheetDestination = sheetBackup.getRange(1, 1, sheetBackup.getLastRow(), sheetBackup.getLastColumn());
-    sheetDestination.clearContent();
   }
 
   let sheetSource = sheetResponses.getRange(1, 1, sheetResponses.getLastRow(), sheetResponses.getLastColumn());
-  let sheetDestination = sheetBackup.getRange(1, 1, sheetResponses.getLastRow(), sheetResponses.getLastColumn());
+
+  let rowRange = sheetBackup.getLastRow() || sheetResponses.getLastRow();
+  let columnRange = sheetBackup.getLastColumn() || sheetResponses.getLastColumn();
+  let sheetDestination = sheetBackup.getRange(1, 1, rowRange, columnRange);
+  sheetDestination.clearContent();
+
+  sheetDestination = sheetBackup.getRange(1, 1, sheetResponses.getLastRow(), sheetResponses.getLastColumn());
+
   sheetSource.copyTo(sheetDestination);
 
   sheetDestination = sheetBackup.getRange(1, 1, sheetBackup.getMaxRows(), sheetBackup.getMaxColumns());
   sheetDestination.setNumberFormat('@');
 
-  ui.alert(
+  SpreadsheetApp.getUi().alert(
     'Respaldo de Datos',
     alertMessage,
-    ui.ButtonSet.OK
+    SpreadsheetApp.getUi().ButtonSet.OK
   );
 }
