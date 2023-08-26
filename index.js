@@ -630,7 +630,11 @@ function generateDocument(filteredData, level, type) {
 
 
 function cleanValues () {
-  //~ Creación o actualización del respaldo ~//
+  //~ Creación Hoja de Configuración ~//
+  createConfigSheet();
+
+
+  //~ Creación o actualización del Respaldo ~//
   createOrUpdateBackup();
 
 
@@ -731,6 +735,36 @@ function createOrUpdateBackup () {
 
   SpreadsheetApp.getUi().alert(
     'Respaldo de Datos',
+    alertMessage,
+    SpreadsheetApp.getUi().ButtonSet.OK
+  );
+}
+
+
+function createConfigSheet () {
+  const configObject = getConfigKeys();
+
+  let sheetConfig = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(configObject.SHEET_CONFIG);
+  let alertMessage = '⚠️ Ya existe la hoja de configuración ⚠️';
+
+  if (sheetConfig === null) {
+    sheetConfig = SpreadsheetApp.getActiveSpreadsheet().insertSheet();
+    sheetConfig.setName(configObject.SHEET_CONFIG);
+
+    let row = 1;
+    for (const key in configObject) {
+      sheetConfig.getRange(row, 1).setValue(key);
+      sheetConfig.getRange(row, 2).setValue(configObject[key]);
+      row++;
+    }
+
+    sheetConfig.autoResizeColumn(1, 2);
+
+    alertMessage = '⚠️ Se creó la hoja de configuración ⚠️';
+  }
+
+  SpreadsheetApp.getUi().alert(
+    'Hoja de Configuración',
     alertMessage,
     SpreadsheetApp.getUi().ButtonSet.OK
   );

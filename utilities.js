@@ -122,6 +122,15 @@ function getStyle(style) {
   if (style === 'EndDate') { return styleEndDate() }
 }
 
+function getConfigKeys() {
+  return {
+    ID_FOLDER: '',
+    SHEET_BACKUP: 'Respaldo Respuestas',
+    SHEET_CONFIG: 'Configuración',
+    SHEET_RESPONSES: 'Form Responses 1'
+  }
+}
+
 function editFile () {
   const doc = DocumentApp.openById(env().ID_FILE);
   const fileBody = doc.getBody();
