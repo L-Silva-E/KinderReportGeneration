@@ -1,8 +1,8 @@
 function onOpen(e) {
   SpreadsheetApp.getUi()
     .createMenu('⚙️ Admin ⚙️')
-    .addItem('📄 Generar Documento', 'generateDocument')
     .addItem('🧼 Limpiar Valores', 'cleanValues')
+    .addItem('📄 Generar Documentos', 'generateAllDocuments')
     .addToUi();
 }
 
@@ -31,6 +31,11 @@ function generateAllDocuments () {
     return;
   }
 
+  SpreadsheetApp.getActiveSpreadsheet().toast(
+    'Esta operación puede tardar varios minutos.',
+    '⚠️ Obteniendo datos de todos los párvulos',
+    30
+  );
   for (let currentRow = 2; currentRow <= sheetData.getLastRow(); currentRow++) {
     console.log('Getting Row: ' + currentRow);
     const data = getDataRow(sheetData, currentRow);
@@ -45,8 +50,18 @@ function generateAllDocuments () {
 
       const formattedAmount = filteredData.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false });
       console.log('( ' + formattedAmount + ' ) | ' + level.value + ' - ' + type.value);
+      SpreadsheetApp.getActiveSpreadsheet().toast(
+        'Se está generando el documento de ' + level.value + ' - ' + type.value + '\ncon ' + formattedAmount + ' párvulos.',
+        '🏗️ Generando Documento',
+        15
+      );
       messageAlert += '• ' + formattedAmount + ' - ' + level.value + ' - ' + type.value + '\n';
-      generateDocument(filteredData, level.key, type.key);
+      generateDocument(filteredData, level.value, type.value);
+      SpreadsheetApp.getActiveSpreadsheet().toast(
+        'Se generó el documento de ' + level.value + ' - ' + type.value + '\n con ' + formattedAmount + ' párvulos.',
+        '✅ Documento Generado',
+        15
+      );
     });
   });
 
@@ -64,7 +79,7 @@ function generateDocument(filteredData, level, type) {
   // //~ Destino y creación de Archivo base ~//
   const destination = DriveApp.getFolderById(env().ID_FOLDER);
 
-  const fileName = (new Date()).getFullYear() + ' - Crisolito - ' + level + ' - ' + type
+  const fileName = (new Date()).getFullYear() + ' - ' + level + ' - ' + type
   const doc = DocumentApp.create(fileName);
   const idDoc = doc.getId();
   const file = DriveApp.getFileById(idDoc);
