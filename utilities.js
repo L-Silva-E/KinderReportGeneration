@@ -125,10 +125,18 @@ function getStyle(style) {
 function getConfigKeys() {
   return {
     ID_FOLDER: '',
-    SHEET_BACKUP: 'Respaldo Respuestas',
+    SHEET_BACKUP: 'Respaldo',
     SHEET_CONFIG: 'Configuración',
     SHEET_RESPONSES: 'Form Responses 1'
   }
+}
+
+function showMessage(header, body) {
+  SpreadsheetApp.getUi().alert(
+    header,
+    body,
+    SpreadsheetApp.getUi().ButtonSet.OK
+  );
 }
 
 function editFile () {

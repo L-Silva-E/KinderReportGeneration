@@ -1,6 +1,6 @@
 function onOpen(e) {
   SpreadsheetApp.getUi()
-    .createMenu('⚙️ Admin ⚙️')
+    .createMenu('⚙️ Administración')
     .addItem('🧼 Limpiar Valores', 'cleanValues')
     .addItem('📄 Generar Documentos', 'generateAllDocuments')
     .addToUi();
@@ -8,26 +8,32 @@ function onOpen(e) {
 
 
 function generateAllDocuments () {
-  const sheetData = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(env().SHEET_BACKUP);
+  const dataConfigSheet = getDataConfigSheet();
+  if (dataConfigSheet.ID_FOLDER === '' || dataConfigSheet.SHEET_BACKUP === '' || dataConfigSheet.SHEET_CONFIG === '' || dataConfigSheet.SHEET_RESPONSES === '') {
+    showMessage('❌ Hoja de Configuración', 'Faltan valores en la "Hoja de Configuración"\nGeneración de documentos detenido',)
+    return;
+  }
+
+  const sheetData = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
+  if (sheetData === null) {
+    showMessage('❌ Hoja de Respaldo', 'Falta la "Hoja de Respaldo"\nGeneración de documentos detenido');
+    return;
+  }
 
   const arrayLevel = [
     { key: 'PREKINDER (nivel de transición I)', value: 'Pre-Kinder'},
     { key: 'KINDER (nivel de transición II)',   value: 'Kinder'}
   ];
   const arrayType = [
-    { key: 'JORNADA DE MAÑANA', value: "Jornada Mañana"},
-    { key: 'JORNADA DE TARDE',  value: "Jornada Tarde"}
+    { key: 'JORNADA DE MAÑANA', value: 'Jornada Mañana'},
+    { key: 'JORNADA DE TARDE',  value: 'Jornada Tarde'}
   ];
 
   const dataAllRows = [];
   let messageAlert = 'Se han generado 4 documentos: \n\n';
 
   if (sheetData === null) {
-    SpreadsheetApp.getUi().alert(
-      'Alerta',
-      'No se encontró la hoja de respaldo.',
-      SpreadsheetApp.getUi().ButtonSet.OK
-    );
+    showMessage('❌ Hoja de Respaldo', 'Falta la "Hoja de Respaldo"\nGeneración de documentos detenido');
     return;
   }
 
@@ -56,7 +62,7 @@ function generateAllDocuments () {
         15
       );
       messageAlert += '• ' + formattedAmount + ' - ' + level.value + ' - ' + type.value + '\n';
-      generateDocument(filteredData, level.value, type.value);
+      generateDocument(dataConfigSheet, filteredData, level.value, type.value);
       SpreadsheetApp.getActiveSpreadsheet().toast(
         'Se generó el documento de ' + level.value + ' - ' + type.value + '\n con ' + formattedAmount + ' párvulos.',
         '✅ Documento Generado',
@@ -67,17 +73,13 @@ function generateAllDocuments () {
 
   messageAlert += '\n\nLos documentos se generaron con datos de ' + dataAllRows.length + ' párvulos en total.\n';
 
-  SpreadsheetApp.getUi().alert(
-    'Ejecución Finalizada',
-    messageAlert,
-    SpreadsheetApp.getUi().ButtonSet.OK
-  );
+  showMessage('✅ Ejecución Finalizada', messageAlert);
 }
 
 
-function generateDocument(filteredData, level, type) {
+function generateDocument(dataConfigSheet, filteredData, level, type) {
   // //~ Destino y creación de Archivo base ~//
-  const destination = DriveApp.getFolderById(env().ID_FOLDER);
+  const destination = DriveApp.getFolderById(dataConfigSheet.ID_FOLDER);
 
   const fileName = (new Date()).getFullYear() + ' - ' + level + ' - ' + type
   const doc = DocumentApp.create(fileName);
@@ -636,14 +638,23 @@ function cleanValues () {
 
   //~ Obtención de Datos importantes ~//
   const dataConfigSheet = getDataConfigSheet();
+  if (dataConfigSheet.SHEET_BACKUP === '' || dataConfigSheet.SHEET_CONFIG === '' || dataConfigSheet.SHEET_RESPONSES === '') {
+    showMessage('❌ Hoja de Configuración', 'Faltan valores en la Hoja de Configuración\nProceso de limpieza detenido',)
+    return;
+  }
 
 
   //~ Creación o actualización del Respaldo ~//
-  createOrUpdateBackup();
+  createOrUpdateBackup(dataConfigSheet);
 
 
   //~ Limpieza de valores ~//
-  const sheetBackup = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(env().SHEET_BACKUP);
+  const sheetBackup = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
+  if (sheetBackup === null) {
+    showMessage('❌ Hoja de Respaldo', 'Falta la "Hoja de Respaldo"\nProceso de limpieza detenido');
+    return;
+  }
+
   sheetBackup.getRange(1, 1).setValue('Limpieza');
   let countCleaned = 0;
 
@@ -703,24 +714,22 @@ function cleanValues () {
     countCleaned++;
   }
 
-  SpreadsheetApp.getUi().alert(
-    'Limpieza Finalizada',
-    'Se limpiaron los datos de ' + countCleaned + ' párvulos en total.',
-    SpreadsheetApp.getUi().ButtonSet.OK
-  );
+  showMessage('🧼 Limpieza finalizada', 'Se limpiaron los datos de ' + countCleaned + ' párvulos en total.');
 }
 
 
-function createOrUpdateBackup () {
-  const sheetResponses = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(env().SHEET_RESPONSES);
-  let sheetBackup = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(env().SHEET_BACKUP);
-  let alertMessage = '🔃 Se actualizará el respaldo 🔃';
+function createOrUpdateBackup (dataConfigSheet) {
+  const sheetResponses = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_RESPONSES);
+  let sheetBackup = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
+  let messageHeader = '🔃 Se actualizará el respaldo';
+  let messageBody = 'Se copiarán los datos de la "Hoja de Respuestas" a la "Hoja de Respaldo"';
 
   //~ En caso de no existir, se crea la pestaña de respaldo ~//
   if (sheetBackup === null) {
-    alertMessage = '⚠️ Se creará el respaldo ⚠️';
+    messageHeader = '⚠️ Se creará el respaldo';
+    messageBody = 'Se creará el respaldo con los datos de la "Hoja de Respuestas"';
     sheetBackup = SpreadsheetApp.getActiveSpreadsheet().insertSheet();
-    sheetBackup.setName(env().SHEET_BACKUP);
+    sheetBackup.setName(dataConfigSheet.SHEET_BACKUP);
   }
 
   let sheetSource = sheetResponses.getRange(1, 1, sheetResponses.getLastRow(), sheetResponses.getLastColumn());
@@ -737,11 +746,7 @@ function createOrUpdateBackup () {
   sheetDestination = sheetBackup.getRange(1, 1, sheetBackup.getMaxRows(), sheetBackup.getMaxColumns());
   sheetDestination.setNumberFormat('@');
 
-  SpreadsheetApp.getUi().alert(
-    'Respaldo de Datos',
-    alertMessage,
-    SpreadsheetApp.getUi().ButtonSet.OK
-  );
+  showMessage(messageHeader, messageBody);
 }
 
 
@@ -749,7 +754,8 @@ function createConfigSheet () {
   const configObject = getConfigKeys();
 
   let sheetConfig = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(configObject.SHEET_CONFIG);
-  let alertMessage = '⚠️ Ya existe la hoja de configuración ⚠️';
+  let messageHeader = '⚠️ Hoja de Configuración';
+  let messageBody = 'Ya existe la "Hoja de Configuración"\nNo se aplicarán cambios';
 
   if (sheetConfig === null) {
     sheetConfig = SpreadsheetApp.getActiveSpreadsheet().insertSheet();
@@ -762,16 +768,13 @@ function createConfigSheet () {
       row++;
     }
 
-    sheetConfig.autoResizeColumn(1, 2);
+    sheetConfig.setColumnWidths(1, 2, 200);
 
-    alertMessage = '⚠️ Se creó la hoja de configuración ⚠️';
+    messageHeader = '⚠️ Hoja de Configuración';
+    messageBody = 'Se creó la "Hoja de Configuración"\nFue creada con los valores por defecto';
   }
 
-  SpreadsheetApp.getUi().alert(
-    'Hoja de Configuración',
-    alertMessage,
-    SpreadsheetApp.getUi().ButtonSet.OK
-  );
+  showMessage(messageHeader, messageBody);
 }
 
 
