@@ -634,6 +634,10 @@ function cleanValues () {
   createConfigSheet();
 
 
+  //~ Obtención de Datos importantes ~//
+  const dataConfigSheet = getDataConfigSheet();
+
+
   //~ Creación o actualización del Respaldo ~//
   createOrUpdateBackup();
 
@@ -768,4 +772,16 @@ function createConfigSheet () {
     alertMessage,
     SpreadsheetApp.getUi().ButtonSet.OK
   );
+}
+
+
+function getDataConfigSheet () {
+  let sheetConfig = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(getConfigKeys().SHEET_CONFIG);
+  let dataConfigSheet = {};
+
+  for (let currentRow = 1; currentRow <= sheetConfig.getLastRow(); currentRow++) {
+    dataConfigSheet[sheetConfig.getRange(currentRow, 1).getValue()] = sheetConfig.getRange(currentRow, 2).getValue();
+  }
+
+  return dataConfigSheet;
 }
