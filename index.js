@@ -193,13 +193,13 @@ function generateDocument(dataConfigSheet, filteredData, level, type) {
             value: { text: data.section_1.childShareBedWith, style: 'ParagraphValue' }
           },
           {
-            breakLine: true,
+            breakLine: false,
             key:   { text: 'Procedencia escolar:', style: 'ParagraphKey' },
             value: { text: data.section_1.schoolOrigin, style: 'ParagraphValue' }
           },
           {
             breakLine: false,
-            key:   { text: 'Nombre del establecimiento:', style: 'ParagraphKey' },
+            key:   { text: ' ', style: 'ParagraphKey' },
             value: { text: data.section_1.schoolName, style: 'ParagraphValue' }
           },
         ]
