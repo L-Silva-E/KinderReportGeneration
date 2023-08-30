@@ -135,12 +135,12 @@ function generateDocument(dataConfigSheet, filteredData, level, type) {
           {
             breakLine: false,
             key:   { text: 'Curso:', style: 'ParagraphKey' },
-            value: { text: 'Kinder-A', style: 'ParagraphFull' }
+            value: { text: 'Kinder-A', style: 'ParagraphFullImportant' }
           },
           {
             breakLine: true,
             key:   { text: 'Nombre:', style: 'ParagraphKey' },
-            value: { text: data.section_1.names.toUpperCase() + ' ' + data.section_1.fatherLastName.toUpperCase() + ' ' + data.section_1.motherLastName.toUpperCase(), style: 'ParagraphFull' }
+            value: { text: data.section_1.names.toUpperCase() + ' ' + data.section_1.fatherLastName.toUpperCase() + ' ' + data.section_1.motherLastName.toUpperCase(), style: 'ParagraphFullImportant' }
           },
           {
             breakLine: false,
@@ -294,17 +294,17 @@ function generateDocument(dataConfigSheet, filteredData, level, type) {
           {
             breakLine: false,
             key:   { text: 'Nombre completo:', style: 'ParagraphKey' },
-            value: { text: data.section_3.mother.fullName, style: 'ParagraphValue' }
+            value: { text: data.section_3.mother.fullName, style: 'ParagraphValueImportant' }
           },
           {
             breakLine: true,
             key:   { text: 'Rut:', style: 'ParagraphKey' },
-            value: { text: data.section_3.mother.rut, style: 'ParagraphValue' }
+            value: { text: data.section_3.mother.rut, style: 'ParagraphValueImportant' }
           },
           {
             breakLine: false,
             key:   { text: 'Teléfono:', style: 'ParagraphKey' },
-            value: { text: data.section_3.mother.phone, style: 'ParagraphValue' }
+            value: { text: data.section_3.mother.phone, style: 'ParagraphValueImportant' }
           },
           {
             breakLine: true,
@@ -381,17 +381,17 @@ function generateDocument(dataConfigSheet, filteredData, level, type) {
           {
             breakLine: false,
             key:   { text: 'Nombre completo:', style: 'ParagraphKey' },
-            value: { text: data.section_3.father.fullName, style: 'ParagraphValue' }
+            value: { text: data.section_3.father.fullName, style: 'ParagraphValueImportant' }
           },
           {
             breakLine: true,
             key:   { text: 'Rut:', style: 'ParagraphKey' },
-            value: { text: data.section_3.father.rut, style: 'ParagraphValue' }
+            value: { text: data.section_3.father.rut, style: 'ParagraphValueImportant' }
           },
           {
             breakLine: false,
             key:   { text: 'Teléfono:', style: 'ParagraphKey' },
-            value: { text: data.section_3.father.phone, style: 'ParagraphValue' }
+            value: { text: data.section_3.father.phone, style: 'ParagraphValueImportant' }
           },
           {
             breakLine: true,

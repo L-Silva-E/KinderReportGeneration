@@ -118,7 +118,9 @@ function getStyle(style) {
   if (style === 'Paragraph') { return styleParagraph() }
   if (style === 'ParagraphKey') { return styleParagraphKey() }
   if (style === 'ParagraphValue') { return styleParagraphValue() }
+  if (style === 'ParagraphValueImportant') { return styleParagraphValueImportant() }
   if (style === 'ParagraphFull') { return styleParagraphFull() }
+  if (style === 'ParagraphFullImportant') { return styleParagraphFullImportant() }
   if (style === 'EndDate') { return styleEndDate() }
 }
 

@@ -109,12 +109,36 @@ function styleParagraphValue() {
   return style;
 }
 
+function styleParagraphValueImportant() {
+  let style = {};
+
+  style[DocumentApp.Attribute.HORIZONTAL_ALIGNMENT] = DocumentApp.HorizontalAlignment.JUSTIFY;
+  style[DocumentApp.Attribute.FONT_FAMILY] = styleValues().Font.Family;
+  style[DocumentApp.Attribute.FONT_SIZE] = styleValues().Font.SizeTitles;
+  style[DocumentApp.Attribute.BOLD] = true;
+  style[DocumentApp.Attribute.UNDERLINE] = true;
+
+  return style;
+}
+
 function styleParagraphFull() {
   let style = {};
 
   style[DocumentApp.Attribute.HORIZONTAL_ALIGNMENT] = DocumentApp.HorizontalAlignment.JUSTIFY;
   style[DocumentApp.Attribute.FONT_FAMILY] = styleValues().Font.Family;
   style[DocumentApp.Attribute.FONT_SIZE] = styleValues().Font.Size;
+  style[DocumentApp.Attribute.BOLD] = true;
+  style[DocumentApp.Attribute.UNDERLINE] = true;
+
+  return style;
+}
+
+function styleParagraphFullImportant() {
+  let style = {};
+
+  style[DocumentApp.Attribute.HORIZONTAL_ALIGNMENT] = DocumentApp.HorizontalAlignment.JUSTIFY;
+  style[DocumentApp.Attribute.FONT_FAMILY] = styleValues().Font.Family;
+  style[DocumentApp.Attribute.FONT_SIZE] = styleValues().Font.SizeTitles;
   style[DocumentApp.Attribute.BOLD] = true;
   style[DocumentApp.Attribute.UNDERLINE] = true;
 
