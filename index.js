@@ -140,7 +140,7 @@ function generateDocument(dataConfigSheet, filteredData, level, type) {
           {
             breakLine: true,
             key:   { text: 'Nombre:', style: 'ParagraphKey' },
-            value: { text: data.section_1.names.toUpperCase() + ' ' + data.section_1.fatherLastName.toUpperCase() + ' ' + data.section_1.motherLastName.toUpperCase(), style: 'ParagraphFullImportant' }
+            value: { text: data.section_1.fatherLastName.toUpperCase() + ' ' + data.section_1.motherLastName.toUpperCase() + ' ' + data.section_1.names.toUpperCase(), style: 'ParagraphFullImportant' }
           },
           {
             breakLine: false,
