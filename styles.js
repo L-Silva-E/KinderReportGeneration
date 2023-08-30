@@ -12,8 +12,8 @@ function styleValues () {
       Margin: {
         Top: 0.4,
         Bottom: 0.4,
-        Left: 0.8,
-        Right: 0.8
+        Left: 0.4,
+        Right: 0.4
       }
     },
     SpaceParagraph: {
