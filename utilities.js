@@ -140,7 +140,8 @@ function showMessage(header, body) {
 }
 
 function editFile () {
-  const doc = DocumentApp.openById(env().ID_FILE);
+  const ID_FILE = '';
+  const doc = DocumentApp.openById(ID_FILE);
   const fileBody = doc.getBody();
 
   let paras = fileBody.getParagraphs();
