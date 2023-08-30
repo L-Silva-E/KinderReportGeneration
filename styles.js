@@ -91,7 +91,7 @@ function styleParagraphKey() {
   style[DocumentApp.Attribute.HORIZONTAL_ALIGNMENT] = DocumentApp.HorizontalAlignment.JUSTIFY;
   style[DocumentApp.Attribute.FONT_FAMILY] = styleValues().Font.Family;
   style[DocumentApp.Attribute.FONT_SIZE] = styleValues().Font.Size;
-  style[DocumentApp.Attribute.BOLD] = true;
+  style[DocumentApp.Attribute.BOLD] = false;
   style[DocumentApp.Attribute.UNDERLINE] = false;
 
   return style;
@@ -103,7 +103,7 @@ function styleParagraphValue() {
   style[DocumentApp.Attribute.HORIZONTAL_ALIGNMENT] = DocumentApp.HorizontalAlignment.JUSTIFY;
   style[DocumentApp.Attribute.FONT_FAMILY] = styleValues().Font.Family;
   style[DocumentApp.Attribute.FONT_SIZE] = styleValues().Font.Size;
-  style[DocumentApp.Attribute.BOLD] = false;
+  style[DocumentApp.Attribute.BOLD] = true;
   style[DocumentApp.Attribute.UNDERLINE] = true;
 
   return style;
