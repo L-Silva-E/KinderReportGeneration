@@ -297,12 +297,12 @@ function generateDocument(dataConfigSheet, filteredData, level, type) {
             value: { text: data.section_3.mother.fullName, style: 'ParagraphValueImportant' }
           },
           {
-            breakLine: true,
+            breakLine: false,
             key:   { text: 'Rut:', style: 'ParagraphKey' },
             value: { text: data.section_3.mother.rut, style: 'ParagraphValueImportant' }
           },
           {
-            breakLine: false,
+            breakLine: true,
             key:   { text: 'Teléfono:', style: 'ParagraphKey' },
             value: { text: data.section_3.mother.phone, style: 'ParagraphValueImportant' }
           },
@@ -384,12 +384,12 @@ function generateDocument(dataConfigSheet, filteredData, level, type) {
             value: { text: data.section_3.father.fullName, style: 'ParagraphValueImportant' }
           },
           {
-            breakLine: true,
+            breakLine: false,
             key:   { text: 'Rut:', style: 'ParagraphKey' },
             value: { text: data.section_3.father.rut, style: 'ParagraphValueImportant' }
           },
           {
-            breakLine: false,
+            breakLine: true,
             key:   { text: 'Teléfono:', style: 'ParagraphKey' },
             value: { text: data.section_3.father.phone, style: 'ParagraphValueImportant' }
           },
