@@ -117,7 +117,7 @@ function generateDocument(dataConfigSheet, filteredData, level, type) {
           },
           {
             breakLine: false,
-            key:   { text: 'N° de Registro 1234', style: 'SubHeader' },
+            key:   { text: 'N° de Registro ______', style: 'SubHeader' },
             value: null
           },
         ]
