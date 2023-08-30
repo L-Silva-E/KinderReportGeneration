@@ -76,7 +76,7 @@ function styleSubTitle() {
 function styleParagraph() {
   let style = {};
 
-  style[DocumentApp.Attribute.HORIZONTAL_ALIGNMENT] = DocumentApp.HorizontalAlignment.JUSTIFY;
+  style[DocumentApp.Attribute.HORIZONTAL_ALIGNMENT] = DocumentApp.HorizontalAlignment.LEFT;
   style[DocumentApp.Attribute.FONT_FAMILY] = styleValues().Font.Family;
   style[DocumentApp.Attribute.FONT_SIZE] = styleValues().Font.Size;
   style[DocumentApp.Attribute.BOLD] = false;
@@ -88,7 +88,7 @@ function styleParagraph() {
 function styleParagraphKey() {
   let style = {};
 
-  style[DocumentApp.Attribute.HORIZONTAL_ALIGNMENT] = DocumentApp.HorizontalAlignment.JUSTIFY;
+  style[DocumentApp.Attribute.HORIZONTAL_ALIGNMENT] = DocumentApp.HorizontalAlignment.LEFT;
   style[DocumentApp.Attribute.FONT_FAMILY] = styleValues().Font.Family;
   style[DocumentApp.Attribute.FONT_SIZE] = styleValues().Font.Size;
   style[DocumentApp.Attribute.BOLD] = false;
@@ -100,7 +100,7 @@ function styleParagraphKey() {
 function styleParagraphValue() {
   let style = {};
 
-  style[DocumentApp.Attribute.HORIZONTAL_ALIGNMENT] = DocumentApp.HorizontalAlignment.JUSTIFY;
+  style[DocumentApp.Attribute.HORIZONTAL_ALIGNMENT] = DocumentApp.HorizontalAlignment.LEFT;
   style[DocumentApp.Attribute.FONT_FAMILY] = styleValues().Font.Family;
   style[DocumentApp.Attribute.FONT_SIZE] = styleValues().Font.Size;
   style[DocumentApp.Attribute.BOLD] = true;
@@ -112,7 +112,7 @@ function styleParagraphValue() {
 function styleParagraphValueImportant() {
   let style = {};
 
-  style[DocumentApp.Attribute.HORIZONTAL_ALIGNMENT] = DocumentApp.HorizontalAlignment.JUSTIFY;
+  style[DocumentApp.Attribute.HORIZONTAL_ALIGNMENT] = DocumentApp.HorizontalAlignment.LEFT;
   style[DocumentApp.Attribute.FONT_FAMILY] = styleValues().Font.Family;
   style[DocumentApp.Attribute.FONT_SIZE] = styleValues().Font.SizeTitles;
   style[DocumentApp.Attribute.BOLD] = true;
@@ -124,7 +124,7 @@ function styleParagraphValueImportant() {
 function styleParagraphFull() {
   let style = {};
 
-  style[DocumentApp.Attribute.HORIZONTAL_ALIGNMENT] = DocumentApp.HorizontalAlignment.JUSTIFY;
+  style[DocumentApp.Attribute.HORIZONTAL_ALIGNMENT] = DocumentApp.HorizontalAlignment.LEFT;
   style[DocumentApp.Attribute.FONT_FAMILY] = styleValues().Font.Family;
   style[DocumentApp.Attribute.FONT_SIZE] = styleValues().Font.Size;
   style[DocumentApp.Attribute.BOLD] = true;
@@ -136,7 +136,7 @@ function styleParagraphFull() {
 function styleParagraphFullImportant() {
   let style = {};
 
-  style[DocumentApp.Attribute.HORIZONTAL_ALIGNMENT] = DocumentApp.HorizontalAlignment.JUSTIFY;
+  style[DocumentApp.Attribute.HORIZONTAL_ALIGNMENT] = DocumentApp.HorizontalAlignment.LEFT;
   style[DocumentApp.Attribute.FONT_FAMILY] = styleValues().Font.Family;
   style[DocumentApp.Attribute.FONT_SIZE] = styleValues().Font.SizeTitles;
   style[DocumentApp.Attribute.BOLD] = true;
