@@ -106,6 +106,10 @@ function formatDate(date) {
   return Utilities.formatDate(date, Session.getScriptTimeZone(), 'dd/MM/YYYY')
 }
 
+function formatComplicationsBirth(complicationsBirth, whatComplications) {
+  return complicationsBirth === 'Sí' ? whatComplications : complicationsBirth;
+}
+
 function getPoints(inchs) {
   return inchs * styleValues().PageFormat.PointsInInchs;
 }

@@ -104,6 +104,8 @@ function generateDocument(dataConfigSheet, filteredData, level, type) {
   let flagRemoveFisrtParagraph = true;
 
   filteredData.forEach((data) => {
+    const textComplicationsBirth = formatComplicationsBirth(data.section_2.complicationsBirth, data.section_2.whatComplications);
+
     let dataDocument = [
       {
         configuration: {
@@ -225,14 +227,9 @@ function generateDocument(dataConfigSheet, filteredData, level, type) {
             value: { text: data.section_2.weightBirth, style: 'ParagraphValue' }
           },
           {
-            breakLine: false,
-            key:   { text: 'Complicaciones en el parto:', style: 'ParagraphKey' },
-            value: { text: data.section_2.complicationsBirth, style: 'ParagraphValue' }
-          },
-          {
             breakLine: true,
-            key:   { text: '¿Cuáles fueron las complicaciones?', style: 'ParagraphKey' },
-            value: { text: data.section_2.whatComplications, style: 'ParagraphValue' }
+            key:   { text: 'Complicaciones en el parto:', style: 'ParagraphKey' },
+            value: { text: textComplicationsBirth, style: 'ParagraphValue' }
           },
           {
             breakLine: false,
@@ -297,22 +294,22 @@ function generateDocument(dataConfigSheet, filteredData, level, type) {
             value: { text: data.section_3.mother.fullName, style: 'ParagraphValueImportant' }
           },
           {
-            breakLine: false,
+            breakLine: true,
             key:   { text: 'Rut:', style: 'ParagraphKey' },
             value: { text: data.section_3.mother.rut, style: 'ParagraphValueImportant' }
           },
           {
-            breakLine: true,
+            breakLine: false,
             key:   { text: 'Teléfono:', style: 'ParagraphKey' },
             value: { text: data.section_3.mother.phone, style: 'ParagraphValueImportant' }
           },
           {
-            breakLine: true,
+            breakLine: false,
             key:   { text: 'Edad:', style: 'ParagraphKey' },
             value: { text: data.section_3.mother.age, style: 'ParagraphValue' }
           },
           {
-            breakLine: false,
+            breakLine: true,
             key:   { text: 'Estudios:', style: 'ParagraphKey' },
             value: { text: data.section_3.mother.study, style: 'ParagraphValue' }
           },
@@ -384,22 +381,22 @@ function generateDocument(dataConfigSheet, filteredData, level, type) {
             value: { text: data.section_3.father.fullName, style: 'ParagraphValueImportant' }
           },
           {
-            breakLine: false,
+            breakLine: true,
             key:   { text: 'Rut:', style: 'ParagraphKey' },
             value: { text: data.section_3.father.rut, style: 'ParagraphValueImportant' }
           },
           {
-            breakLine: true,
+            breakLine: false,
             key:   { text: 'Teléfono:', style: 'ParagraphKey' },
             value: { text: data.section_3.father.phone, style: 'ParagraphValueImportant' }
           },
           {
-            breakLine: true,
+            breakLine: false,
             key:   { text: 'Edad:', style: 'ParagraphKey' },
             value: { text: data.section_3.father.age, style: 'ParagraphValue' }
           },
           {
-            breakLine: false,
+            breakLine: true,
             key:   { text: 'Estudios:', style: 'ParagraphKey' },
             value: { text: data.section_3.father.study, style: 'ParagraphValue' }
           },
