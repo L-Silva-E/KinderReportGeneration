@@ -145,6 +145,12 @@ function showMessage(header, body) {
   );
 }
 
+function showToast(header, body) {
+  SpreadsheetApp.getActiveSpreadsheet().toast(
+    body, header, 60
+  );
+}
+
 function editFile () {
   const ID_FILE = '';
   const doc = DocumentApp.openById(ID_FILE);
