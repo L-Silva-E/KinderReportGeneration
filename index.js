@@ -57,7 +57,7 @@ function generateAllDocuments () {
   }
 
   console.log('✅ Done');
-  showToast(
+  showMessage(
     '✅ Ejecución Finalizada',
     'Los documentos se generaron con datos de ' + (sheetData.getLastRow() - 1) + ' párvulos en total.'
   );
@@ -693,6 +693,7 @@ function cleanValues () {
     countCleaned++;
   }
 
+  console.log('✅ Done');
   showMessage('🧼 Limpieza finalizada', 'Se limpiaron los datos de ' + countCleaned + ' párvulos en total.');
 }
 
@@ -700,13 +701,13 @@ function cleanValues () {
 function createOrUpdateBackup (dataConfigSheet) {
   const sheetResponses = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_RESPONSES);
   let sheetBackup = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
-  let messageHeader = '🔃 Se actualizará el respaldo';
-  let messageBody = 'Se copiarán los datos de la "Hoja de Respuestas" a la "Hoja de Respaldo"';
+  let messageHeader = '🔃 Actualizando el respaldo';
+  let messageBody = 'Copiando los datos de la "Hoja de Respuestas" a la "Hoja de Respaldo"';
 
   //~ En caso de no existir, se crea la pestaña de respaldo ~//
   if (sheetBackup === null) {
-    messageHeader = '⚠️ Se creará el respaldo';
-    messageBody = 'Se creará el respaldo con los datos de la "Hoja de Respuestas"';
+    messageHeader = '⚠️ Creando respaldo';
+    messageBody = 'Creando el respaldo con los datos de la "Hoja de Respuestas"';
     sheetBackup = SpreadsheetApp.getActiveSpreadsheet().insertSheet();
     sheetBackup.setName(dataConfigSheet.SHEET_BACKUP);
   }
@@ -725,7 +726,7 @@ function createOrUpdateBackup (dataConfigSheet) {
   sheetDestination = sheetBackup.getRange(1, 1, sheetBackup.getMaxRows(), sheetBackup.getMaxColumns());
   sheetDestination.setNumberFormat('@');
 
-  showMessage(messageHeader, messageBody);
+  showToast(messageHeader, messageBody);
 }
 
 
@@ -753,7 +754,7 @@ function createConfigSheet () {
     messageBody = 'Se creó la "Hoja de Configuración"\nFue creada con los valores por defecto';
   }
 
-  showMessage(messageHeader, messageBody);
+  showToast(messageHeader, messageBody);
 }
 
 
