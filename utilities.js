@@ -131,6 +131,7 @@ function getStyle(style) {
 function getConfigKeys() {
   return {
     ID_FOLDER: '',
+    ID_IMAGE: '',
     SHEET_BACKUP: 'Respaldo',
     SHEET_CONFIG: 'Configuración',
     SHEET_RESPONSES: 'Form Responses 1'

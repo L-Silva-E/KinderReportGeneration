@@ -1,4 +1,4 @@
-function onOpen(e) {
+function onOpen() {
   SpreadsheetApp.getUi()
     .createMenu('⚙️ Administración')
     .addItem('🧼 Limpiar Valores', 'cleanValues')
@@ -9,8 +9,8 @@ function onOpen(e) {
 
 function generateAllDocuments () {
   const dataConfigSheet = getDataConfigSheet();
-  if (dataConfigSheet.ID_FOLDER === '' || dataConfigSheet.SHEET_BACKUP === '' || dataConfigSheet.SHEET_CONFIG === '' || dataConfigSheet.SHEET_RESPONSES === '') {
-    showMessage('❌ Hoja de Configuración', 'Faltan valores en la "Hoja de Configuración"\nGeneración de documentos detenido',)
+  if (dataConfigSheet.ID_FOLDER === '' || dataConfigSheet.ID_IMAGE === '' || dataConfigSheet.SHEET_BACKUP === '' || dataConfigSheet.SHEET_CONFIG === '' || dataConfigSheet.SHEET_RESPONSES === '') {
+    showMessage('❌ Hoja de Configuración', 'Faltan valores en la "Hoja de Configuración"\nSe tienen que rellenar todos los campos\nGeneración de documentos detenido',)
     return;
   }
 
@@ -606,7 +606,7 @@ function generateDocument(dataConfigSheet, data, level, type) {
   let paragraphs = fileBody.getParagraphs();
   paragraphs[0].removeFromParent();
 
-  const blob = DriveApp.getFileById('1CO7kkdVQz0ocQ0JBq0K1SJ1hCspU1esV').getBlob();
+  const blob = DriveApp.getFileById(dataConfigSheet.ID_IMAGE).getBlob();
   const image = paragraphs[1].addPositionedImage(blob);
   image.setHeight(116).setWidth(96).setLeftOffset(480).setLayout(DocumentApp.PositionedLayout.ABOVE_TEXT);
 
