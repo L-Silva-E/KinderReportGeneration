@@ -603,8 +603,12 @@ function generateDocument(dataConfigSheet, data, level, type) {
     });
   });
 
-  let paras = fileBody.getParagraphs();
-  paras[0].removeFromParent();
+  let paragraphs = fileBody.getParagraphs();
+  paragraphs[0].removeFromParent();
+
+  const blob = DriveApp.getFileById('1CO7kkdVQz0ocQ0JBq0K1SJ1hCspU1esV').getBlob();
+  const image = paragraphs[1].addPositionedImage(blob);
+  image.setHeight(116).setWidth(96).setLeftOffset(480).setLayout(DocumentApp.PositionedLayout.ABOVE_TEXT);
 
   doc.saveAndClose();
 }
