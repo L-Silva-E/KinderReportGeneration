@@ -122,6 +122,8 @@ function getStyle(style) {
   if (style === 'Paragraph') { return styleParagraph() }
   if (style === 'ParagraphKey') { return styleParagraphKey() }
   if (style === 'ParagraphValue') { return styleParagraphValue() }
+  if (style === 'ParagraphValueChildName') { return styleParagraphValueChildName() }
+  if (style === 'ParagraphValueEmail') { return styleParagraphValueEmail() }
   if (style === 'ParagraphValueImportant') { return styleParagraphValueImportant() }
   if (style === 'ParagraphFull') { return styleParagraphFull() }
   if (style === 'ParagraphFullImportant') { return styleParagraphFullImportant() }

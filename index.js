@@ -99,10 +99,17 @@ function generateDocument(dataConfigSheet, data, level, type) {
       },
       values: [
         {
-          breakLine: true,
+          breakLine: false,
           key:   { text: 'Ficha de Antecedentes 2024', style: 'Header' },
           value: null
-        },
+        }
+      ]
+    },
+    {
+      configuration: {
+        type: 'Header'
+      },
+      values: [
         {
           breakLine: false,
           key:   { text: 'N° de Registro ______', style: 'SubHeader' },
@@ -128,7 +135,7 @@ function generateDocument(dataConfigSheet, data, level, type) {
         {
           breakLine: true,
           key:   { text: 'Nombre:', style: 'ParagraphKey' },
-          value: { text: childFullName, style: 'ParagraphFullImportant' }
+          value: { text: childFullName, style: 'ParagraphValueChildName' }
         },
         {
           breakLine: false,
@@ -471,7 +478,7 @@ function generateDocument(dataConfigSheet, data, level, type) {
         {
           breakLine: true,
           key:   { text: 'Email:', style: 'ParagraphKey' },
-          value: { text: data.section_3.guardian.email, style: 'ParagraphValue' }
+          value: { text: data.section_3.guardian.email, style: 'ParagraphValueEmail' }
         },
         {
           breakLine: false,
@@ -530,6 +537,13 @@ function generateDocument(dataConfigSheet, data, level, type) {
           key:   { text: 'El grupo familiar vive en:', style: 'ParagraphKey' },
           value: { text: data.section_4.familyLivesIn, style: 'ParagraphValue' }
         },
+      ]
+    },
+    {
+      configuration: {
+        type: 'Paragraph'
+      },
+      values: [
         {
           breakLine: true,
           key:   { text: 'Teléfono emergencia 1:', style: 'ParagraphKey' },
@@ -541,7 +555,7 @@ function generateDocument(dataConfigSheet, data, level, type) {
           value: { text: data.section_4.emergencyContact2, style: 'ParagraphValue' }
         },
         {
-          breakLine: false,
+          breakLine: true,
           key:   { text: 'Teléfono emergencia 3:', style: 'ParagraphKey' },
           value: { text: data.section_4.emergencyContact3, style: 'ParagraphValue' }
         },

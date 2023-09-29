@@ -3,11 +3,12 @@ function styleValues () {
     Font: {
       Family: 'Century Gothic',
       Size: 10,
+      SizeChildName: 14,
       SizeTitles: 11
     },
     PageFormat: {
       PointsInInchs: 72,
-      Height: 13,
+      Height: 12.2,
       Width: 8.5,
       Margin: {
         Top: 0.4,
@@ -117,6 +118,30 @@ function styleParagraphValueImportant() {
   style[DocumentApp.Attribute.FONT_SIZE] = styleValues().Font.SizeTitles;
   style[DocumentApp.Attribute.BOLD] = true;
   style[DocumentApp.Attribute.UNDERLINE] = true;
+
+  return style;
+}
+
+function styleParagraphValueChildName() {
+  let style = {};
+
+  style[DocumentApp.Attribute.HORIZONTAL_ALIGNMENT] = DocumentApp.HorizontalAlignment.LEFT;
+  style[DocumentApp.Attribute.FONT_FAMILY] = styleValues().Font.Family;
+  style[DocumentApp.Attribute.FONT_SIZE] = styleValues().Font.SizeChildName;
+  style[DocumentApp.Attribute.BOLD] = true;
+  style[DocumentApp.Attribute.UNDERLINE] = true;
+
+  return style;
+}
+
+function styleParagraphValueEmail() {
+  let style = {};
+
+  style[DocumentApp.Attribute.HORIZONTAL_ALIGNMENT] = DocumentApp.HorizontalAlignment.LEFT;
+  style[DocumentApp.Attribute.FONT_FAMILY] = styleValues().Font.Family;
+  style[DocumentApp.Attribute.FONT_SIZE] = styleValues().Font.Size;
+  style[DocumentApp.Attribute.BOLD] = true;
+  style[DocumentApp.Attribute.UNDERLINE] = false;
 
   return style;
 }
