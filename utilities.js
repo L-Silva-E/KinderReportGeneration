@@ -10,6 +10,7 @@ function getDataRow(sheetData, row) {
       'motherLastName': sheetData.getRange(row, 3).getValue(),
       'names': sheetData.getRange(row, 4).getValue(),
       'birthday': sheetData.getRange(row, 5).getValue(),
+      'birthPlace': sheetData.getRange(row, 79).getValue(),
       'rut': sheetData.getRange(row, 6).getValue(),
       'age': sheetData.getRange(row, 7).getValue(),
       'address': sheetData.getRange(row, 8).getValue(),

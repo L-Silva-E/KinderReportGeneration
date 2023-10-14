@@ -27,12 +27,12 @@ function generateAllDocuments () {
   );
 
   const arrayLevel = [
-    { key: 'PREKINDER (nivel de transición I)', value: 'Pre-Kinder'},
-    { key: 'KINDER (nivel de transición II)',   value: 'Kinder'}
+    { key: 'PREKINDER (nivel de transición I)', value: 'Pre-Kinder' },
+    { key: 'KINDER (nivel de transición II)',   value: 'Kinder' }
   ];
   const arrayType = [
-    { key: 'JORNADA DE MAÑANA', value: 'Jornada Mañana'},
-    { key: 'JORNADA DE TARDE',  value: 'Jornada Tarde'}
+    { key: 'JORNADA DE MAÑANA', value: 'A' },
+    { key: 'JORNADA DE TARDE',  value: 'B' }
   ];
 
   for (let currentRow = 2; currentRow <= sheetData.getLastRow(); currentRow++) {
@@ -46,12 +46,12 @@ function generateAllDocuments () {
     console.log('Generating document: ' + data.section_1.rut);
     showToast(
       '🏗️ Generando Documento',
-      currentLevel + ' / ' + currentType + ' - ' + currentFullName
+      currentLevel + ' - ' + currentType + ' / ' + currentFullName
     );
     generateDocument(dataConfigSheet, data, currentLevel, currentType);
     showToast(
       '✅ Documento Generado',
-      currentLevel + ' / ' + currentType + ' - ' + currentFullName
+      currentLevel + ' - ' + currentType + ' / ' + currentFullName
     );
 
     sheetData.getRange(currentRow, 1).setValue('📄');
@@ -107,12 +107,12 @@ function generateOneDocument () {
   );
 
   const arrayLevel = [
-    { key: 'PREKINDER (nivel de transición I)', value: 'Pre-Kinder'},
-    { key: 'KINDER (nivel de transición II)',   value: 'Kinder'}
+    { key: 'PREKINDER (nivel de transición I)', value: 'Pre-Kinder' },
+    { key: 'KINDER (nivel de transición II)',   value: 'Kinder' }
   ];
   const arrayType = [
-    { key: 'JORNADA DE MAÑANA', value: 'Jornada Mañana'},
-    { key: 'JORNADA DE TARDE',  value: 'Jornada Tarde'}
+    { key: 'JORNADA DE MAÑANA', value: 'A' },
+    { key: 'JORNADA DE TARDE',  value: 'B' }
   ];
 
   console.log('Getting row: ' + currentRow);
@@ -125,12 +125,12 @@ function generateOneDocument () {
   console.log('Generating document: ' + data.section_1.rut);
   showToast(
     '🏗️ Generando Documento',
-    currentLevel + ' / ' + currentType + ' - ' + currentFullName
+    currentLevel + ' - ' + currentType + ' / ' + currentFullName
   );
   generateDocument(dataConfigSheet, data, currentLevel, currentType);
   showToast(
     '✅ Documento Generado',
-    currentLevel + ' / ' + currentType + ' - ' + currentFullName
+    currentLevel + ' - ' + currentType + ' / ' + currentFullName
   );
 
   sheetData.getRange(currentRow, 1).setValue('📄');
@@ -145,14 +145,16 @@ function generateOneDocument () {
 
 function generateDocument(dataConfigSheet, data, level, type) {
   //~ Generación del Texto ~//
+  const titleHeader = 'Ficha de Antecedentes ' + ((new Date()).getFullYear() + 1);
+  const currentGrade = level + ' - ' + type;
   const childFullName = data.section_1.fatherLastName.toUpperCase() + ' ' + data.section_1.motherLastName.toUpperCase() + ' ' + data.section_1.names.toUpperCase();
   const textComplicationsBirth = formatComplicationsBirth(data.section_2.complicationsBirth, data.section_2.whatComplications);
 
 
-  // //~ Destino y creación de Archivo base ~//
+  //~ Destino y creación de Archivo base ~//
   const destination = DriveApp.getFolderById(dataConfigSheet.ID_FOLDER);
 
-  const fileName = (new Date()).getFullYear() + ' - ' + level + ' / ' + type + ' - ' + childFullName;
+  const fileName = (new Date()).getFullYear() + ' / ' + level + ' - ' + type + ' / ' + childFullName;
   const doc = DocumentApp.create(fileName);
   const idDoc = doc.getId();
   const file = DriveApp.getFileById(idDoc);
@@ -179,7 +181,7 @@ function generateDocument(dataConfigSheet, data, level, type) {
       values: [
         {
           breakLine: false,
-          key:   { text: 'Ficha de Antecedentes 2024', style: 'Header' },
+          key:   { text: titleHeader, style: 'Header' },
           value: null
         }
       ]
@@ -209,7 +211,7 @@ function generateDocument(dataConfigSheet, data, level, type) {
         {
           breakLine: false,
           key:   { text: 'Curso:', style: 'ParagraphKey' },
-          value: { text: 'Kinder-A', style: 'ParagraphFullImportant' }
+          value: { text: currentGrade, style: 'ParagraphFullImportant' }
         },
         {
           breakLine: true,
