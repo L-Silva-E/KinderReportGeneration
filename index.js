@@ -235,6 +235,11 @@ function generateDocument(dataConfigSheet, data, level, type) {
         },
         {
           breakLine: true,
+          key:   { text: 'Lugar de nacimiento:', style: 'ParagraphKey' },
+          value: { text: data.section_1.birthPlace, style: 'ParagraphValue' }
+        },
+        {
+          breakLine: true,
           key:   { text: 'Domicilio:', style: 'ParagraphKey' },
           value: { text: data.section_1.address, style: 'ParagraphValue' }
         },
