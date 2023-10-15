@@ -100,6 +100,7 @@ function generatePendingDocuments () {
   }
 
   let messageBody = 'Los documentos se generaron con datos de ' + (dataGenerated.length) + ' párvulos en total.\nSe utilizaron datos de las filas:';
+  if (dataGenerated.length === 0) messageBody = 'No se generó ningún documento';
   dataGenerated.forEach((row) => {
     messageBody += '\n • ' + row;
   });

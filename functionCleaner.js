@@ -22,6 +22,11 @@ function cleanValues () {
     return;
   }
 
+  showToast(
+    '🧼 Limpiando Valores',
+    'Limpiar todas las filas puede tardar varios minutos'
+  );
+
   sheetBackup.getRange(1, 1).setValue('Estado');
   let countCleaned = 0;
   const indexClean = getIndexClean(dataConfigSheet.IS_KINDER);
@@ -179,6 +184,8 @@ function createOrUpdateBackup (dataConfigSheet) {
     sheetBackup.setName(dataConfigSheet.SHEET_BACKUP);
   }
 
+  showToast(messageHeader, messageBody);
+
   let sheetSource = sheetResponses.getRange(1, 1, sheetResponses.getLastRow(), sheetResponses.getLastColumn());
 
   let rowRange = sheetBackup.getLastRow() || sheetResponses.getLastRow();
@@ -192,8 +199,6 @@ function createOrUpdateBackup (dataConfigSheet) {
 
   sheetDestination = sheetBackup.getRange(1, 1, sheetBackup.getMaxRows(), sheetBackup.getMaxColumns());
   sheetDestination.setNumberFormat('@');
-
-  showToast(messageHeader, messageBody);
 }
 
 
