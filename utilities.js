@@ -70,16 +70,16 @@ function getStyle(style) {
 }
 
 function showMessage(header, body) {
+  showToast(header, body, 5);
+
   SpreadsheetApp.getUi().alert(
-    header,
-    body,
-    SpreadsheetApp.getUi().ButtonSet.OK
+    header, body, SpreadsheetApp.getUi().ButtonSet.OK
   );
 }
 
-function showToast(header, body) {
+function showToast(header, body, time = 60) {
   SpreadsheetApp.getActiveSpreadsheet().toast(
-    body, header, 60
+    body, header, time
   );
 }
 
