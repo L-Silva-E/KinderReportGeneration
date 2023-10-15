@@ -81,6 +81,90 @@ function cleanValues () {
 }
 
 
+function cleanPendingRows () {
+  const dataConfigSheet = getDataConfigSheet();
+  if (dataConfigSheet.ID_FOLDER === '' || dataConfigSheet.ID_IMAGE === '' || dataConfigSheet.SHEET_BACKUP === '' || dataConfigSheet.SHEET_CONFIG === '' || dataConfigSheet.SHEET_RESPONSES === '' || dataConfigSheet.IS_KINDER === '') {
+    showMessage('❌ Hoja de Configuración', 'Faltan valores en la "Hoja de Configuración"\nSe tienen que rellenar todos los campos\nSe ha detenido la generación de documentos',)
+    return;
+  }
+
+  const sheetData = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
+  if (sheetData === null) {
+    showMessage('❌ Hoja de Respaldo', 'Falta la "Hoja de Respaldo"\nSe ha detenido la generación de documentos');
+    return;
+  }
+
+  showToast(
+    '🧼 Limpiando Valores',
+    'Limpiar las filas restantes puede tardar varios minutos'
+  );
+
+  const indexClean = getIndexClean(dataConfigSheet.IS_KINDER);
+  let dataCleaned = [];
+
+  for (let currentRow = 2; currentRow <= sheetData.getLastRow(); currentRow++) {
+    if (sheetData.getRange(currentRow, 1).getValue() === '🧼' || sheetData.getRange(currentRow, 1).getValue() === '📄') continue;
+
+    dataCleaned.push(currentRow);
+    const rut = sheetData.getRange(currentRow, 6).getValue();
+    console.log(currentRow + ' - ' + rut);
+
+
+    //~ Limpieza y formateo de columans ~//
+    //* Capitalización de Nombres *//
+    indexClean.capitalize.forEach((column) => {
+      let currentValue = sheetData.getRange(currentRow, column).getValue();
+      if (!currentValue) return;
+
+      currentValue = currentValue.trim();
+      currentValue = currentValue.toLowerCase().replace(/(?:^|\s)\S/g, function(word) {
+        return word.toUpperCase();
+      });
+
+      sheetData.getRange(currentRow, column).setValue(currentValue);
+    });
+
+
+    //* Fechas *//
+    indexClean.date.forEach((column) => {
+      let currentValue = sheetData.getRange(currentRow, column).getValue();
+      if (!currentValue) return;
+
+      currentValue = currentValue.trim();
+      let arrayDate = currentValue.split('/');
+      if (arrayDate[0].length === 1) { arrayDate[0] = '0' + arrayDate[0]; }
+      if (arrayDate[1].length === 1) { arrayDate[1] = '0' + arrayDate[1]; }
+      currentValue = arrayDate[1] + '/' + arrayDate[0] + '/' + arrayDate[2];
+
+      sheetData.getRange(currentRow, column).setValue(currentValue);
+    });
+
+
+    //* Renta *//
+    indexClean.rent.forEach((column) => {
+      let currentValue = sheetData.getRange(currentRow, column).getValue();
+      if (!currentValue) return;
+
+      currentValue = currentValue.trim();
+      if (currentValue.length === 3) { currentValue += '.000'; }
+
+      sheetData.getRange(currentRow, column).setValue(currentValue);
+    });
+
+    sheetData.getRange(currentRow, 1).setValue('🧼');
+  }
+
+  let messageBody = 'Se limpiaron los datos de ' + (dataCleaned.length) + ' párvulos en total.\nSe limpiaron los datos de las filas:';
+  if (dataCleaned.length === 0) messageBody = 'No se encontraron datos para limpiar.';
+  dataCleaned.forEach((row) => {
+    messageBody += '\n • ' + row;
+  });
+
+  console.log('✅ Done');
+  showMessage('✅ Ejecución Finalizada', messageBody);
+}
+
+
 function createOrUpdateBackup (dataConfigSheet) {
   const sheetResponses = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_RESPONSES);
   let sheetBackup = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
