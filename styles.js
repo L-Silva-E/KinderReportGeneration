@@ -6,6 +6,11 @@ function styleValues () {
       SizeChildName: 14,
       SizeTitles: 11
     },
+    ImageFormat: {
+      Height: 116,
+      Width: 96,
+      LeftOffset: 480
+    },
     PageFormat: {
       PointsInInchs: 72,
       Height: 12.2,

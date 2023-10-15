@@ -65,7 +65,10 @@ function generateDocument(dataConfigSheet, data, level, type) {
 
   const blob = DriveApp.getFileById(dataConfigSheet.ID_IMAGE).getBlob();
   const image = paragraphs[1].addPositionedImage(blob);
-  image.setHeight(116).setWidth(96).setLeftOffset(480).setLayout(DocumentApp.PositionedLayout.ABOVE_TEXT);
+  image.setHeight(styleValues().ImageFormat.Height)
+    .setWidth(styleValues().ImageFormat.Height)
+    .setLeftOffset(styleValues().ImageFormat.LeftOffset)
+    .setLayout(DocumentApp.PositionedLayout.ABOVE_TEXT);
 
   doc.saveAndClose();
 }
