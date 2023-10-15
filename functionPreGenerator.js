@@ -1,6 +1,6 @@
 function generateAllDocuments () {
   const dataConfigSheet = getDataConfigSheet();
-  if (dataConfigSheet.ID_FOLDER === '' || dataConfigSheet.ID_IMAGE === '' || dataConfigSheet.SHEET_BACKUP === '' || dataConfigSheet.SHEET_CONFIG === '' || dataConfigSheet.SHEET_RESPONSES === '') {
+  if (dataConfigSheet.ID_FOLDER === '' || dataConfigSheet.ID_IMAGE === '' || dataConfigSheet.SHEET_BACKUP === '' || dataConfigSheet.SHEET_CONFIG === '' || dataConfigSheet.SHEET_RESPONSES === '' || dataConfigSheet.IS_KINDER === '') {
     showMessage('❌ Hoja de Configuración', 'Faltan valores en la "Hoja de Configuración"\nSe tienen que rellenar todos los campos\nSe ha detenido la generación de documentos',)
     return;
   }
@@ -16,22 +16,17 @@ function generateAllDocuments () {
     'Generar los documentos puede tardar varios minutos'
   );
 
-  const arrayLevel = [
-    { key: 'PREKINDER (nivel de transición I)', value: 'Pre-Kinder' },
-    { key: 'KINDER (nivel de transición II)',   value: 'Kinder' }
-  ];
-  const arrayType = [
-    { key: 'JORNADA DE MAÑANA', value: 'A' },
-    { key: 'JORNADA DE TARDE',  value: 'B' }
-  ];
+  const arrayLevel = getLevels();
+  const arrayType = getTypes();
 
   for (let currentRow = 2; currentRow <= sheetData.getLastRow(); currentRow++) {
     console.log('Getting row: ' + currentRow);
-    const data = getDataRow(sheetData, currentRow);
+    const data = getDataRow(sheetData, currentRow, dataConfigSheet.IS_KINDER);
 
-    const currentFullName = data.section_1.fatherLastName.toUpperCase() + ' ' + data.section_1.motherLastName.toUpperCase() + ' ' + data.section_1.names.toUpperCase();
     const currentLevel = (arrayLevel.find((level) => level.key === data.enrollment.level)).value;
     const currentType = (arrayType.find((type) => type.key === data.enrollment.type)).value;
+
+    const currentFullName = data.section_1.fatherLastName.toUpperCase() + ' ' + data.section_1.motherLastName.toUpperCase() + ' ' + data.section_1.names.toUpperCase();
 
     console.log('Generating document: ' + data.section_1.rut);
     showToast(
@@ -96,21 +91,16 @@ function generateOneDocument () {
     'Generar el documento puede tardar varios minutos'
   );
 
-  const arrayLevel = [
-    { key: 'PREKINDER (nivel de transición I)', value: 'Pre-Kinder' },
-    { key: 'KINDER (nivel de transición II)',   value: 'Kinder' }
-  ];
-  const arrayType = [
-    { key: 'JORNADA DE MAÑANA', value: 'A' },
-    { key: 'JORNADA DE TARDE',  value: 'B' }
-  ];
+  const arrayLevel = getLevels();
+  const arrayType = getTypes();
 
   console.log('Getting row: ' + currentRow);
-  const data = getDataRow(sheetData, currentRow);
+  const data = getDataRow(sheetData, currentRow, dataConfigSheet);
 
-  const currentFullName = data.section_1.fatherLastName.toUpperCase() + ' ' + data.section_1.motherLastName.toUpperCase() + ' ' + data.section_1.names.toUpperCase();
   const currentLevel = (arrayLevel.find((level) => level.key === data.enrollment.level)).value;
   const currentType = (arrayType.find((type) => type.key === data.enrollment.type)).value;
+
+  const currentFullName = data.section_1.fatherLastName.toUpperCase() + ' ' + data.section_1.motherLastName.toUpperCase() + ' ' + data.section_1.names.toUpperCase();
 
   console.log('Generating document: ' + data.section_1.rut);
   showToast(

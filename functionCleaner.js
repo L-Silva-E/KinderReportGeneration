@@ -5,7 +5,7 @@ function cleanValues () {
 
   //~ Obtención de Datos importantes ~//
   const dataConfigSheet = getDataConfigSheet();
-  if (dataConfigSheet.SHEET_BACKUP === '' || dataConfigSheet.SHEET_CONFIG === '' || dataConfigSheet.SHEET_RESPONSES === '') {
+  if (dataConfigSheet.SHEET_BACKUP === '' || dataConfigSheet.SHEET_CONFIG === '' || dataConfigSheet.SHEET_RESPONSES === '' || dataConfigSheet.IS_KINDER === '') {
     showMessage('❌ Hoja de Configuración', 'Faltan valores en la Hoja de Configuración\nProceso de limpieza detenido',)
     return;
   }
@@ -22,22 +22,20 @@ function cleanValues () {
     return;
   }
 
-  sheetBackup.getRange(1, 1).setValue('Limpieza');
+  sheetBackup.getRange(1, 1).setValue('Estado');
   let countCleaned = 0;
+  const indexClean = getIndexClean(dataConfigSheet.IS_KINDER);
 
   for (let currentRow = 2; currentRow <= sheetBackup.getLastRow(); currentRow++) {
     const rut = sheetBackup.getRange(currentRow, 6).getValue();
     console.log(currentRow + ' - ' + rut);
 
 
-    let columns = [];
-
     //~ Limpieza y formateo de columans ~//
     //* Capitalización de Nombres *//
-    columns = [2, 3, 4, 30, 45, 60];
-    columns.forEach((column) => {
+    indexClean.capitalize.forEach((column) => {
       let currentValue = sheetBackup.getRange(currentRow, column).getValue();
-      if (!currentValue) { return; }
+      if (!currentValue) return;
 
       currentValue = currentValue.trim();
       currentValue = currentValue.toLowerCase().replace(/(?:^|\s)\S/g, function(word) {
@@ -49,10 +47,9 @@ function cleanValues () {
 
 
     //* Fechas *//
-    columns = [5];
-    columns.forEach((column) => {
+    indexClean.date.forEach((column) => {
       let currentValue = sheetBackup.getRange(currentRow, column).getValue();
-      if (!currentValue) { return; }
+      if (!currentValue) return;
 
       currentValue = currentValue.trim();
       let arrayDate = currentValue.split('/');
@@ -65,11 +62,9 @@ function cleanValues () {
 
 
     //* Renta *//
-    columns = [37, 52, 68];
-
-    columns.forEach((column) => {
+    indexClean.rent.forEach((column) => {
       let currentValue = sheetBackup.getRange(currentRow, column).getValue();
-      if (!currentValue) { return; }
+      if (!currentValue) return;
 
       currentValue = currentValue.trim();
       if (currentValue.length === 3) { currentValue += '.000'; }
