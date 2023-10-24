@@ -166,7 +166,17 @@ function cleanPendingRows () {
   });
 
   console.log('✅ Done');
-  showMessage('✅ Ejecución Finalizada', messageBody);
+  showMessage('🧼 Limpieza finalizada', messageBody);
+}
+
+
+function cleanRow () {
+  console.log('🚧 WIP');
+  showMessage('🚧 WIP', messageBody);
+
+  // console.log('✅ Done');
+  // showMessage('✅ Ejecución Finalizada', messageBody);
+}
 }
 
 
