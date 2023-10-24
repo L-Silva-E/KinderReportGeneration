@@ -177,6 +177,88 @@ function cleanRow () {
   // console.log('✅ Done');
   // showMessage('✅ Ejecución Finalizada', messageBody);
 }
+
+
+function addAndCleanNewRows () {
+  //~ Obtención de Datos importantes ~//
+  const dataConfigSheet = getDataConfigSheet();
+  if (dataConfigSheet.SHEET_BACKUP === '' || dataConfigSheet.SHEET_CONFIG === '' || dataConfigSheet.SHEET_RESPONSES === '' || dataConfigSheet.IS_KINDER === '') {
+    showMessage('❌ Hoja de Configuración', 'Faltan valores en la Hoja de Configuración\nProceso de limpieza detenido',)
+    return;
+  }
+
+
+  const sheetResponses = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_RESPONSES);
+  const sheetBackup = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
+
+  let countCleaned = 0;
+  const indexClean = getIndexClean(dataConfigSheet.IS_KINDER);
+  let dataCleaned = [];
+
+  for (let currentRow = sheetBackup.getLastRow() + 1; currentRow <= sheetResponses.getLastRow(); currentRow++) {
+    const rowSource = sheetResponses.getRange(currentRow, 1, 1, sheetResponses.getLastColumn());
+    let rowDestination = sheetBackup.getRange(currentRow, 1, 1, sheetResponses.getLastColumn());
+    rowSource.copyTo(rowDestination);
+    rowDestination.setNumberFormat('@');
+
+    dataCleaned.push(currentRow);
+    const rut = sheetBackup.getRange(currentRow, 6).getValue();
+    console.log(currentRow + ' - ' + rut);
+
+    //~ Limpieza y formateo de columans ~//
+    //* Capitalización de Nombres *//
+    indexClean.capitalize.forEach((column) => {
+      let currentValue = sheetBackup.getRange(currentRow, column).getValue();
+      if (!currentValue) return;
+
+      currentValue = currentValue.trim();
+      currentValue = currentValue.toLowerCase().replace(/(?:^|\s)\S/g, function(word) {
+        return word.toUpperCase();
+      });
+
+      sheetBackup.getRange(currentRow, column).setValue(currentValue);
+    });
+
+
+    //* Fechas *//
+    indexClean.date.forEach((column) => {
+      let currentValue = sheetBackup.getRange(currentRow, column).getValue();
+      if (!currentValue) return;
+
+      currentValue = currentValue.trim();
+      let arrayDate = currentValue.split('/');
+      if (arrayDate[0].length === 1) { arrayDate[0] = '0' + arrayDate[0]; }
+      if (arrayDate[1].length === 1) { arrayDate[1] = '0' + arrayDate[1]; }
+      currentValue = arrayDate[1] + '/' + arrayDate[0] + '/' + arrayDate[2];
+
+      sheetBackup.getRange(currentRow, column).setValue(currentValue);
+    });
+
+
+    //* Renta *//
+    indexClean.rent.forEach((column) => {
+      let currentValue = sheetBackup.getRange(currentRow, column).getValue();
+      if (!currentValue) return;
+
+      currentValue = currentValue.trim();
+      if (currentValue.length === 3) { currentValue += '.000'; }
+
+      sheetBackup.getRange(currentRow, column).setValue(currentValue);
+    });
+
+    sheetBackup.getRange(currentRow, 1).setValue('🧼');
+  }
+
+  let messageBody = 'No se encontraron datos para limpiar.'
+  if (dataCleaned.length > 0) {
+    messageBody = dataCleaned.length === 1
+    ? 'Se agregó y limpió el dato de 1 párvulo.\n Se limpió la fila ' + dataCleaned[0] + '.'
+    : `Se agregaron y limpiaron ${dataCleaned.length} párvulos en total.\n` +
+      `Se limpiaron los datos de las filas:\n${dataCleaned.map((row) => ` • ${row}`).join('\n')}`;
+  }
+
+  console.log('✅ Done');
+  showMessage('🧼 Limpieza finalizada', messageBody);
 }
 
 
