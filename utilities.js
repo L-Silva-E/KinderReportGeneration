@@ -78,9 +78,22 @@ function showMessage(header, body) {
 }
 
 function showToast(header, body, time = 60) {
+  const formattedBody = formatToastBody(body);
   SpreadsheetApp.getActiveSpreadsheet().toast(
-    body, header, time
+    formattedBody, header, time
   );
+}
+
+function formatToastBody(message) {
+  let formattedMessage = message.replace(/:\n • /g, ': ');
+
+  const rows = formattedMessage.split('\n • ');
+  if (rows.length === 1) { return formattedMessage }
+
+  const lastRow = rows.pop();
+  formattedMessage = `${rows.join(', ')} y ${lastRow}`;
+
+  return formattedMessage;
 }
 
 function editFile () {
