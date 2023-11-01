@@ -250,7 +250,7 @@ function addAndCleanNewRows () {
   //~ Obtención de Datos importantes ~//
   const dataConfigSheet = getDataConfigSheet();
   if (dataConfigSheet.SHEET_BACKUP === '' || dataConfigSheet.SHEET_CONFIG === '' || dataConfigSheet.SHEET_RESPONSES === '' || dataConfigSheet.IS_KINDER === '') {
-    showMessage('❌ Hoja de Configuración', 'Faltan valores en la Hoja de Configuración\nProceso de limpieza detenido',)
+    showMessage('❌ Hoja de Configuración', 'Faltan valores en la Hoja de Configuración\nProceso de limpieza detenido')
     return;
   }
 
@@ -258,7 +258,6 @@ function addAndCleanNewRows () {
   const sheetResponses = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_RESPONSES);
   const sheetBackup = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
 
-  let countCleaned = 0;
   const indexClean = getIndexClean(dataConfigSheet.IS_KINDER);
   let dataCleaned = [];
 
@@ -282,21 +281,6 @@ function addAndCleanNewRows () {
       currentValue = currentValue.toLowerCase().replace(/(?:^|\s)\S/g, function(word) {
         return word.toUpperCase();
       });
-
-      sheetBackup.getRange(currentRow, column).setValue(currentValue);
-    });
-
-
-    //* Fechas *//
-    indexClean.date.forEach((column) => {
-      let currentValue = sheetBackup.getRange(currentRow, column).getValue();
-      if (!currentValue) return;
-
-      currentValue = currentValue.trim();
-      let arrayDate = currentValue.split('/');
-      if (arrayDate[0].length === 1) { arrayDate[0] = '0' + arrayDate[0]; }
-      if (arrayDate[1].length === 1) { arrayDate[1] = '0' + arrayDate[1]; }
-      currentValue = arrayDate[1] + '/' + arrayDate[0] + '/' + arrayDate[2];
 
       sheetBackup.getRange(currentRow, column).setValue(currentValue);
     });
