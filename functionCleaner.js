@@ -171,11 +171,78 @@ function cleanPendingRows () {
 
 
 function cleanRow () {
-  console.log('🚧 WIP');
-  showMessage('🚧 WIP', messageBody);
+  const ui = SpreadsheetApp.getUi();
+  const result = ui.prompt(
+    '📋 Limpieza de 1 fila',
+    'Ingrese el número de fila del párvulo que desea limpiar',
+    ui.ButtonSet.OK_CANCEL
+  );
 
-  // console.log('✅ Done');
-  // showMessage('✅ Ejecución Finalizada', messageBody);
+  if (result.getSelectedButton() !== ui.Button.OK) {
+    showMessage('❌ Limpieza de Fila', 'Se ha cancelado la limpieza de la fila');
+    return;
+  }
+
+  const currentRow = parseInt(result.getResponseText());
+  if (isNaN(currentRow)) {
+    showMessage('❌ Número de Fila', 'El valor ingresado no es un número\nSe ha detenido la limpieza de la fila');
+    return;
+  }
+
+  const dataConfigSheet = getDataConfigSheet();
+  if (dataConfigSheet.ID_FOLDER === '' || dataConfigSheet.ID_IMAGE === '' || dataConfigSheet.SHEET_BACKUP === '' || dataConfigSheet.SHEET_CONFIG === '' || dataConfigSheet.SHEET_RESPONSES === '') {
+    showMessage('❌ Hoja de Configuración', 'Faltan valores en la "Hoja de Configuración"\nSe tienen que rellenar todos los campos\nSe ha detenido la limpieza de la fila',)
+    return;
+  }
+
+  const sheetData = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
+  if (sheetData === null) {
+    showMessage('❌ Hoja de Respaldo', 'Falta la "Hoja de Respaldo"\nSe ha detenido la limpieza de la fila');
+    return;
+  }
+
+  if (currentRow < 2 || currentRow > sheetData.getLastRow()) {
+    showMessage('❌ Número de Fila', 'El valor ingresado no es válido\nDebe estar entre 2 y ' + sheetData.getLastRow() + '\nSe ha detenido la limpieza de la fila');
+    return;
+  }
+
+  showToast(
+    '⚠️ Comenzando Ejecución',
+    'Se está limpiando la fila número ' + currentRow
+  );
+
+  const indexClean = getIndexClean(dataConfigSheet.IS_KINDER);
+
+  //~ Limpieza y formateo de columans ~//
+  //* Capitalización de Nombres *//
+  indexClean.capitalize.forEach((column) => {
+    let currentValue = sheetData.getRange(currentRow, column).getValue();
+    if (!currentValue) return;
+
+    currentValue = currentValue.trim();
+    currentValue = currentValue.toLowerCase().replace(/(?:^|\s)\S/g, function(word) {
+      return word.toUpperCase();
+    });
+
+    sheetData.getRange(currentRow, column).setValue(currentValue);
+  });
+
+
+  //* Renta *//
+  indexClean.rent.forEach((column) => {
+    let currentValue = sheetData.getRange(currentRow, column).getValue();
+    if (!currentValue) return;
+
+    currentValue = currentValue.trim();
+    if (currentValue.length === 3) { currentValue += '.000'; }
+
+    sheetData.getRange(currentRow, column).setValue(currentValue);
+  });
+
+  sheetData.getRange(currentRow, 1).setValue('🧼');
+
+  console.log('✅ Done');
+  showMessage('🧼 Limpieza finalizada', 'Se limpió la fila número ' + currentRow);
 }
 
 
