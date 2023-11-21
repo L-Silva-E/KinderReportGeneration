@@ -131,7 +131,7 @@ function generateOneDocument () {
   }
 
   const dataConfigSheet = getDataConfigSheet();
-  if (dataConfigSheet.ID_FOLDER === '' || dataConfigSheet.ID_IMAGE === '' || dataConfigSheet.SHEET_BACKUP === '' || dataConfigSheet.SHEET_CONFIG === '' || dataConfigSheet.SHEET_RESPONSES === '') {
+  if (dataConfigSheet.ID_FOLDER === '' || dataConfigSheet.ID_IMAGE === '' || dataConfigSheet.SHEET_BACKUP === '' || dataConfigSheet.SHEET_CONFIG === '' || dataConfigSheet.SHEET_RESPONSES === '' || dataConfigSheet.IS_KINDER === '') {
     showMessage('❌ Hoja de Configuración', 'Faltan valores en la "Hoja de Configuración"\nSe tienen que rellenar todos los campos\nSe ha detenido la generación de documentos',)
     return;
   }
@@ -156,7 +156,7 @@ function generateOneDocument () {
   const arrayType = getTypes();
 
   console.log('Getting row: ' + currentRow);
-  const data = getDataRow(sheetData, currentRow, dataConfigSheet);
+  const data = getDataRow(sheetData, currentRow, dataConfigSheet.IS_KINDER);
 
   const currentLevel = (arrayLevel.find((level) => level.key === data.enrollment.level)).value;
   const currentType = (arrayType.find((type) => type.key === data.enrollment.type)).value;
