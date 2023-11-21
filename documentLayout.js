@@ -40,12 +40,12 @@ function documentLayout(data, titleHeader, currentGrade, childFullName, textComp
           value: { text: currentGrade, style: 'ParagraphFullImportant' }
         },
         {
-          breakLine: true,
+          breakLine: false,
           key:   { text: 'Nombre:', style: 'ParagraphKey' },
           value: { text: childFullName, style: 'ParagraphValueChildName' }
         },
         {
-          breakLine: false,
+          breakLine: true,
           key:   { text: 'RUT:', style: 'ParagraphKey' },
           value: { text: data.section_1.rut, style: 'ParagraphValue' }
         },
@@ -55,9 +55,14 @@ function documentLayout(data, titleHeader, currentGrade, childFullName, textComp
           value: { text: data.section_1.birthday, style: 'ParagraphValue' }
         },
         {
-          breakLine: true,
+          breakLine: false,
           key:   { text: 'Edad al 31/03:', style: 'ParagraphKey' },
           value: { text: data.section_1.age, style: 'ParagraphValue' }
+        },
+        {
+          breakLine: true,
+          key:   { text: 'Nacionalidad:', style: 'ParagraphKey' },
+          value: { text: data.section_1.nationality, style: 'ParagraphValue' }
         },
         {
           breakLine: true,
