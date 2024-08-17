@@ -1,13 +1,25 @@
 function onOpen() {
-  SpreadsheetApp.getUi()
-    .createMenu('⚙️ Administración')
-    .addItem('🧼 Limpiar Valores', 'LimpiarValores')
-    .addItem('🧽 Limpiar Filas Restantes', 'LimpiarFilasRestantes')
-    .addItem('🧹 Limpiar Fila', 'LimpiarFila')
-    .addItem('✍️ Agregar y Limpiar Filas Nuevas', 'AgregarYLimpiarFilasNuevas')
-    .addItem('📑 Generar Documentos', 'GenerarDocumentos')
-    .addItem('📃 Generar Documentos Restantes', 'GenerarRestantes')
-    .addItem('📄 Generar 1 Documento', 'GenerarUnDocumento')
+  let ui = SpreadsheetApp.getUi();
+
+  ui.createMenu('⚙️ Administración')
+    .addItem('⚙️ Configuración Inicial', 'WorkInProgress')
+    .addSeparator()
+    .addSubMenu(ui.createMenu('📋 Copiado de Datos')
+      .addItem('📜 Todos', 'WorkInProgress')
+      .addItem('📃 Restantes', 'WorkInProgress')
+      .addItem('📄 Específica', 'WorkInProgress')
+    )
+    .addSubMenu(ui.createMenu('🧹 Limpieza')
+      .addItem('🧼 Completa', 'LimpiarValores')
+      .addItem('🫧 Filas Restantes', 'LimpiarFilasRestantes')
+      .addItem('🧽 Fila Específica', 'LimpiarFila')
+      .addItem('🆕 Agregar y Limpiar Filas Nuevas', 'AgregarYLimpiarFilasNuevas')
+    )
+    .addSubMenu(ui.createMenu('📚 Generar Documentos')
+      .addItem('📜 Todos', 'GenerarDocumentos')
+      .addItem('📃 Restantes', 'GenerarRestantes')
+      .addItem('📄 Específico', 'GenerarUnDocumento')
+    )
     .addToUi();
 }
 
@@ -22,3 +34,8 @@ function AgregarYLimpiarFilasNuevas() { addAndCleanNewRows() }
 function GenerarDocumentos() { generateAllDocuments() }
 function GenerarRestantes() { generatePendingDocuments() }
 function GenerarUnDocumento() { generateOneDocument() }
+
+//~ Work In Progress ~//
+function WorkInProgress() {
+  showMessage('🚧 En Construcción 🚧', 'Esta función aún no está disponible');
+}
