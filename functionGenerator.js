@@ -1,6 +1,6 @@
 function generateDocument(dataConfigSheet, data, level, type) {
   //~ Generación del Texto ~//
-  const titleHeader = 'Ficha de Antecedentes ' + ((new Date()).getFullYear() + 1);
+  const titleHeader = 'Ficha de Antecedentes 20____';
   const currentGrade = level + ' - ' + type;
   const childFullName = data.section_1.fatherLastName.toUpperCase() + ' ' + data.section_1.motherLastName.toUpperCase() + ' ' + data.section_1.names.toUpperCase();
   const textComplicationsBirth = formatComplicationsBirth(data.section_2.complicationsBirth, data.section_2.whatComplications);
@@ -33,8 +33,8 @@ function generateDocument(dataConfigSheet, data, level, type) {
   dataDocument.forEach((section) => {
     let paragraphObjetcDataChild =
       fileBody.appendParagraph('')
-      .setSpacingAfter(getPoints(styleValues().SpaceParagraph[section.configuration.type]))
-      .setLineSpacing(styleValues().SpaceLine);
+        .setSpacingAfter(getPoints(styleValues().SpaceParagraph[section.configuration.type]))
+        .setLineSpacing(styleValues().SpaceLine);
 
     paragraphObjetcDataChild.setAttributes(getStyle(section.configuration.type));
 

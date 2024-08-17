@@ -23,7 +23,7 @@ function generateAllDocuments () {
     console.log('Getting row: ' + currentRow);
     const data = getDataRow(sheetData, currentRow, dataConfigSheet.IS_KINDER);
 
-    const currentLevel = (arrayLevel.find((level) => level.key === data.enrollment.level)).value;
+    const currentLevel = (arrayLevel.find((level) => level.key === 'KINDER (nivel de transición II)')).value;
     const currentType = (arrayType.find((type) => type.key === data.enrollment.type)).value;
 
     const currentFullName = data.section_1.fatherLastName.toUpperCase() + ' ' + data.section_1.motherLastName.toUpperCase() + ' ' + data.section_1.names.toUpperCase();
@@ -80,7 +80,7 @@ function generatePendingDocuments () {
     console.log('Getting row: ' + currentRow);
     const data = getDataRow(sheetData, currentRow, dataConfigSheet.IS_KINDER);
 
-    const currentLevel = (arrayLevel.find((level) => level.key === data.enrollment.level)).value;
+    const currentLevel = (arrayLevel.find((level) => level.key === 'KINDER (nivel de transición II)')).value;
     const currentType = (arrayType.find((type) => type.key === data.enrollment.type)).value;
 
     const currentFullName = data.section_1.fatherLastName.toUpperCase() + ' ' + data.section_1.motherLastName.toUpperCase() + ' ' + data.section_1.names.toUpperCase();
@@ -158,7 +158,7 @@ function generateOneDocument () {
   console.log('Getting row: ' + currentRow);
   const data = getDataRow(sheetData, currentRow, dataConfigSheet.IS_KINDER);
 
-  const currentLevel = (arrayLevel.find((level) => level.key === data.enrollment.level)).value;
+  const currentLevel = (arrayLevel.find((level) => level.key === 'KINDER (nivel de transición II)')).value;
   const currentType = (arrayType.find((type) => type.key === data.enrollment.type)).value;
 
   const currentFullName = data.section_1.fatherLastName.toUpperCase() + ' ' + data.section_1.motherLastName.toUpperCase() + ' ' + data.section_1.names.toUpperCase();

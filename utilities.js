@@ -24,9 +24,7 @@ function getConfigKeys() {
 }
 
 function getDataRow(sheetData, currentRow, isKinder) {
-  return (isKinder)
-    ? getDataRowKinder(sheetData, currentRow)
-    : getDataRowPreKinder(sheetData, currentRow);
+  return getDataSpreadsheet(sheetData, currentRow);
 }
 
 function getIndexClean(isKinder) {
@@ -44,8 +42,8 @@ function getLevels() {
 
 function getTypes() {
   return [
-    { key: 'JORNADA DE MAÑANA', value: 'A' },
-    { key: 'JORNADA DE TARDE',  value: 'B' }
+    { key: 'Jornada de Mañana', value: 'A' },
+    { key: 'Jornada de Tarde',  value: 'B' }
   ];
 }
 
