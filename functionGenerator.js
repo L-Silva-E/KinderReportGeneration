@@ -57,6 +57,8 @@ function generateDocument(dataConfigSheet, data, level, type) {
         ? paragraphObjetcDataChild.appendText('\n')
         : paragraphObjetcDataChild.appendText(' ').setAttributes(getStyle('Paragraph'));
 
+      if (item.breakPage) paragraphObjetcDataChild.appendPageBreak();
+
     });
   });
 
