@@ -189,7 +189,7 @@ function documentLayout(data, titleHeader, currentGrade, childFullName, textComp
           value: { text: data.section_3.childWellControl, style: 'ParagraphValue' }
         },
         {
-          breakLine: false,
+          breakLine: false, breakPage: true,
           key:   { text: '¿Está en alguno de estos tratamientos de salud?', style: 'ParagraphKey' },
           value: { text: data.section_3.childIsTreatment, style: 'ParagraphValue' }
         },
@@ -435,7 +435,7 @@ function documentLayout(data, titleHeader, currentGrade, childFullName, textComp
           value: { text: data.section_4.guardian.typeWorkday, style: 'ParagraphValue' }
         },
         {
-          breakLine: true, breakPage: true,
+          breakLine: false,
           key:   { text: 'Horario laboral:', style: 'ParagraphKey' },
           value: { text: data.section_4.guardian.workingHours, style: 'ParagraphValue' }
         }
@@ -479,64 +479,64 @@ function documentLayout(data, titleHeader, currentGrade, childFullName, textComp
           value: null
         },
         {
-          breakLine: true,
-          key:   { text: '1. Contacto de Emergencia', style: 'SubTitle' },
+          breakLine: false,
+          key:   { text: '1. Contacto:', style: 'ParagraphKey' },
           value: null
         },
         {
-          breakLine: true,
-          key:   { text: 'Nombre completo:', style: 'ParagraphKey' },
-          value: { text: data.section_6.emergencyContact[0].fullName, style: 'ParagraphValueImportant' }
+          breakLine: false,
+          key:   { text: '', style: 'ParagraphKey' },
+          value: { text: data.section_6.emergencyContact[0].phone, style: 'ParagraphValue' }
         },
         {
-          breakLine: true,
-          key:   { text: 'Parentesco:', style: 'ParagraphKey' },
+          breakLine: false,
+          key:   { text: '', style: 'ParagraphKey' },
           value: { text: data.section_6.emergencyContact[0].kinship, style: 'ParagraphValue' }
         },
         {
           breakLine: true,
-          key:   { text: 'Teléfono:', style: 'ParagraphKey' },
-          value: { text: data.section_6.emergencyContact[0].phone, style: 'ParagraphValue' }
+          key:   { text: '', style: 'ParagraphKey' },
+          value: { text: data.section_6.emergencyContact[0].fullName, style: 'ParagraphValue' }
         },
         {
-          breakLine: true,
-          key:   { text: '2. Contacto de Emergencia', style: 'SubTitle' },
+          breakLine: false,
+          key:   { text: '2. Contacto:', style: 'ParagraphKey' },
           value: null
         },
         {
-          breakLine: true,
-          key:   { text: 'Nombre completo:', style: 'ParagraphKey' },
-          value: { text: data.section_6.emergencyContact[1].fullName, style: 'ParagraphValueImportant' }
+          breakLine: false,
+          key:   { text: '', style: 'ParagraphKey' },
+          value: { text: data.section_6.emergencyContact[1].phone, style: 'ParagraphValue' }
         },
         {
-          breakLine: true,
-          key:   { text: 'Parentesco:', style: 'ParagraphKey' },
+          breakLine: false,
+          key:   { text: '', style: 'ParagraphKey' },
           value: { text: data.section_6.emergencyContact[1].kinship, style: 'ParagraphValue' }
         },
         {
           breakLine: true,
-          key:   { text: 'Teléfono:', style: 'ParagraphKey' },
-          value: { text: data.section_6.emergencyContact[1].phone, style: 'ParagraphValue' }
-        },
-        {
-          breakLine: true,
-          key:   { text: '3. Contacto de Emergencia', style: 'SubTitle' },
-          value: null
-        },
-        {
-          breakLine: true,
-          key:   { text: 'Nombre completo:', style: 'ParagraphKey' },
-          value: { text: data.section_6.emergencyContact[2].fullName, style: 'ParagraphValueImportant' }
-        },
-        {
-          breakLine: true,
-          key:   { text: 'Parentesco:', style: 'ParagraphKey' },
-          value: { text: data.section_6.emergencyContact[2].kinship, style: 'ParagraphValue' }
+          key:   { text: '', style: 'ParagraphKey' },
+          value: { text: data.section_6.emergencyContact[1].fullName, style: 'ParagraphValue' }
         },
         {
           breakLine: false,
-          key:   { text: 'Teléfono:', style: 'ParagraphKey' },
+          key:   { text: '3. Contacto:', style: 'ParagraphKey' },
+          value: null
+        },
+        {
+          breakLine: false,
+          key:   { text: '', style: 'ParagraphKey' },
           value: { text: data.section_6.emergencyContact[2].phone, style: 'ParagraphValue' }
+        },
+        {
+          breakLine: false,
+          key:   { text: '', style: 'ParagraphKey' },
+          value: { text: data.section_6.emergencyContact[2].kinship, style: 'ParagraphValue' }
+        },
+        {
+          breakLine: true,
+          key:   { text: '', style: 'ParagraphKey' },
+          value: { text: data.section_6.emergencyContact[2].fullName, style: 'ParagraphValue' }
         },
       ]
     },
@@ -551,83 +551,78 @@ function documentLayout(data, titleHeader, currentGrade, childFullName, textComp
           value: null
         },
         {
-          breakLine: true,
-          key:   { text: 'Personas que pueden retirar al niño/a', style: 'SubTitle' },
+          breakLine: false,
+          key:   { text: '1. Persona:', style: 'ParagraphKey' },
           value: null
         },
         {
-          breakLine: true,
-          key:   { text: '1. Retiro Autorizado', style: 'SubTitle' },
-          value: null
-        },
-        {
-          breakLine: true,
-          key:   { text: 'Rut:', style: 'ParagraphKey' },
+          breakLine: false,
+          key:   { text: '', style: 'ParagraphKey' },
           value: { text: data.section_7.authorizedWithdraw[0].rut, style: 'ParagraphValue' }
         },
         {
-          breakLine: true,
-          key:   { text: 'Nombre completo:', style: 'ParagraphKey' },
-          value: { text: data.section_7.authorizedWithdraw[0].fullName, style: 'ParagraphValueImportant' }
+          breakLine: false,
+          key:   { text: '', style: 'ParagraphKey' },
+          value: { text: data.section_7.authorizedWithdraw[0].fullName, style: 'ParagraphValue' }
         },
         {
-          breakLine: true,
-          key:   { text: 'Parentesco:', style: 'ParagraphKey' },
+          breakLine: false,
+          key:   { text: '', style: 'ParagraphKey' },
           value: { text: data.section_7.authorizedWithdraw[0].kinship, style: 'ParagraphValue' }
         },
         {
           breakLine: true,
-          key:   { text: 'Teléfono:', style: 'ParagraphKey' },
+          key:   { text: '', style: 'ParagraphKey' },
           value: { text: data.section_7.authorizedWithdraw[0].phone, style: 'ParagraphValue' }
         },
         {
-          breakLine: true,
-          key:   { text: '2. Retiro Autorizado', style: 'SubTitle' },
+          breakLine: false,
+          key:   { text: '2. Persona:', style: 'ParagraphKey' },
           value: null
         },
         {
-          breakLine: true,
-          key:   { text: 'Rut:', style: 'ParagraphKey' },
+          breakLine: false,
+          key:   { text: '', style: 'ParagraphKey' },
           value: { text: data.section_7.authorizedWithdraw[1].rut, style: 'ParagraphValue' }
         },
         {
-          breakLine: true,
-          key:   { text: 'Nombre completo:', style: 'ParagraphKey' },
-          value: { text: data.section_7.authorizedWithdraw[1].fullName, style: 'ParagraphValueImportant' }
+          breakLine: false,
+          key:   { text: '', style: 'ParagraphKey' },
+          value: { text: data.section_7.authorizedWithdraw[1].fullName, style: 'ParagraphValue' }
         },
         {
-          breakLine: true,
-          key:   { text: 'Parentesco:', style: 'ParagraphKey' },
+          breakLine: false,
+          key:   { text: '', style: 'ParagraphKey' },
           value: { text: data.section_7.authorizedWithdraw[1].kinship, style: 'ParagraphValue' }
         },
         {
           breakLine: true,
-          key:   { text: 'Teléfono:', style: 'ParagraphKey' },
+          key:   { text: '', style: 'ParagraphKey' },
           value: { text: data.section_7.authorizedWithdraw[1].phone, style: 'ParagraphValue' }
         },
         {
-          breakLine: true,
-          key:   { text: '3. Retiro Autorizado', style: 'SubTitle' },
+          breakLine: false,
+          key:   { text: '3. Persona:', style: 'ParagraphKey' },
           value: null
         },
         {
-          breakLine: true,
-          key:   { text: 'Rut:', style: 'ParagraphKey' },
+          breakLine: false,
+          key:   { text: '', style: 'ParagraphKey' },
           value: { text: data.section_7.authorizedWithdraw[2].rut, style: 'ParagraphValue' }
         },
         {
-          breakLine: true,
-          key:   { text: 'Nombre completo:', style: 'ParagraphKey' },
-          value: { text: data.section_7.authorizedWithdraw[2].fullName, style: 'ParagraphValueImportant' }
+          breakLine: false,
+          key:   { text: '', style: 'ParagraphKey' },
+          value: { text: data.section_7.authorizedWithdraw[2].fullName, style: 'ParagraphValue' }
         },
         {
-          breakLine: true,
-          key:   { text: 'Parentesco:', style: 'ParagraphKey' },
+          breakLine: false,
+          key:   { text: '', style: 'ParagraphKey' },
           value: { text: data.section_7.authorizedWithdraw[2].kinship, style: 'ParagraphValue' }
         },
         {
-          breakLine: true,
-          key:   { text: 'Teléfono:', style: 'ParagraphKey' },
+          breakLine: false,
+          key:   { text: '', style: 'ParagraphKey' },
           value: { text: data.section_7.authorizedWithdraw[2].phone, style: 'ParagraphValue' }
         },
       ]
