@@ -88,11 +88,6 @@ function documentLayout(data, titleHeader, currentGrade, childFullName, textComp
         },
         {
           breakLine: true,
-          key:   { text: '¿Con quién vive el niño/a?', style: 'ParagraphKey' },
-          value: { text: data.section_2.childLiveWith, style: 'ParagraphValue' }
-        },
-        {
-          breakLine: true,
           key:   { text: '¿Quién estará al cuidado cuando no esté en el jardín?', style: 'ParagraphKey' },
           value: { text: data.section_2.whoTakesCaresOfChild, style: 'ParagraphValue' }
         },
@@ -122,9 +117,14 @@ function documentLayout(data, titleHeader, currentGrade, childFullName, textComp
           value: { text: data.section_2.schoolOrigin, style: 'ParagraphValue' }
         },
         {
-          breakLine: false,
+          breakLine: true,
           key:   { text: ' ', style: 'ParagraphKey' },
           value: { text: data.section_2.schoolName, style: 'ParagraphValue' }
+        },
+        {
+          breakLine: false, hasTable: true,
+          key:   { text: '¿Con quién vive el niño/a?', style: 'ParagraphKey' },
+          value: { text: data.section_2.childLiveWith, style: 'ParagraphValue' }
         },
       ]
     },

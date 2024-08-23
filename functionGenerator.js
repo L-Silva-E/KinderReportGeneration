@@ -53,6 +53,20 @@ function generateDocument(dataConfigSheet, data, level, type) {
           .setAttributes(getStyle(item.value.style));
       }
 
+      if (item.hasTable) {
+        let cells = [
+          ['Parentesco', 'Nombre'],
+          ['', ''],
+          ['', ''],
+          ['', ''],
+          ['', ''],
+          ['', ''],
+        ];
+
+        let tableObject = fileBody.appendTable(cells);
+        tableObject.setColumnWidth(0, 100);
+      }
+
       item.breakLine
         ? paragraphObjetcDataChild.appendText('\n')
         : paragraphObjetcDataChild.appendText(' ').setAttributes(getStyle('Paragraph'));
