@@ -1,8 +1,4 @@
 function cleanValues () {
-  //~ Creación Hoja de Configuración ~//
-  createConfigSheet();
-
-
   //~ Obtención de Datos importantes ~//
   const dataConfigSheet = getDataConfigSheet();
   if (dataConfigSheet.SHEET_BACKUP === '' || dataConfigSheet.SHEET_CONFIG === '' || dataConfigSheet.SHEET_RESPONSES === '' || dataConfigSheet.IS_KINDER === '') {
@@ -342,34 +338,6 @@ function createOrUpdateBackup (dataConfigSheet) {
 
   sheetDestination = sheetBackup.getRange(1, 1, sheetBackup.getMaxRows(), sheetBackup.getMaxColumns());
   sheetDestination.setNumberFormat('@');
-}
-
-
-function createConfigSheet () {
-  const configObject = getConfigKeys();
-
-  let sheetConfig = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(configObject.SHEET_CONFIG);
-  let messageHeader = '⚠️ Hoja de Configuración';
-  let messageBody = 'Ya existe la "Hoja de Configuración"\nNo se aplicarán cambios';
-
-  if (sheetConfig === null) {
-    sheetConfig = SpreadsheetApp.getActiveSpreadsheet().insertSheet();
-    sheetConfig.setName(configObject.SHEET_CONFIG);
-
-    let row = 1;
-    for (const key in configObject) {
-      sheetConfig.getRange(row, 1).setValue(key);
-      sheetConfig.getRange(row, 2).setValue(configObject[key]);
-      row++;
-    }
-
-    sheetConfig.setColumnWidths(1, 2, 200);
-
-    messageHeader = '⚠️ Hoja de Configuración';
-    messageBody = 'Se creó la "Hoja de Configuración"\nFue creada con los valores por defecto';
-  }
-
-  showToast(messageHeader, messageBody);
 }
 
 
