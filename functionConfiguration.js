@@ -1,6 +1,6 @@
 function createConfigSheet () {
   const configObject = getConfigKeys();
-  const configAuxObject = getConfigKeysAux();
+  const configAuxObject = getConfigDescription();
 
   let sheetConfig = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(configObject.SHEET_CONFIG);
   let messageHeader = '⚠️ Hoja de Configuración';

@@ -1,6 +1,6 @@
 function cleanText(type, text) {
   let cleanedText = text.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-  return type === constants().CASE_TEXT.LOWER ? cleanedText.toLowerCase() :  cleanedText.toUpperCase();
+  return type === constants().CASE_TEXT.LOWER ? cleanedText.toLowerCase() : cleanedText.toUpperCase();
 }
 
 function formatDate(date) {
@@ -20,6 +20,17 @@ function getConfigKeys() {
     SHEET_CONFIG: 'Configuración',
     SHEET_RESPONSES: 'Form Responses 1',
     IS_KINDER: 'true'
+  }
+}
+
+function getConfigDescription() {
+  return {
+    ID_FOLDER: 'Rellenar con la \'Id\' de la carpeta en donde se generarán los documentos',
+    ID_IMAGE: 'Rellenar con la \'Id\' de la imagen del logo de Crisolito',
+    SHEET_BACKUP: '',
+    SHEET_CONFIG: '',
+    SHEET_RESPONSES: '',
+    IS_KINDER: ''
   }
 }
 
