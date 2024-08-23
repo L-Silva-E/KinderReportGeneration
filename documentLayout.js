@@ -639,7 +639,7 @@ function documentLayout(data, titleHeader, currentGrade, childFullName, textComp
       values: [
         {
           breakLine: true,
-          key:   { text: 'Datos Relevantes:', style: 'ParagraphValue' },
+          key:   { text: 'Datos Relevantes:', style: 'SubTitle' },
           value: { text: data.section_7.relevantData, style: 'SubTitle' }
         },
       ]
