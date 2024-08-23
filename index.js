@@ -2,7 +2,7 @@ function onOpen() {
   let ui = SpreadsheetApp.getUi();
 
   ui.createMenu('⚙️ Administración')
-    .addItem('⚙️ Configuración Inicial', 'WorkInProgress')
+    .addItem('⚙️ Configuración Inicial', 'ConfiguracionInicial')
     .addSeparator()
     .addSubMenu(ui.createMenu('📋 Copiado de Datos')
       .addItem('📜 Todos', 'WorkInProgress')
@@ -22,6 +22,9 @@ function onOpen() {
     )
     .addToUi();
 }
+
+//~ Configuration ~//
+function ConfiguracionInicial() { createConfigSheet() }
 
 //~ Clean Values ~//
 function LimpiarValores() { cleanValues() }
