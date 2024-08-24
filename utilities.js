@@ -12,26 +12,37 @@ function formatComplicationsBirth(complicationsBirth, whatComplications) {
   return complicationsBirth === 'Sí' ? whatComplications : complicationsBirth;
 }
 
-function getConfigKeys() {
+function getConfigSheet() {
   return {
-    ID_FOLDER: '',
-    ID_IMAGE: '',
-    SHEET_BACKUP: 'Respaldo',
-    SHEET_CONFIG: 'Configuración',
-    SHEET_RESPONSES: 'Form Responses 1',
-    IS_KINDER: 'true'
-  }
-}
-
-function getConfigDescription() {
-  return {
-    ID_FOLDER: 'Rellenar con la \'Id\' de la carpeta en donde se generarán los documentos',
-    ID_IMAGE: 'Rellenar con la \'Id\' de la imagen del logo de Crisolito',
-    SHEET_BACKUP: '',
-    SHEET_CONFIG: '',
-    SHEET_RESPONSES: '',
-    IS_KINDER: ''
-  }
+    ID_FOLDER_A: {
+      value: '',
+      description: 'Rellenar con la \'Id\' de la carpeta en donde se generarán los documentos de la \'Jornada de la Mañana\''
+    },
+    ID_FOLDER_B: {
+      value: '',
+      description: 'Rellenar con la \'Id\' de la carpeta en donde se generarán los documentos de la \'Jornada de la Tarde\''
+    },
+    ID_IMAGE: {
+      value: '',
+      description: 'Rellenar con la \'Id\' de la imagen del logo de Crisolito'
+    },
+    SHEET_BACKUP: {
+      value: 'Respaldo',
+      description: ''
+    },
+    SHEET_CONFIG: {
+      value: 'Configuración',
+      description: ''
+    },
+    SHEET_RESPONSES: {
+      value: 'Form Responses 1',
+      description: ''
+    },
+    IS_KINDER: {
+      value: 'true',
+      description: ''
+    }
+  };
 }
 
 function getDataRow(sheetData, currentRow, isKinder) {
