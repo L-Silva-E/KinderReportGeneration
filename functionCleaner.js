@@ -342,7 +342,7 @@ function createOrUpdateBackup (dataConfigSheet) {
 
 
 function getDataConfigSheet () {
-  let sheetConfig = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(getConfigKeys().SHEET_CONFIG);
+  let sheetConfig = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(getConfigSheet().SHEET_CONFIG.value);
   let dataConfigSheet = {};
 
   for (let currentRow = 1; currentRow <= sheetConfig.getLastRow(); currentRow++) {
