@@ -140,7 +140,7 @@ function getDataSpreadsheet(sheetData, row) {
   }
 }
 
-function getIndexCleanKinder() {
+function getIndexClean() {
   return {
     'capitalize': [4, 5, 6, 34, 49, 64, 78, 81, 84, 88, 92, 96],
     'date': [7],

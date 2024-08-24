@@ -25,7 +25,7 @@ function cleanValues () {
 
   sheetBackup.getRange(1, 1).setValue('Estado');
   let countCleaned = 0;
-  const indexClean = getIndexClean(dataConfigSheet.IS_KINDER);
+  const indexClean = getIndexClean();
 
   for (let currentRow = 2; currentRow <= sheetBackup.getLastRow(); currentRow++) {
     const rut = sheetBackup.getRange(currentRow, 6).getValue();
@@ -100,7 +100,7 @@ function cleanPendingRows () {
     'Limpiar las filas restantes puede tardar varios minutos'
   );
 
-  const indexClean = getIndexClean(dataConfigSheet.IS_KINDER);
+  const indexClean = getIndexClean();
   let dataCleaned = [];
 
   for (let currentRow = 2; currentRow <= sheetData.getLastRow(); currentRow++) {
@@ -207,7 +207,7 @@ function cleanRow () {
     'Se está limpiando la fila número ' + currentRow
   );
 
-  const indexClean = getIndexClean(dataConfigSheet.IS_KINDER);
+  const indexClean = getIndexClean();
 
   //~ Limpieza y formateo de columans ~//
   //* Capitalización de Nombres *//
@@ -254,7 +254,7 @@ function addAndCleanNewRows () {
   const sheetResponses = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_RESPONSES);
   const sheetBackup = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
 
-  const indexClean = getIndexClean(dataConfigSheet.IS_KINDER);
+  const indexClean = getIndexClean();
   let dataCleaned = [];
 
   for (let currentRow = sheetBackup.getLastRow() + 1; currentRow <= sheetResponses.getLastRow(); currentRow++) {

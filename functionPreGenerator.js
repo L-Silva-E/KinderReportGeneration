@@ -1,6 +1,6 @@
 function generateAllDocuments () {
   const dataConfigSheet = getDataConfigSheet();
-  if (dataConfigSheet.ID_FOLDER === '' || dataConfigSheet.ID_IMAGE === '' || dataConfigSheet.SHEET_BACKUP === '' || dataConfigSheet.SHEET_CONFIG === '' || dataConfigSheet.SHEET_RESPONSES === '' || dataConfigSheet.IS_KINDER === '') {
+  if (dataConfigSheet.ID_FOLDER_A === '' || dataConfigSheet.ID_FOLDER_B === '' || dataConfigSheet.ID_IMAGE === '' || dataConfigSheet.SHEET_BACKUP === '' || dataConfigSheet.SHEET_CONFIG === '' || dataConfigSheet.SHEET_RESPONSES === '' || dataConfigSheet.IS_KINDER === '') {
     showMessage('❌ Hoja de Configuración', 'Faltan valores en la "Hoja de Configuración"\nSe tienen que rellenar todos los campos\nSe ha detenido la generación de documentos',)
     return;
   }
@@ -16,15 +16,12 @@ function generateAllDocuments () {
     'Generar los documentos puede tardar varios minutos'
   );
 
-  const arrayLevel = getLevels();
-  const arrayType = getTypes();
-
   for (let currentRow = 2; currentRow <= sheetData.getLastRow(); currentRow++) {
     console.log('Getting row: ' + currentRow);
-    const data = getDataRow(sheetData, currentRow, dataConfigSheet.IS_KINDER);
+    const data = getDataSpreadsheet(sheetData, currentRow);
 
-    const currentLevel = (arrayLevel.find((level) => level.key === 'KINDER (nivel de transición II)')).value;
-    const currentType = (arrayType.find((type) => type.key === data.enrollment.type)).value;
+    const currentLevel = getLevel(dataConfigSheet.IS_KINDER);
+    const currentType = getType(data.enrollment.type);
 
     const currentFullName = data.section_1.fatherLastName.toUpperCase() + ' ' + data.section_1.motherLastName.toUpperCase() + ' ' + data.section_1.names.toUpperCase();
 
@@ -52,7 +49,7 @@ function generateAllDocuments () {
 
 function generatePendingDocuments () {
   const dataConfigSheet = getDataConfigSheet();
-  if (dataConfigSheet.ID_FOLDER === '' || dataConfigSheet.ID_IMAGE === '' || dataConfigSheet.SHEET_BACKUP === '' || dataConfigSheet.SHEET_CONFIG === '' || dataConfigSheet.SHEET_RESPONSES === '' || dataConfigSheet.IS_KINDER === '') {
+  if (dataConfigSheet.ID_FOLDER_A === '' || dataConfigSheet.ID_FOLDER_B === '' || dataConfigSheet.ID_IMAGE === '' || dataConfigSheet.SHEET_BACKUP === '' || dataConfigSheet.SHEET_CONFIG === '' || dataConfigSheet.SHEET_RESPONSES === '' || dataConfigSheet.IS_KINDER === '') {
     showMessage('❌ Hoja de Configuración', 'Faltan valores en la "Hoja de Configuración"\nSe tienen que rellenar todos los campos\nSe ha detenido la generación de documentos',)
     return;
   }
@@ -68,9 +65,6 @@ function generatePendingDocuments () {
     'Generar los documentos puede tardar varios minutos'
   );
 
-  const arrayLevel = getLevels();
-  const arrayType = getTypes();
-
   let dataGenerated = [];
 
   for (let currentRow = 2; currentRow <= sheetData.getLastRow(); currentRow++) {
@@ -78,10 +72,10 @@ function generatePendingDocuments () {
 
     dataGenerated.push(currentRow);
     console.log('Getting row: ' + currentRow);
-    const data = getDataRow(sheetData, currentRow, dataConfigSheet.IS_KINDER);
+    const data = getDataSpreadsheet(sheetData, currentRow, dataConfigSheet.IS_KINDER);
 
-    const currentLevel = (arrayLevel.find((level) => level.key === 'KINDER (nivel de transición II)')).value;
-    const currentType = (arrayType.find((type) => type.key === data.enrollment.type)).value;
+    const currentLevel = getLevel(dataConfigSheet.IS_KINDER);
+    const currentType = getType(data.enrollment.type);
 
     const currentFullName = data.section_1.fatherLastName.toUpperCase() + ' ' + data.section_1.motherLastName.toUpperCase() + ' ' + data.section_1.names.toUpperCase();
 
@@ -131,7 +125,7 @@ function generateOneDocument () {
   }
 
   const dataConfigSheet = getDataConfigSheet();
-  if (dataConfigSheet.ID_FOLDER === '' || dataConfigSheet.ID_IMAGE === '' || dataConfigSheet.SHEET_BACKUP === '' || dataConfigSheet.SHEET_CONFIG === '' || dataConfigSheet.SHEET_RESPONSES === '' || dataConfigSheet.IS_KINDER === '') {
+  if (dataConfigSheet.ID_FOLDER_A === '' || dataConfigSheet.ID_FOLDER_B === '' || dataConfigSheet.ID_IMAGE === '' || dataConfigSheet.SHEET_BACKUP === '' || dataConfigSheet.SHEET_CONFIG === '' || dataConfigSheet.SHEET_RESPONSES === '' || dataConfigSheet.IS_KINDER === '') {
     showMessage('❌ Hoja de Configuración', 'Faltan valores en la "Hoja de Configuración"\nSe tienen que rellenar todos los campos\nSe ha detenido la generación de documentos',)
     return;
   }
@@ -152,14 +146,11 @@ function generateOneDocument () {
     'Generar el documento puede tardar varios minutos'
   );
 
-  const arrayLevel = getLevels();
-  const arrayType = getTypes();
-
   console.log('Getting row: ' + currentRow);
-  const data = getDataRow(sheetData, currentRow, dataConfigSheet.IS_KINDER);
+  const data = getDataSpreadsheet(sheetData, currentRow, dataConfigSheet.IS_KINDER);
 
-  const currentLevel = (arrayLevel.find((level) => level.key === 'KINDER (nivel de transición II)')).value;
-  const currentType = (arrayType.find((type) => type.key === data.enrollment.type)).value;
+  const currentLevel = getLevel(dataConfigSheet.IS_KINDER);
+  const currentType = getType(data.enrollment.type);
 
   const currentFullName = data.section_1.fatherLastName.toUpperCase() + ' ' + data.section_1.motherLastName.toUpperCase() + ' ' + data.section_1.names.toUpperCase();
 

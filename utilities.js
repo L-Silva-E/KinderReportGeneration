@@ -45,28 +45,16 @@ function getConfigSheet() {
   };
 }
 
-function getDataRow(sheetData, currentRow, isKinder) {
-  return getDataSpreadsheet(sheetData, currentRow);
+function getLevel(isKinder) {
+  return (isKinder) ? 'Kinder' : 'Pre-Kinder';
 }
 
-function getIndexClean(isKinder) {
-  return (isKinder)
-    ? getIndexCleanKinder()
-    : getIndexCleanPreKinder();
+function getType(type) {
+  return (type === 'Jornada de Mañana') ? 'A' : 'B';
 }
 
-function getLevels() {
-  return [
-    { key: 'PREKINDER (nivel de transición I)', value: 'Pre-Kinder' },
-    { key: 'KINDER (nivel de transición II)',   value: 'Kinder' }
-  ];
-}
-
-function getTypes() {
-  return [
-    { key: 'Jornada de Mañana', value: 'A' },
-    { key: 'Jornada de Tarde',  value: 'B' }
-  ];
+function getIdFolder(dataConfigSheet, type) {
+  return (type === 'A') ? dataConfigSheet.ID_FOLDER_A : dataConfigSheet.ID_FOLDER_B;
 }
 
 function getPoints(inchs) {

@@ -7,7 +7,7 @@ function generateDocument(dataConfigSheet, data, level, type) {
 
 
   //~ Destino y creación de Archivo base ~//
-  const destination = DriveApp.getFolderById(dataConfigSheet.ID_FOLDER);
+  const destination = DriveApp.getFolderById(getIdFolder(dataConfigSheet, type));
 
   const fileName = (new Date()).getFullYear() + ' / ' + level + ' - ' + type + ' / ' + childFullName;
   const doc = DocumentApp.create(fileName);
