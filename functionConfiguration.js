@@ -2,8 +2,9 @@ function createConfigSheet () {
   const configObject = getConfigSheet();
 
   let sheetConfig = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(configObject.SHEET_CONFIG.value);
-  let messageHeader = '⚠️ Hoja de Configuración';
-  let messageBody = 'Ya existe la "Hoja de Configuración"\nNo se aplicarán cambios';
+  const messageHeader = '⚠️ Hoja de Configuración';
+  let messageBody = 'Ya existe la "Hoja de Configuración" con los valores por defecto\nNo se realizaron cambios';
+  let flagChanged = false;
 
   let row = 1;
 
@@ -18,26 +19,30 @@ function createConfigSheet () {
       row++;
     }
 
-    sheetConfig.setColumnWidths(1, 2, 200);
-
-    messageHeader = '⚠️ Hoja de Configuración';
     messageBody = 'Se creó la "Hoja de Configuración"\nFue creada con los valores por defecto';
 
   } else {
     for (const key in configObject) {
       if (sheetConfig.getRange(row, 1).getValue() !== key) {
         sheetConfig.getRange(row, 1).setValue(key);
+        flagChanged = true;
       }
 
       if (configObject[key].value !== '' && sheetConfig.getRange(row, 2).getValue() !== configObject[key].value) {
         sheetConfig.getRange(row, 2).setValue(configObject[key].value);
+        flagChanged = true;
       }
 
       if (configObject[key].description !== '' && sheetConfig.getRange(row, 3).getValue() !== configObject[key].description) {
         sheetConfig.getRange(row, 3).setValue(configObject[key].description);
+        flagChanged = true;
       }
 
       row++;
+    }
+
+    if (flagChanged) {
+      messageBody = 'Se actualizaron los valores de la "Hoja de Configuración" con los valores por defecto';
     }
   }
 

@@ -39,7 +39,7 @@ function getConfigSheet() {
       description: ''
     },
     IS_KINDER: {
-      value: 'true',
+      value: true,
       description: ''
     }
   };
