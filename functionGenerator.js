@@ -55,16 +55,17 @@ function generateDocument(dataConfigSheet, data, level, type) {
 
       if (item.hasTable) {
         let cells = [
-          ['Parentesco', 'Nombre'],
-          ['', ''],
-          ['', ''],
-          ['', ''],
-          ['', ''],
-          ['', ''],
+          ['Nombre', 'Edad', 'Parentesco', 'Actividad'],
+          ['', '', '', ''],
+          ['', '', '', ''],
+          ['', '', '', ''],
+          ['', '', '', ''],
+          ['', '', '', ''],
         ];
 
         let tableObject = fileBody.appendTable(cells);
-        tableObject.setColumnWidth(0, 100);
+        tableObject.setColumnWidth(1, 50);
+        tableObject.setColumnWidth(2, 100);
       }
 
       item.breakLine
