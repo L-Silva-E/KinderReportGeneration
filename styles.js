@@ -13,7 +13,7 @@ function styleValues () {
     },
     PageFormat: {
       PointsInInchs: 72,
-      Height: 12.2,
+      Height: 13,
       Width: 8.5,
       Margin: {
         Top: 0.4,
