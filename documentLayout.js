@@ -534,7 +534,7 @@ function documentLayout(data, titleHeader, currentGrade, childFullName, textComp
           value: { text: data.section_6.emergencyContact[2].kinship, style: 'ParagraphValue' }
         },
         {
-          breakLine: true,
+          breakLine: false,
           key:   { text: '', style: 'ParagraphKey' },
           value: { text: data.section_6.emergencyContact[2].fullName, style: 'ParagraphValue' }
         },
@@ -624,6 +624,60 @@ function documentLayout(data, titleHeader, currentGrade, childFullName, textComp
           breakLine: false,
           key:   { text: '', style: 'ParagraphKey' },
           value: { text: data.section_7.authorizedWithdraw[2].phone, style: 'ParagraphValue' }
+        },
+      ]
+    },
+    {
+      configuration: {
+        type: 'Paragraph'
+      },
+      values: [
+        {
+          breakLine: true,
+          key:   { text: 'Al firmar este formulario estoy en conocimiento de:', style: 'SubTitle' },
+          value: null
+        },
+        {
+          breakLine: true,
+          key:   { text: '1. Escuela de Párvulos Crisolito forma parte del programa de Subvención Escolar Preferencial (SEP).', style: 'ParagraphKey' },
+          value: null
+        },
+        {
+          breakLine: true,
+          key:   { text: '2. Durante el mes de Marzo se compartirá con la comunidad escolar: Reglamento Interno de Convivencia Escolar, Proyecto Institucional, Reglamento de promoción y evaluación y planes normativos.', style: 'ParagraphKey' },
+          value: null
+        },
+        {
+          breakLine: true,
+          key:   { text: '3. El MINEDUC, hace entrega de forma gratuita de Texto de estudio Ministerial.', style: 'ParagraphKey' },
+          value: null
+        },
+        {
+          breakLine: false,
+          key:   { text: '4. Nuestro establecimiento cuenta con Instagram institucional, donde se comparte con la comunidad escolar diversas experiencias pedagógicas y actividades realizadas con los estudiantes y comunidad educativa.', style: 'ParagraphKey' },
+          value: null
+        },
+      ]
+    },
+    {
+      configuration: {
+        type: 'Paragraph'
+      },
+      values: [
+        {
+          breakLine: true,
+          key:   { text: 'Autorizo:', style: 'SubTitle' },
+          value: null
+        },
+        {
+          breakLine: true,
+          key:   { text: '1. A que mi pupilo(a) realice salidas pedagógicas por el entorno, en horario de clases.', style: 'ParagraphKey' },
+          value: null
+        },
+        {
+          breakLine: true,
+          key:   { text: '2. A que las fotos donde mi pupilo(a) aparezca durante las experiencias pedagógicas o actividades con la comunidad educativa, puedan ser compartidas en la Página Web u otras de la institución.', style: 'ParagraphKey' },
+          value: null
         },
       ]
     },
