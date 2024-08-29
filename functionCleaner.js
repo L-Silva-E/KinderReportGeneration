@@ -165,6 +165,7 @@ function cleanPendingRows () {
     });
 
     sheetData.getRange(currentRow, 1).setValue('🧼');
+    dataCleaned.push(currentRow);
   }
 
   let messageBody = 'Se limpiaron los datos de ' + (dataCleaned.length) + ' párvulos en total.\nSe limpiaron los datos de las filas:';
