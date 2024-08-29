@@ -5,9 +5,9 @@ function onOpen() {
     .addItem('⚙️ Configuración Inicial', 'ConfiguracionInicial')
     .addSeparator()
     .addSubMenu(ui.createMenu('📋 Copiado de Datos')
-      .addItem('📜 Todos', 'WorkInProgress')
-      .addItem('📃 Restantes', 'WorkInProgress')
-      .addItem('📄 Específica', 'WorkInProgress')
+      .addItem('📜 Todos', 'CopiarDatos')
+      .addItem('📃 Restantes', 'CopiarRestantes')
+      .addItem('📄 Específica', 'CopiarFilaEspecifica')
     )
     .addSubMenu(ui.createMenu('🧹 Limpieza')
       .addItem('🧼 Completa', 'LimpiarValores')
@@ -26,6 +26,13 @@ function onOpen() {
 //~ Configuration ~//
 function ConfiguracionInicial() { createConfigSheet() }
 
+
+//~ Copy Data ~//
+function CopiarDatos() { copyRows() }
+function CopiarRestantes() { copyPendingRows() }
+function CopiarFilaEspecifica() { copySpecificRow() }
+
+
 //~ Clean Values ~//
 function LimpiarValores() { cleanValues() }
 function LimpiarFilasRestantes() { cleanPendingRows() }
@@ -37,6 +44,7 @@ function AgregarYLimpiarFilasNuevas() { addAndCleanNewRows() }
 function GenerarDocumentos() { generateAllDocuments() }
 function GenerarRestantes() { generatePendingDocuments() }
 function GenerarUnDocumento() { generateOneDocument() }
+
 
 //~ Work In Progress ~//
 function WorkInProgress() {
