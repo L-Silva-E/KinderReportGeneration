@@ -7,10 +7,6 @@ function cleanValues () {
   }
 
 
-  //~ Creación o actualización del Respaldo ~//
-  createOrUpdateBackup(dataConfigSheet);
-
-
   //~ Limpieza de valores ~//
   const sheetBackup = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
   if (sheetBackup === null) {
