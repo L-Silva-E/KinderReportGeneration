@@ -24,17 +24,25 @@ function cleanValues () {
   const indexClean = getIndexClean();
 
   for (let currentRow = 2; currentRow <= sheetBackup.getLastRow(); currentRow++) {
-    const rut = sheetBackup.getRange(currentRow, 6).getValue();
+    const rut = sheetBackup.getRange(currentRow, 11).getValue();
     console.log(currentRow + ' - ' + rut);
 
 
     //~ Limpieza y formateo de columans ~//
+    //* Eliminando espacios al inicio y final *//
+    indexClean.trim.forEach((column) => {
+      let currentValue = sheetBackup.getRange(currentRow, column).getValue();
+      if (!currentValue) return;
+
+      currentValue = currentValue.trim();
+      sheetBackup.getRange(currentRow, column).setValue(currentValue);
+    });
+
     //* Capitalización de Nombres *//
     indexClean.capitalize.forEach((column) => {
       let currentValue = sheetBackup.getRange(currentRow, column).getValue();
       if (!currentValue) return;
 
-      currentValue = currentValue.trim();
       currentValue = currentValue.toLowerCase().replace(/(?:^|\s)\S/g, function(word) {
         return word.toUpperCase();
       });
@@ -48,7 +56,6 @@ function cleanValues () {
       let currentValue = sheetBackup.getRange(currentRow, column).getValue();
       if (!currentValue) return;
 
-      currentValue = currentValue.trim();
       let arrayDate = currentValue.split('/');
       if (arrayDate[0].length === 1) { arrayDate[0] = '0' + arrayDate[0]; }
       if (arrayDate[1].length === 1) { arrayDate[1] = '0' + arrayDate[1]; }
@@ -63,7 +70,6 @@ function cleanValues () {
       let currentValue = sheetBackup.getRange(currentRow, column).getValue();
       if (!currentValue) return;
 
-      currentValue = currentValue.trim();
       if (currentValue.length === 3) { currentValue += '.000'; }
 
       sheetBackup.getRange(currentRow, column).setValue(currentValue);
@@ -100,20 +106,32 @@ function cleanPendingRows () {
   let dataCleaned = [];
 
   for (let currentRow = 2; currentRow <= sheetData.getLastRow(); currentRow++) {
-    if (sheetData.getRange(currentRow, 1).getValue() === '🧼' || sheetData.getRange(currentRow, 1).getValue() === '📄') continue;
+    if (
+      sheetData.getRange(currentRow, 1).getValue() === '🧼' ||
+      sheetData.getRange(currentRow, 1).getValue() === '📄'
+    )
+    continue;
 
-    dataCleaned.push(currentRow);
     const rut = sheetData.getRange(currentRow, 6).getValue();
     console.log(currentRow + ' - ' + rut);
 
 
     //~ Limpieza y formateo de columans ~//
+    //* Eliminando espacios al inicio y final *//
+    indexClean.trim.forEach((column) => {
+      let currentValue = sheetData.getRange(currentRow, column).getValue();
+      if (!currentValue) return;
+
+      currentValue = currentValue.trim();
+      sheetData.getRange(currentRow, column).setValue(currentValue);
+    });
+
+
     //* Capitalización de Nombres *//
     indexClean.capitalize.forEach((column) => {
       let currentValue = sheetData.getRange(currentRow, column).getValue();
       if (!currentValue) return;
 
-      currentValue = currentValue.trim();
       currentValue = currentValue.toLowerCase().replace(/(?:^|\s)\S/g, function(word) {
         return word.toUpperCase();
       });
@@ -127,7 +145,6 @@ function cleanPendingRows () {
       let currentValue = sheetData.getRange(currentRow, column).getValue();
       if (!currentValue) return;
 
-      currentValue = currentValue.trim();
       let arrayDate = currentValue.split('/');
       if (arrayDate[0].length === 1) { arrayDate[0] = '0' + arrayDate[0]; }
       if (arrayDate[1].length === 1) { arrayDate[1] = '0' + arrayDate[1]; }
@@ -142,7 +159,6 @@ function cleanPendingRows () {
       let currentValue = sheetData.getRange(currentRow, column).getValue();
       if (!currentValue) return;
 
-      currentValue = currentValue.trim();
       if (currentValue.length === 3) { currentValue += '.000'; }
 
       sheetData.getRange(currentRow, column).setValue(currentValue);
@@ -206,15 +222,38 @@ function cleanRow () {
   const indexClean = getIndexClean();
 
   //~ Limpieza y formateo de columans ~//
+  //* Eliminando espacios al inicio y final *//
+  indexClean.trim.forEach((column) => {
+    let currentValue = sheetData.getRange(currentRow, column).getValue();
+    if (!currentValue) return;
+
+    currentValue = currentValue.trim();
+    sheetData.getRange(currentRow, column).setValue(currentValue);
+  });
+
+
   //* Capitalización de Nombres *//
   indexClean.capitalize.forEach((column) => {
     let currentValue = sheetData.getRange(currentRow, column).getValue();
     if (!currentValue) return;
 
-    currentValue = currentValue.trim();
     currentValue = currentValue.toLowerCase().replace(/(?:^|\s)\S/g, function(word) {
       return word.toUpperCase();
     });
+
+    sheetData.getRange(currentRow, column).setValue(currentValue);
+  });
+
+
+  //* Fechas *//
+  indexClean.date.forEach((column) => {
+    let currentValue = sheetData.getRange(currentRow, column).getValue();
+    if (!currentValue) return;
+
+    let arrayDate = currentValue.split('/');
+    if (arrayDate[0].length === 1) { arrayDate[0] = '0' + arrayDate[0]; }
+    if (arrayDate[1].length === 1) { arrayDate[1] = '0' + arrayDate[1]; }
+    currentValue = arrayDate[1] + '/' + arrayDate[0] + '/' + arrayDate[2];
 
     sheetData.getRange(currentRow, column).setValue(currentValue);
   });
@@ -225,7 +264,6 @@ function cleanRow () {
     let currentValue = sheetData.getRange(currentRow, column).getValue();
     if (!currentValue) return;
 
-    currentValue = currentValue.trim();
     if (currentValue.length === 3) { currentValue += '.000'; }
 
     sheetData.getRange(currentRow, column).setValue(currentValue);
@@ -264,6 +302,16 @@ function addAndCleanNewRows () {
     console.log(currentRow + ' - ' + rut);
 
     //~ Limpieza y formateo de columans ~//
+    //* Eliminando espacios al inicio y final *//
+    for (let currentColumn = 1; currentColumn <= sheetBackup.getLastColumn(); currentColumn++) {
+      let currentValue = sheetBackup.getRange(currentRow, currentColumn).getValue();
+      if (!currentValue) continue;
+
+      currentValue = currentValue.trim();
+      sheetBackup.getRange(currentRow, currentColumn).setValue(currentValue);
+    }
+
+
     //* Capitalización de Nombres *//
     indexClean.capitalize.forEach((column) => {
       let currentValue = sheetBackup.getRange(currentRow, column).getValue();
