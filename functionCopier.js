@@ -1,19 +1,17 @@
-function createOrUpdateBackup (dataConfigSheet) {
-  const sheetResponses = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_RESPONSES);
-  let sheetBackup = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
-  let messageHeader = '🔃 Actualizando el respaldo';
-  let messageBody = 'Copiando los datos de la "Hoja de Respuestas" a la "Hoja de Respaldo"';
-
-  //~ En caso de no existir, se crea la pestaña de respaldo ~//
-  if (sheetBackup === null) {
-    messageHeader = '⚠️ Creando respaldo';
-    messageBody = 'Creando el respaldo con los datos de la "Hoja de Respuestas"';
-    sheetBackup = SpreadsheetApp.getActiveSpreadsheet().insertSheet();
-    sheetBackup.setName(dataConfigSheet.SHEET_BACKUP);
+function copyRows() {
+  const dataConfigSheet = getDataConfigSheet();
+  if (dataConfigSheet.SHEET_BACKUP === '' || dataConfigSheet.SHEET_CONFIG === '' || dataConfigSheet.SHEET_RESPONSES === '' || dataConfigSheet.IS_KINDER === '') {
+    showMessage('❌ Hoja de Configuración', 'Faltan valores en la Hoja de Configuración\nProceso de limpieza detenido')
+    return;
   }
 
-  showToast(messageHeader, messageBody);
+  //~ Se crea la hoja de respaldo en caso de no existir ~//
+  createBackupSheet(dataConfigSheet);
 
+
+  //~ Se copian los valores de la hoja de respuestas a la hoja de respaldo ~//
+  const sheetResponses = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_RESPONSES);
+  const sheetBackup = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
   let sheetSource = sheetResponses.getRange(1, 1, sheetResponses.getLastRow(), sheetResponses.getLastColumn());
 
   let rowRange = sheetBackup.getLastRow() || sheetResponses.getLastRow();
@@ -27,4 +25,15 @@ function createOrUpdateBackup (dataConfigSheet) {
 
   sheetDestination = sheetBackup.getRange(1, 1, sheetBackup.getMaxRows(), sheetBackup.getMaxColumns());
   sheetDestination.setNumberFormat('@');
+function createBackupSheet(dataConfigSheet) {
+  let sheetBackup = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
+
+  if (sheetBackup === null) {
+    let messageHeader = '⚠️ Creando respaldo';
+    let messageBody = 'Creando el respaldo con los datos de la "Hoja de Respuestas"';
+    sheetBackup = SpreadsheetApp.getActiveSpreadsheet().insertSheet();
+    sheetBackup.setName(dataConfigSheet.SHEET_BACKUP);
+
+    showToast(messageHeader, messageBody);
+  }
 }
