@@ -65,7 +65,7 @@ function documentLayout(data, titleHeader, currentGrade, childFullName, textComp
           value: { text: data.section_1.nationality, style: 'ParagraphValue' }
         },
         {
-          breakLine: true,
+          breakLine: false,
           key:   { text: 'Lugar de nacimiento:', style: 'ParagraphKey' },
           value: { text: data.section_1.birthPlace, style: 'ParagraphValue' }
         },
@@ -117,7 +117,7 @@ function documentLayout(data, titleHeader, currentGrade, childFullName, textComp
           value: { text: data.section_2.schoolOrigin, style: 'ParagraphValue' }
         },
         {
-          breakLine: true,
+          breakLine: false,
           key:   { text: ' ', style: 'ParagraphKey' },
           value: { text: data.section_2.schoolName, style: 'ParagraphValue' }
         },
@@ -189,7 +189,7 @@ function documentLayout(data, titleHeader, currentGrade, childFullName, textComp
           value: { text: data.section_3.childWellControl, style: 'ParagraphValue' }
         },
         {
-          breakLine: false, breakPage: true,
+          breakLine: false,
           key:   { text: '¿Está en alguno de estos tratamientos de salud?', style: 'ParagraphKey' },
           value: { text: data.section_3.childIsTreatment, style: 'ParagraphValue' }
         },
@@ -246,7 +246,7 @@ function documentLayout(data, titleHeader, currentGrade, childFullName, textComp
           value: { text: data.section_4.mother.workPlace, style: 'ParagraphValue' }
         },
         {
-          breakLine: true,
+          breakLine: false,
           key:   { text: 'Renta mensual:', style: 'ParagraphKey' },
           value: { text: data.section_4.mother.rent, style: 'ParagraphValue' }
         },
@@ -333,7 +333,7 @@ function documentLayout(data, titleHeader, currentGrade, childFullName, textComp
           value: { text: data.section_4.father.workPlace, style: 'ParagraphValue' }
         },
         {
-          breakLine: true,
+          breakLine: false,
           key:   { text: 'Renta mensual:', style: 'ParagraphKey' },
           value: { text: data.section_4.father.rent, style: 'ParagraphValue' }
         },
@@ -368,7 +368,7 @@ function documentLayout(data, titleHeader, currentGrade, childFullName, textComp
           value: { text: data.section_4.father.authorizedWithdraw, style: 'ParagraphValue' }
         },
         {
-          breakLine: false,
+          breakLine: false, breakPage: true,
           key:   { text: '¿Visitarlo al jardín?', style: 'ParagraphKey' },
           value: { text: data.section_4.father.authorizedVisit, style: 'ParagraphValue' }
         },
@@ -425,7 +425,7 @@ function documentLayout(data, titleHeader, currentGrade, childFullName, textComp
           value: { text: data.section_4.guardian.workPlace, style: 'ParagraphValue' }
         },
         {
-          breakLine: true,
+          breakLine: false,
           key:   { text: 'Renta mensual:', style: 'ParagraphKey' },
           value: { text: data.section_4.guardian.rent, style: 'ParagraphValue' }
         },

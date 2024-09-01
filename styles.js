@@ -8,7 +8,7 @@ function styleValues () {
     },
     ImageFormat: {
       Height: 116,
-      Width: 96,
+      Width: 240,
       LeftOffset: 480
     },
     PageFormat: {
@@ -27,7 +27,7 @@ function styleValues () {
       Paragraph: 0.125,
       EndDate: 0.125
     },
-    SpaceLine: 1
+    SpaceLine: 1.1
   }
 }
 

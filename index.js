@@ -9,7 +9,7 @@ function onOpen() {
       .addItem('📃 Restantes', 'CopiarRestantes')
       .addItem('📄 Específica', 'CopiarFilaEspecifica')
     )
-    .addSubMenu(ui.createMenu('🧹 Limpieza')
+    .addSubMenu(ui.createMenu('🧹 Limpieza de Datos')
       .addItem('🧼 Completa', 'LimpiarValores')
       .addItem('🫧 Filas Restantes', 'LimpiarFilasRestantes')
       .addItem('🧽 Fila Específica', 'LimpiarFila')
