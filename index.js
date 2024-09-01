@@ -5,20 +5,20 @@ function onOpen() {
     .addItem('⚙️ Configuración Inicial', 'ConfiguracionInicial')
     .addSeparator()
     .addSubMenu(ui.createMenu('📋 Copiado de Datos')
-      .addItem('📜 Todos', 'CopiarDatos')
-      .addItem('📃 Restantes', 'CopiarRestantes')
+      .addItem('📜 Todos', 'CopiarFilas')
+      .addItem('📃 Restantes', 'CopiarFilasRestantes')
       .addItem('📄 Específica', 'CopiarFilaEspecifica')
     )
     .addSubMenu(ui.createMenu('🧹 Limpieza de Datos')
-      .addItem('🧼 Completa', 'LimpiarValores')
+      .addItem('🧼 Completa', 'LimpiarFilas')
       .addItem('🫧 Filas Restantes', 'LimpiarFilasRestantes')
-      .addItem('🧽 Fila Específica', 'LimpiarFila')
+      .addItem('🧽 Fila Específica', 'LimpiarFilaEspecifica')
       .addItem('🆕 Agregar y Limpiar Filas Nuevas', 'AgregarYLimpiarFilasNuevas')
     )
     .addSubMenu(ui.createMenu('📚 Generar Documentos')
       .addItem('📜 Todos', 'GenerarDocumentos')
-      .addItem('📃 Restantes', 'GenerarRestantes')
-      .addItem('📄 Específico', 'GenerarUnDocumento')
+      .addItem('📃 Restantes', 'GenerarDocumentosRestantes')
+      .addItem('📄 Específico', 'GenerarDocumentoEspecifico')
     )
     .addToUi();
 }
@@ -28,22 +28,22 @@ function ConfiguracionInicial() { createConfigSheet() }
 
 
 //~ Copy Data ~//
-function CopiarDatos() { copyRows() }
-function CopiarRestantes() { copyPendingRows() }
+function CopiarFilas() { copyAllRows() }
+function CopiarFilasRestantes() { copyPendingRows() }
 function CopiarFilaEspecifica() { copySpecificRow() }
 
 
 //~ Clean Values ~//
-function LimpiarValores() { cleanValues() }
+function LimpiarFilas() { cleanAllRows() }
 function LimpiarFilasRestantes() { cleanPendingRows() }
-function LimpiarFila() { cleanRow() }
+function LimpiarFilaEspecifica() { cleanSpecificRow() }
 function AgregarYLimpiarFilasNuevas() { addAndCleanNewRows() }
 
 
 //~ Generate Documents ~//
 function GenerarDocumentos() { generateAllDocuments() }
-function GenerarRestantes() { generatePendingDocuments() }
-function GenerarUnDocumento() { generateOneDocument() }
+function GenerarDocumentosRestantes() { generatePendingDocuments() }
+function GenerarDocumentoEspecifico() { generateSpecificDocument() }
 
 
 //~ Work In Progress ~//

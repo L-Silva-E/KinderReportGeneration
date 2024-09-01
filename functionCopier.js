@@ -1,4 +1,4 @@
-function copyRows() {
+function copyAllRows() {
   const dataConfigSheet = getDataConfigSheet();
   if (dataConfigSheet.SHEET_BACKUP === '' || dataConfigSheet.SHEET_CONFIG === '' || dataConfigSheet.SHEET_RESPONSES === '' || dataConfigSheet.IS_KINDER === '') {
     showMessage('❌ Hoja de Configuración', 'Faltan valores en la Hoja de Configuración\nProceso de limpieza detenido')

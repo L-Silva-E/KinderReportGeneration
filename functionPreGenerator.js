@@ -105,7 +105,7 @@ function generatePendingDocuments () {
 }
 
 
-function generateOneDocument () {
+function generateSpecificDocument () {
   const ui = SpreadsheetApp.getUi();
   const result = ui.prompt(
     '📋 Generar 1 Documento',

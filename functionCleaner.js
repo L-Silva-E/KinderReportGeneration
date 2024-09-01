@@ -1,4 +1,4 @@
-function cleanValues () {
+function cleanAllRows () {
   //~ Obtención de Datos importantes ~//
   const dataConfigSheet = getDataConfigSheet();
   if (dataConfigSheet.SHEET_BACKUP === '' || dataConfigSheet.SHEET_CONFIG === '' || dataConfigSheet.SHEET_RESPONSES === '' || dataConfigSheet.IS_KINDER === '') {
@@ -179,7 +179,7 @@ function cleanPendingRows () {
 }
 
 
-function cleanRow () {
+function cleanSpecificRow () {
   const ui = SpreadsheetApp.getUi();
   const result = ui.prompt(
     '📋 Limpieza de 1 fila',
