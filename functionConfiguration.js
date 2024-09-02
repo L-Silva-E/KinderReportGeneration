@@ -1,9 +1,13 @@
 function createConfigSheet () {
+  showToast(
+    '⚙️ Hoja de Configuración',
+    'Trabajando en la hoja.'
+  );
+
   const configObject = getConfigSheet();
 
   let sheetConfig = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(configObject.SHEET_CONFIG.value);
-  const messageHeader = '⚠️ Hoja de Configuración';
-  let messageBody = 'Ya existe la "Hoja de Configuración" con los valores por defecto\nNo se realizaron cambios';
+  let messageBody = 'Ya existe la hoja con los valores por defecto por lo que no se realizaron cambios.';
   let flagChanged = false;
 
   let row = 1;
@@ -19,7 +23,7 @@ function createConfigSheet () {
       row++;
     }
 
-    messageBody = 'Se creó la "Hoja de Configuración"\nFue creada con los valores por defecto';
+    messageBody = 'Se creó la hoja con los valores por defecto.';
 
   } else {
     for (const key in configObject) {
@@ -42,7 +46,7 @@ function createConfigSheet () {
     }
 
     if (flagChanged) {
-      messageBody = 'Se actualizaron los valores de la "Hoja de Configuración" con los valores por defecto';
+      messageBody = 'Se actualizó la hoja con los valores por defecto.';
     }
   }
 
@@ -50,5 +54,5 @@ function createConfigSheet () {
   sheetConfig.setColumnWidth(2, 300);
   sheetConfig.setColumnWidth(3, 750);
 
-  showToast(messageHeader, messageBody);
+  showToast('✅ Hoja de Configuración', messageBody);
 }
