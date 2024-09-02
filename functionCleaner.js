@@ -1,22 +1,20 @@
 function cleanAllRows () {
-  //~ Obtención de Datos importantes ~//
+  //~ Obtención de Datos de la Hoja de Configuración ~//
   const dataConfigSheet = getDataConfigSheet();
-  if (dataConfigSheet.SHEET_BACKUP === '' || dataConfigSheet.SHEET_CONFIG === '' || dataConfigSheet.SHEET_RESPONSES === '' || dataConfigSheet.IS_KINDER === '') {
-    showMessage('❌ Hoja de Configuración', 'Faltan valores en la Hoja de Configuración\nProceso de limpieza detenido',)
-    return;
-  }
+  if (!dataConfigSheet) return;
+  if (!validateConfigSheet(dataConfigSheet)) return;
 
 
-  //~ Limpieza de valores ~//
+  //~ Limpieza de filas ~//
   const sheetBackup = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
   if (sheetBackup === null) {
-    showMessage('❌ Hoja de Respaldo', 'Falta la "Hoja de Respaldo"\nProceso de limpieza detenido');
+    showMessage('❌ Hoja de Respaldo', 'Falta la "Hoja de Respaldo"\nProceso de limpieza detenido.');
     return;
   }
 
   showToast(
-    '🧼 Limpiando Valores',
-    'Limpiar todas las filas puede tardar varios minutos'
+    '🧼 Limpiando Filas',
+    'Limpiar todas las filas puede tardar varios minutos.'
   );
 
   sheetBackup.getRange(1, 1).setValue('Estado');
@@ -57,9 +55,9 @@ function cleanAllRows () {
       if (!currentValue) return;
 
       let arrayDate = currentValue.split('/');
-      if (arrayDate[0].length === 1) { arrayDate[0] = '0' + arrayDate[0]; }
-      if (arrayDate[1].length === 1) { arrayDate[1] = '0' + arrayDate[1]; }
-      currentValue = arrayDate[1] + '/' + arrayDate[0] + '/' + arrayDate[2];
+      if (arrayDate[0].length === 1) arrayDate[0] = '0' + arrayDate[0];
+      if (arrayDate[1].length === 1) arrayDate[1] = '0' + arrayDate[1];
+      currentValue = arrayDate[0] + '/' + arrayDate[1] + '/' + arrayDate[2];
 
       sheetBackup.getRange(currentRow, column).setValue(currentValue);
     });
@@ -70,7 +68,7 @@ function cleanAllRows () {
       let currentValue = sheetBackup.getRange(currentRow, column).getValue();
       if (!currentValue) return;
 
-      if (currentValue.length === 3) { currentValue += '.000'; }
+      if (currentValue.length === 3) currentValue += '.000';
 
       sheetBackup.getRange(currentRow, column).setValue(currentValue);
     });
@@ -79,32 +77,32 @@ function cleanAllRows () {
     countCleaned++;
   }
 
-  console.log('✅ Done');
-  showMessage('🧼 Limpieza finalizada', 'Se limpiaron los datos de ' + countCleaned + ' párvulos en total.');
+  showMessage(
+    '✅ Limpieza finalizada',
+    `Se limpiaron los datos de ${countCleaned} párvulos en total.`
+  );
 }
 
 
 function cleanPendingRows () {
+  //~ Obtención de Datos de la Hoja de Configuración ~//
   const dataConfigSheet = getDataConfigSheet();
-  if (dataConfigSheet.ID_FOLDER === '' || dataConfigSheet.ID_IMAGE === '' || dataConfigSheet.SHEET_BACKUP === '' || dataConfigSheet.SHEET_CONFIG === '' || dataConfigSheet.SHEET_RESPONSES === '' || dataConfigSheet.IS_KINDER === '') {
-    showMessage('❌ Hoja de Configuración', 'Faltan valores en la "Hoja de Configuración"\nSe tienen que rellenar todos los campos\nSe ha detenido la generación de documentos',)
-    return;
-  }
+  if (!dataConfigSheet) return;
+  if (!validateConfigSheet(dataConfigSheet)) return;
 
   const sheetData = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
   if (sheetData === null) {
-    showMessage('❌ Hoja de Respaldo', 'Falta la "Hoja de Respaldo"\nSe ha detenido la generación de documentos');
+    showMessage('❌ Hoja de Respaldo', 'Falta la "Hoja de Respaldo"\nSe ha detenido la generación de documentos.');
     return;
   }
 
   showToast(
     '🧼 Limpiando Valores',
-    'Limpiar las filas restantes puede tardar varios minutos'
+    'Limpiar las filas restantes puede tardar varios minutos.'
   );
 
   const indexClean = getIndexClean();
   let dataCleaned = [];
-
   for (let currentRow = 2; currentRow <= sheetData.getLastRow(); currentRow++) {
     if (
       sheetData.getRange(currentRow, 1).getValue() === '🧼' ||
@@ -146,8 +144,8 @@ function cleanPendingRows () {
       if (!currentValue) return;
 
       let arrayDate = currentValue.split('/');
-      if (arrayDate[0].length === 1) { arrayDate[0] = '0' + arrayDate[0]; }
-      if (arrayDate[1].length === 1) { arrayDate[1] = '0' + arrayDate[1]; }
+      if (arrayDate[0].length === 1) arrayDate[0] = '0' + arrayDate[0];
+      if (arrayDate[1].length === 1) arrayDate[1] = '0' + arrayDate[1];
       currentValue = arrayDate[1] + '/' + arrayDate[0] + '/' + arrayDate[2];
 
       sheetData.getRange(currentRow, column).setValue(currentValue);
@@ -159,7 +157,7 @@ function cleanPendingRows () {
       let currentValue = sheetData.getRange(currentRow, column).getValue();
       if (!currentValue) return;
 
-      if (currentValue.length === 3) { currentValue += '.000'; }
+      if (currentValue.length === 3) currentValue += '.000';
 
       sheetData.getRange(currentRow, column).setValue(currentValue);
     });
@@ -168,56 +166,67 @@ function cleanPendingRows () {
     dataCleaned.push(currentRow);
   }
 
-  let messageBody = 'Se limpiaron los datos de ' + (dataCleaned.length) + ' párvulos en total.\nSe limpiaron los datos de las filas:';
-  if (dataCleaned.length === 0) messageBody = 'No se encontraron datos para limpiar.';
+
+  let messageBody = dataCleaned.length === 0
+    ? 'No se encontraron datos para limpiar.'
+    : `Se limpiaron los datos de ${dataCleaned.length} párvulos en total.
+      Se limpiaron los datos de las filas:`;
   dataCleaned.forEach((row) => {
     messageBody += '\n • ' + row;
   });
 
-  console.log('✅ Done');
-  showMessage('🧼 Limpieza finalizada', messageBody);
+  showMessage('✅ Limpieza finalizada', messageBody);
 }
 
 
 function cleanSpecificRow () {
+  //~ Obtención de Datos de la Hoja de Configuración ~//
+  const dataConfigSheet = getDataConfigSheet();
+  if (!dataConfigSheet) return;
+  if (!validateConfigSheet(dataConfigSheet)) return;
+
+  const sheetData = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
+  if (sheetData === null) {
+    showMessage('❌ Hoja de Respaldo', 'Falta la "Hoja de Respaldo"\nSe ha detenido la limpieza de la fila.');
+    return;
+  }
+
+  //~ Prompt para obtener el número de fila ~//
   const ui = SpreadsheetApp.getUi();
   const result = ui.prompt(
-    '📋 Limpieza de 1 fila',
-    'Ingrese el número de fila del párvulo que desea limpiar',
+    '🧼 Limpieza de 1 fila',
+    'Ingrese el número de fila del párvulo que desea limpiar.',
     ui.ButtonSet.OK_CANCEL
   );
 
   if (result.getSelectedButton() !== ui.Button.OK) {
-    showMessage('❌ Limpieza de Fila', 'Se ha cancelado la limpieza de la fila');
+    showMessage(
+      '❌ Limpieza de Fila',
+      'Se ha cancelado la limpieza de la fila.'
+    );
     return;
   }
 
   const currentRow = parseInt(result.getResponseText());
   if (isNaN(currentRow)) {
-    showMessage('❌ Número de Fila', 'El valor ingresado no es un número\nSe ha detenido la limpieza de la fila');
-    return;
-  }
-
-  const dataConfigSheet = getDataConfigSheet();
-  if (dataConfigSheet.ID_FOLDER === '' || dataConfigSheet.ID_IMAGE === '' || dataConfigSheet.SHEET_BACKUP === '' || dataConfigSheet.SHEET_CONFIG === '' || dataConfigSheet.SHEET_RESPONSES === '') {
-    showMessage('❌ Hoja de Configuración', 'Faltan valores en la "Hoja de Configuración"\nSe tienen que rellenar todos los campos\nSe ha detenido la limpieza de la fila',)
-    return;
-  }
-
-  const sheetData = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
-  if (sheetData === null) {
-    showMessage('❌ Hoja de Respaldo', 'Falta la "Hoja de Respaldo"\nSe ha detenido la limpieza de la fila');
+    showMessage(
+      '❌ Número de Fila',
+      'El valor ingresado no es un número\nSe ha detenido la limpieza de la fila.'
+    );
     return;
   }
 
   if (currentRow < 2 || currentRow > sheetData.getLastRow()) {
-    showMessage('❌ Número de Fila', 'El valor ingresado no es válido\nDebe estar entre 2 y ' + sheetData.getLastRow() + '\nSe ha detenido la limpieza de la fila');
+    showMessage(
+      '❌ Número de Fila',
+      `El valor ingresado no es válido\nDebe estar entre 2 y ${sheetData.getLastRow()}\nSe ha detenido la limpieza de la fila.`
+    );
     return;
   }
 
   showToast(
-    '⚠️ Comenzando Ejecución',
-    'Se está limpiando la fila número ' + currentRow
+    '🧼 Comenzando Ejecución',
+    `Se está limpiando la fila número ${currentRow}.`
   );
 
   const indexClean = getIndexClean();
@@ -272,11 +281,14 @@ function cleanSpecificRow () {
 
   sheetData.getRange(currentRow, 1).setValue('🧼');
 
-  console.log('✅ Done');
-  showMessage('🧼 Limpieza finalizada', 'Se limpió la fila número ' + currentRow);
+  showMessage(
+    '✅ Limpieza finalizada',
+    `Se limpió la fila número ${currentRow}.`
+  );
 }
 
 
+// TODO: Remove this function
 function addAndCleanNewRows () {
   //~ Obtención de Datos importantes ~//
   const dataConfigSheet = getDataConfigSheet();
@@ -351,15 +363,4 @@ function addAndCleanNewRows () {
 
   console.log('✅ Done');
   showMessage('🧼 Limpieza finalizada', messageBody);
-}
-
-function getDataConfigSheet () {
-  let sheetConfig = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(getConfigSheet().SHEET_CONFIG.value);
-  let dataConfigSheet = {};
-
-  for (let currentRow = 1; currentRow <= sheetConfig.getLastRow(); currentRow++) {
-    dataConfigSheet[sheetConfig.getRange(currentRow, 1).getValue()] = sheetConfig.getRange(currentRow, 2).getValue();
-  }
-
-  return dataConfigSheet;
 }

@@ -1,3 +1,49 @@
+function getDataConfigSheet () {
+  let sheetConfig = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(getConfigSheet().SHEET_CONFIG.value);
+  let dataConfigSheet = {};
+
+  if (sheetConfig === null) {
+    showMessage(
+      '❌ Hoja de Configuración',
+      `No se encontró la "Hoja de Configuración"
+      Se ha detenido la ejecución
+
+      Para crear la hoja seleccione la opción "⚙️ Configuración Inicial"
+      en el menú de "⚙️ Administración".`
+    );
+    return false;
+  }
+
+  for (let currentRow = 1; currentRow <= sheetConfig.getLastRow(); currentRow++) {
+    dataConfigSheet[sheetConfig.getRange(currentRow, 1).getValue()] = sheetConfig.getRange(currentRow, 2).getValue();
+  }
+
+  return dataConfigSheet;
+}
+
+
+function validateConfigSheet(dataConfigSheet) {
+  if (
+    dataConfigSheet.ID_FOLDER_A === '' ||
+    dataConfigSheet.ID_FOLDER_B === '' ||
+    dataConfigSheet.ID_IMAGE === '' ||
+    dataConfigSheet.SHEET_BACKUP === '' ||
+    dataConfigSheet.SHEET_CONFIG === '' ||
+    dataConfigSheet.SHEET_RESPONSES === '' ||
+    dataConfigSheet.IS_KINDER === ''
+  ) {
+    showMessage(
+      '❌ Hoja de Configuración',
+      `Faltan valores en la "Hoja de Configuración"
+      Se tienen que rellenar todos los campos
+      Se ha detenido la ejecución`
+    )
+    return false;
+  }
+
+  return true;
+}
+
 function cleanText(type, text) {
   let cleanedText = text.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
   return type === constants().CASE_TEXT.LOWER ? cleanedText.toLowerCase() : cleanedText.toUpperCase();

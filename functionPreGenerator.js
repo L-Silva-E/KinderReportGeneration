@@ -1,9 +1,8 @@
 function generateAllDocuments () {
+  //~ Obtención de Datos de la Hoja de Configuración ~//
   const dataConfigSheet = getDataConfigSheet();
-  if (dataConfigSheet.ID_FOLDER_A === '' || dataConfigSheet.ID_FOLDER_B === '' || dataConfigSheet.ID_IMAGE === '' || dataConfigSheet.SHEET_BACKUP === '' || dataConfigSheet.SHEET_CONFIG === '' || dataConfigSheet.SHEET_RESPONSES === '' || dataConfigSheet.IS_KINDER === '') {
-    showMessage('❌ Hoja de Configuración', 'Faltan valores en la "Hoja de Configuración"\nSe tienen que rellenar todos los campos\nSe ha detenido la generación de documentos',)
-    return;
-  }
+  if (!dataConfigSheet) return;
+  if (!validateConfigSheet(dataConfigSheet)) return;
 
   const sheetData = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
   if (sheetData === null) {
@@ -12,7 +11,7 @@ function generateAllDocuments () {
   }
 
   showToast(
-    '⚠️ Comenzando Ejecución',
+    '📚 Comenzando Ejecución',
     'Generar los documentos puede tardar varios minutos'
   );
 
@@ -39,7 +38,6 @@ function generateAllDocuments () {
     sheetData.getRange(currentRow, 1).setValue('📄');
   }
 
-  console.log('✅ Done');
   showMessage(
     '✅ Ejecución Finalizada',
     'Los documentos se generaron con datos de ' + (sheetData.getLastRow() - 1) + ' párvulos en total.'
@@ -48,11 +46,10 @@ function generateAllDocuments () {
 
 
 function generatePendingDocuments () {
+  //~ Obtención de Datos de la Hoja de Configuración ~//
   const dataConfigSheet = getDataConfigSheet();
-  if (dataConfigSheet.ID_FOLDER_A === '' || dataConfigSheet.ID_FOLDER_B === '' || dataConfigSheet.ID_IMAGE === '' || dataConfigSheet.SHEET_BACKUP === '' || dataConfigSheet.SHEET_CONFIG === '' || dataConfigSheet.SHEET_RESPONSES === '' || dataConfigSheet.IS_KINDER === '') {
-    showMessage('❌ Hoja de Configuración', 'Faltan valores en la "Hoja de Configuración"\nSe tienen que rellenar todos los campos\nSe ha detenido la generación de documentos',)
-    return;
-  }
+  if (!dataConfigSheet) return;
+  if (!validateConfigSheet(dataConfigSheet)) return;
 
   const sheetData = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
   if (sheetData === null) {
@@ -61,7 +58,7 @@ function generatePendingDocuments () {
   }
 
   showToast(
-    '⚠️ Comenzando Ejecución',
+    '📚 Comenzando Ejecución',
     'Generar los documentos puede tardar varios minutos'
   );
 
@@ -100,12 +97,23 @@ function generatePendingDocuments () {
   });
 
 
-  console.log('✅ Done');
   showMessage('✅ Ejecución Finalizada', messageBody);
 }
 
 
 function generateSpecificDocument () {
+  //~ Obtención de Datos de la Hoja de Configuración ~//
+  const dataConfigSheet = getDataConfigSheet();
+  if (!dataConfigSheet) return;
+  if (!validateConfigSheet(dataConfigSheet)) return;
+
+  const sheetData = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
+  if (sheetData === null) {
+    showMessage('❌ Hoja de Respaldo', 'Falta la "Hoja de Respaldo"\nSe ha detenido la generación de documentos');
+    return;
+  }
+
+  //~ Prompt para obtener el número de fila ~//
   const ui = SpreadsheetApp.getUi();
   const result = ui.prompt(
     '📋 Generar 1 Documento',
@@ -124,25 +132,13 @@ function generateSpecificDocument () {
     return;
   }
 
-  const dataConfigSheet = getDataConfigSheet();
-  if (dataConfigSheet.ID_FOLDER_A === '' || dataConfigSheet.ID_FOLDER_B === '' || dataConfigSheet.ID_IMAGE === '' || dataConfigSheet.SHEET_BACKUP === '' || dataConfigSheet.SHEET_CONFIG === '' || dataConfigSheet.SHEET_RESPONSES === '' || dataConfigSheet.IS_KINDER === '') {
-    showMessage('❌ Hoja de Configuración', 'Faltan valores en la "Hoja de Configuración"\nSe tienen que rellenar todos los campos\nSe ha detenido la generación de documentos',)
-    return;
-  }
-
-  const sheetData = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
-  if (sheetData === null) {
-    showMessage('❌ Hoja de Respaldo', 'Falta la "Hoja de Respaldo"\nSe ha detenido la generación de documentos');
-    return;
-  }
-
   if (currentRow < 2 || currentRow > sheetData.getLastRow()) {
     showMessage('❌ Número de Fila', 'El valor ingresado no es válido\nDebe estar entre 2 y ' + sheetData.getLastRow() + '\nSe ha detenido la generación de documentos');
     return;
   }
 
   showToast(
-    '⚠️ Comenzando Ejecución',
+    '📚 Comenzando Ejecución',
     'Generar el documento puede tardar varios minutos'
   );
 
@@ -167,7 +163,6 @@ function generateSpecificDocument () {
 
   sheetData.getRange(currentRow, 1).setValue('📄');
 
-  console.log('✅ Done');
   showMessage(
     '✅ Ejecución Finalizada',
     'Se generó el documento con datos de:\n- Nombre: ' + currentFullName + '\n- Rut: ' + data.section_1.rut + '\n- Nivel: ' + currentLevel + '\n- Jornada: ' + currentType + '\n\nSe ha marcado la fila ' + currentRow + ' como generada.'
