@@ -15,7 +15,7 @@ function createConfigSheet () {
     for (const key in configObject) {
       sheetConfig.getRange(row, 1).setValue(key);
       sheetConfig.getRange(row, 2).setValue(configObject[key].value);
-      sheetConfig.getRange(row, 2).setValue(configObject[key].description);
+      sheetConfig.getRange(row, 3).setValue(configObject[key].description);
       row++;
     }
 
