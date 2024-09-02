@@ -13,7 +13,6 @@ function onOpen() {
       .addItem('🧼 Completa', 'LimpiarFilas')
       .addItem('🫧 Filas Restantes', 'LimpiarFilasRestantes')
       .addItem('🧽 Fila Específica', 'LimpiarFilaEspecifica')
-      .addItem('🆕 Agregar y Limpiar Filas Nuevas', 'AgregarYLimpiarFilasNuevas')
     )
     .addSubMenu(ui.createMenu('📚 Generar Documentos')
       .addItem('📜 Todos', 'GenerarDocumentos')
