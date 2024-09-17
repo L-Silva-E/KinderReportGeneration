@@ -713,7 +713,7 @@ function documentLayout(data, titleHeader, currentGrade, childFullName, textComp
         {
           breakLine: false,
           key:   { text: 'Fecha: ', style: 'EndDate' },
-          value: { text: data.enrollment.date, style: 'EndDate' }
+          value: { text: formatDate(data.enrollment.date), style: 'EndDate' }
         },
       ]
     }

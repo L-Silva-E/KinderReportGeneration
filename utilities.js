@@ -50,7 +50,7 @@ function cleanText(type, text) {
 }
 
 function formatDate(date) {
-  date = date ? date : new Date();
+  date = date ? new Date(date) : new Date();
   return Utilities.formatDate(date, Session.getScriptTimeZone(), 'dd/MM/YYYY')
 }
 
