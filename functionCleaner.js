@@ -106,7 +106,7 @@ function cleanPendingRows () {
   for (let currentRow = 2; currentRow <= sheetData.getLastRow(); currentRow++) {
     if (
       sheetData.getRange(currentRow, 1).getValue() === '🧼' ||
-      sheetData.getRange(currentRow, 1).getValue() === '📄'
+      sheetData.getRange(currentRow, 1).getValue() === '📋'
     )
     continue;
 

@@ -5,7 +5,7 @@ function copyAllRows() {
   if (!validateConfigSheet(dataConfigSheet)) return;
 
   showToast(
-    '📋 Copiado de Datos',
+    '✏️ Copiado de Datos',
     'Se está copiando las filas de la "Hoja de Respuestas" a la "Hoja de Respaldo".'
   );
 
@@ -32,7 +32,7 @@ function copyAllRows() {
   const updatedSheetBackup = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
   updatedSheetBackup.getRange(1, 1).setValue('Estado');
   updatedSheetBackup.getRange(2, 1, updatedSheetBackup.getLastRow() - 1, 1)
-    .setValue('📋')
+    .setValue('✏️')
     .setHorizontalAlignment('center');
   updatedSheetBackup.setRowHeightsForced(2, updatedSheetBackup.getLastRow(), 21);
 
@@ -61,7 +61,7 @@ function copyPendingRows() {
   }
 
   showToast(
-    '📋 Copiado de Datos',
+    '✏️ Copiado de Datos',
     'Se está copiando las filas restantes de la "Hoja de Respuestas" a la "Hoja de Respaldo".'
   );
 
@@ -79,7 +79,7 @@ function copyPendingRows() {
   const updatedSheetBackup = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
   for (let currentRow = dataCopied[0]; currentRow <= updatedSheetBackup.getLastRow(); currentRow++) {
     updatedSheetBackup.getRange(2, 1, updatedSheetBackup.getLastRow() - 1, 1)
-      .setValue('📋')
+      .setValue('✏️')
       .setHorizontalAlignment('center');
     updatedSheetBackup.setRowHeightsForced(currentRow, updatedSheetBackup.getLastRow(), 21);
   }
@@ -110,7 +110,7 @@ function copySpecificRow() {
   //~ Prompt para obtener el número de fila a copiar ~//
   const ui = SpreadsheetApp.getUi();
   const result = ui.prompt(
-    '📋 Copiar Fila Específica',
+    '✏️ Copiar Fila Específica',
     'Ingrese el número de fila del párvulo que desea copiar.',
     ui.ButtonSet.OK_CANCEL
   );
@@ -132,7 +132,7 @@ function copySpecificRow() {
   }
 
   showToast(
-    '📋 Copiado de Datos',
+    '✏️ Copiado de Datos',
     `Se está copiando la fila ${currentRow} de la "Hoja de Respuestas" a la "Hoja de Respaldo".`
   );
 
@@ -149,7 +149,7 @@ function copySpecificRow() {
   rowDestination.setNumberFormat('@');
 
   sheetBackup.getRange(currentRow, 1)
-    .setValue('📋')
+    .setValue('✏️')
     .setHorizontalAlignment('center');
   sheetBackup.setRowHeightsForced(currentRow, sheetBackup.getLastRow(), 21);
 
