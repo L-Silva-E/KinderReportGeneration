@@ -36,7 +36,6 @@ function CopiarFilaEspecifica() { copySpecificRow() }
 function LimpiarFilas() { cleanAllRows() }
 function LimpiarFilasRestantes() { cleanPendingRows() }
 function LimpiarFilaEspecifica() { cleanSpecificRow() }
-function AgregarYLimpiarFilasNuevas() { addAndCleanNewRows() }
 
 
 //~ Generate Documents ~//
