@@ -45,7 +45,8 @@ function messageStateEmoji () {
     DONE: '✅',
     ERROR: '❌',
     WARNING: '⚠️',
-    WORKING: '🏗️'
+    WORKING: '🏗️',
+    CONFIGURATION: '⚙️',
   }
 }
 
