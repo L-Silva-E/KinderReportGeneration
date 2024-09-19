@@ -19,59 +19,13 @@ function cleanAllRows () {
 
   sheetBackup.getRange(1, 1).setValue('Estado');
   let countCleaned = 0;
-  const indexClean = getIndexClean();
 
   for (let currentRow = 2; currentRow <= sheetBackup.getLastRow(); currentRow++) {
     const rut = sheetBackup.getRange(currentRow, 11).getValue();
     console.log(currentRow + ' - ' + rut);
 
-
     //~ Limpieza y formateo de columans ~//
-    //* Eliminando espacios al inicio y final *//
-    indexClean.trim.forEach((column) => {
-      let currentValue = sheetBackup.getRange(currentRow, column).getValue();
-      if (!currentValue) return;
-
-      currentValue = currentValue.trim();
-      sheetBackup.getRange(currentRow, column).setValue(currentValue);
-    });
-
-    //* Capitalización de Nombres *//
-    indexClean.capitalize.forEach((column) => {
-      let currentValue = sheetBackup.getRange(currentRow, column).getValue();
-      if (!currentValue) return;
-
-      currentValue = currentValue.toLowerCase().replace(/(?:^|\s)\S/g, function(word) {
-        return word.toUpperCase();
-      });
-
-      sheetBackup.getRange(currentRow, column).setValue(currentValue);
-    });
-
-
-    //* Fechas *//
-    indexClean.date.forEach((column) => {
-      let currentValue = sheetBackup.getRange(currentRow, column).getValue();
-      if (!currentValue) return;
-
-      let arrayDate = currentValue.split('/');
-      if (arrayDate[0].length === 1) arrayDate[0] = '0' + arrayDate[0];
-      if (arrayDate[1].length === 1) arrayDate[1] = '0' + arrayDate[1];
-      currentValue = arrayDate[0] + '/' + arrayDate[1] + '/' + arrayDate[2];
-
-      sheetBackup.getRange(currentRow, column).setValue(currentValue);
-    });
-
-
-    //* Renta *//
-    indexClean.rent.forEach((column) => {
-      let currentValue = sheetBackup.getRange(currentRow, column).getValue();
-      if (!currentValue) return;
-
-      if (currentValue.length === 3) currentValue += '.000';
-
-      sheetBackup.getRange(currentRow, column).setValue(currentValue);
-    });
+    cleanDataRow(sheetBackup, currentRow);
 
     sheetBackup.getRange(currentRow, 1).setValue('🧼');
     countCleaned++;
@@ -101,7 +55,6 @@ function cleanPendingRows () {
     'Limpiar las filas restantes puede tardar varios minutos.'
   );
 
-  const indexClean = getIndexClean();
   let dataCleaned = [];
   for (let currentRow = 2; currentRow <= sheetData.getLastRow(); currentRow++) {
     if (
@@ -113,54 +66,8 @@ function cleanPendingRows () {
     const rut = sheetData.getRange(currentRow, 6).getValue();
     console.log(currentRow + ' - ' + rut);
 
-
     //~ Limpieza y formateo de columans ~//
-    //* Eliminando espacios al inicio y final *//
-    indexClean.trim.forEach((column) => {
-      let currentValue = sheetData.getRange(currentRow, column).getValue();
-      if (!currentValue) return;
-
-      currentValue = currentValue.trim();
-      sheetData.getRange(currentRow, column).setValue(currentValue);
-    });
-
-
-    //* Capitalización de Nombres *//
-    indexClean.capitalize.forEach((column) => {
-      let currentValue = sheetData.getRange(currentRow, column).getValue();
-      if (!currentValue) return;
-
-      currentValue = currentValue.toLowerCase().replace(/(?:^|\s)\S/g, function(word) {
-        return word.toUpperCase();
-      });
-
-      sheetData.getRange(currentRow, column).setValue(currentValue);
-    });
-
-
-    //* Fechas *//
-    indexClean.date.forEach((column) => {
-      let currentValue = sheetData.getRange(currentRow, column).getValue();
-      if (!currentValue) return;
-
-      let arrayDate = currentValue.split('/');
-      if (arrayDate[0].length === 1) arrayDate[0] = '0' + arrayDate[0];
-      if (arrayDate[1].length === 1) arrayDate[1] = '0' + arrayDate[1];
-      currentValue = arrayDate[1] + '/' + arrayDate[0] + '/' + arrayDate[2];
-
-      sheetData.getRange(currentRow, column).setValue(currentValue);
-    });
-
-
-    //* Renta *//
-    indexClean.rent.forEach((column) => {
-      let currentValue = sheetData.getRange(currentRow, column).getValue();
-      if (!currentValue) return;
-
-      if (currentValue.length === 3) currentValue += '.000';
-
-      sheetData.getRange(currentRow, column).setValue(currentValue);
-    });
+    cleanDataRow(sheetData, currentRow);
 
     sheetData.getRange(currentRow, 1).setValue('🧼');
     dataCleaned.push(currentRow);
@@ -229,55 +136,8 @@ function cleanSpecificRow () {
     `Se está limpiando la fila número ${currentRow}.`
   );
 
-  const indexClean = getIndexClean();
-
   //~ Limpieza y formateo de columans ~//
-  //* Eliminando espacios al inicio y final *//
-  indexClean.trim.forEach((column) => {
-    let currentValue = sheetData.getRange(currentRow, column).getValue();
-    if (!currentValue) return;
-
-    currentValue = currentValue.trim();
-    sheetData.getRange(currentRow, column).setValue(currentValue);
-  });
-
-
-  //* Capitalización de Nombres *//
-  indexClean.capitalize.forEach((column) => {
-    let currentValue = sheetData.getRange(currentRow, column).getValue();
-    if (!currentValue) return;
-
-    currentValue = currentValue.toLowerCase().replace(/(?:^|\s)\S/g, function(word) {
-      return word.toUpperCase();
-    });
-
-    sheetData.getRange(currentRow, column).setValue(currentValue);
-  });
-
-
-  //* Fechas *//
-  indexClean.date.forEach((column) => {
-    let currentValue = sheetData.getRange(currentRow, column).getValue();
-    if (!currentValue) return;
-
-    let arrayDate = currentValue.split('/');
-    if (arrayDate[0].length === 1) { arrayDate[0] = '0' + arrayDate[0]; }
-    if (arrayDate[1].length === 1) { arrayDate[1] = '0' + arrayDate[1]; }
-    currentValue = arrayDate[1] + '/' + arrayDate[0] + '/' + arrayDate[2];
-
-    sheetData.getRange(currentRow, column).setValue(currentValue);
-  });
-
-
-  //* Renta *//
-  indexClean.rent.forEach((column) => {
-    let currentValue = sheetData.getRange(currentRow, column).getValue();
-    if (!currentValue) return;
-
-    if (currentValue.length === 3) { currentValue += '.000'; }
-
-    sheetData.getRange(currentRow, column).setValue(currentValue);
-  });
+  cleanDataRow(sheetData, currentRow);
 
   sheetData.getRange(currentRow, 1).setValue('🧼');
 
