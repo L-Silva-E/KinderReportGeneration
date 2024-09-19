@@ -31,12 +31,21 @@ function styleValues () {
   }
 }
 
-function cellStateValue () {
+function cellStateEmoji () {
   return {
     HEADER: 'Estado',
     COPIED: '✏️',
     CLEANED: '🧼',
     GENERATED: '📋',
+  }
+}
+
+function messageStateEmoji () {
+  return {
+    DONE: '✅',
+    ERROR: '❌',
+    WARNING: '⚠️',
+    WORKING: '🏗️'
   }
 }
 
