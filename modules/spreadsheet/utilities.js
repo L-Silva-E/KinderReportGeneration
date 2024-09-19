@@ -4,7 +4,7 @@ function getDataConfigSheet () {
 
   if (sheetConfig === null) {
     showMessage(
-      '❌ Hoja de Configuración',
+      `${messageStateEmoji.ERROR} Hoja de Configuración`,
       `No se encontró la "Hoja de Configuración"
       Se ha detenido la ejecución
 
@@ -33,7 +33,7 @@ function validateConfigSheet(dataConfigSheet) {
     dataConfigSheet.IS_KINDER === ''
   ) {
     showMessage(
-      '❌ Hoja de Configuración',
+      `${messageStateEmoji.ERROR} Hoja de Configuración`,
       `Faltan valores en la "Hoja de Configuración"
       Se tienen que rellenar todos los campos
       Se ha detenido la ejecución`

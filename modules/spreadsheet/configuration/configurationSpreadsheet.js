@@ -54,5 +54,5 @@ function createConfigSheet () {
   sheetConfig.setColumnWidth(2, 300);
   sheetConfig.setColumnWidth(3, 750);
 
-  showToast('✅ Hoja de Configuración', messageBody);
+  showToast(`${messageStateEmoji.DONE} Hoja de Configuración`, messageBody);
 }

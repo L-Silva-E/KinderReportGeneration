@@ -5,7 +5,7 @@ function copyAllRows() {
   if (!validateConfigSheet(dataConfigSheet)) return;
 
   showToast(
-    '✏️ Copiado de Datos',
+    `${cellStateEmoji.COPIED} Copiado de Datos`,
     'Se está copiando las filas de la "Hoja de Respuestas" a la "Hoja de Respaldo".'
   );
 
@@ -30,14 +30,14 @@ function copyAllRows() {
   sheetDestination.setNumberFormat('@');
 
   const updatedSheetBackup = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
-  updatedSheetBackup.getRange(1, 1).setValue('Estado');
+  updatedSheetBackup.getRange(1, 1).setValue(cellStateEmoji.HEADER);
   updatedSheetBackup.getRange(2, 1, updatedSheetBackup.getLastRow() - 1, 1)
-    .setValue('✏️')
+    .setValue(cellStateEmoji.COPIED)
     .setHorizontalAlignment('center');
   updatedSheetBackup.setRowHeightsForced(2, updatedSheetBackup.getLastRow(), 21);
 
   showToast(
-    '✅ Copiado Finalizado',
+    `${messageStateEmoji.DONE} Copiado Finalizado`,
     'Se copiaron los datos de la "Hoja de Respuestas" a la "Hoja de Respaldo".'
   );
 }
@@ -52,16 +52,16 @@ function copyPendingRows() {
   const sheetResponses = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_RESPONSES);
   const sheetBackup = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
   if (sheetResponses === null) {
-    showMessage('❌ Hoja de Respuestas', 'Falta la "Hoja de Respuestas"\nSe ha detenido el copiado de datos.');
+    showMessage(`${messageStateEmoji.ERROR} Hoja de Respuestas`, 'Falta la "Hoja de Respuestas"\nSe ha detenido el copiado de datos.');
     return;
   }
   if (sheetBackup === null) {
-    showMessage('❌ Hoja de Respaldo', 'Falta la "Hoja de Respaldo"\nSe ha detenido el copiado de datos.');
+    showMessage(`${messageStateEmoji.ERROR} Hoja de Respaldo`, 'Falta la "Hoja de Respaldo"\nSe ha detenido el copiado de datos.');
     return;
   }
 
   showToast(
-    '✏️ Copiado de Datos',
+    `${cellStateEmoji.COPIED} Copiado de Datos`,
     'Se está copiando las filas restantes de la "Hoja de Respuestas" a la "Hoja de Respaldo".'
   );
 
@@ -79,7 +79,7 @@ function copyPendingRows() {
   const updatedSheetBackup = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
   for (let currentRow = dataCopied[0]; currentRow <= updatedSheetBackup.getLastRow(); currentRow++) {
     updatedSheetBackup.getRange(2, 1, updatedSheetBackup.getLastRow() - 1, 1)
-      .setValue('✏️')
+      .setValue(cellStateEmoji.COPIED)
       .setHorizontalAlignment('center');
     updatedSheetBackup.setRowHeightsForced(currentRow, updatedSheetBackup.getLastRow(), 21);
   }
@@ -92,7 +92,7 @@ function copyPendingRows() {
         Las filas fueron:\n${dataCopied.map((row) => ` • ${row}`).join('\n')}`;
   }
 
-  showToast('✅ Copiado finalizado', messageBody);
+  showToast(`${messageStateEmoji.DONE} Copiado finalizado`, messageBody);
 }
 
 function copySpecificRow() {
@@ -103,42 +103,42 @@ function copySpecificRow() {
 
   const sheetData = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_RESPONSES);
   if (sheetData === null) {
-    showMessage('❌ Hoja de Respuestas', 'Falta la "Hoja de Respuestas"\nSe ha detenido el copiado de datos.');
+    showMessage(`${messageStateEmoji.ERROR} Hoja de Respuestas`, 'Falta la "Hoja de Respuestas"\nSe ha detenido el copiado de datos.');
     return;
   }
 
   //~ Prompt para obtener el número de fila a copiar ~//
   const ui = SpreadsheetApp.getUi();
   const result = ui.prompt(
-    '✏️ Copiar Fila Específica',
+    `${cellStateEmoji.COPIED} Copiar Fila Específica`,
     'Ingrese el número de fila del párvulo que desea copiar.',
     ui.ButtonSet.OK_CANCEL
   );
 
   if (result.getSelectedButton() !== ui.Button.OK) {
-    showMessage('❌ Copiado de Datos', 'Se ha cancelado el copiado de datos.');
+    showMessage(`${messageStateEmoji.ERROR} Copiado de Datos`, 'Se ha cancelado el copiado de datos.');
     return;
   }
 
   const currentRow = parseInt(result.getResponseText());
   if (isNaN(currentRow)) {
-    showMessage('❌ Número de Fila', 'El valor ingresado no es un número\nSe ha detenido el copiado de datos.');
+    showMessage(`${messageStateEmoji.ERROR} Número de Fila`, 'El valor ingresado no es un número\nSe ha detenido el copiado de datos.');
     return;
   }
 
   if (currentRow < 2 || currentRow > sheetData.getLastRow()) {
-    showMessage('❌ Número de Fila', `El valor ingresado no es válido\nDebe estar entre 2 y ${sheetData.getLastRow()}\nSe ha detenido el copiado de datos.`);
+    showMessage(`${messageStateEmoji.ERROR} Número de Fila`, `El valor ingresado no es válido\nDebe estar entre 2 y ${sheetData.getLastRow()}\nSe ha detenido el copiado de datos.`);
     return;
   }
 
   showToast(
-    '✏️ Copiado de Datos',
+    `${cellStateEmoji.COPIED} Copiado de Datos`,
     `Se está copiando la fila ${currentRow} de la "Hoja de Respuestas" a la "Hoja de Respaldo".`
   );
 
   const sheetBackup = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
   if (sheetBackup === null) {
-    showMessage('❌ Hoja de Respaldo', 'Falta la "Hoja de Respaldo"\nSe ha detenido el copiado de datos.');
+    showMessage(`${messageStateEmoji.ERROR} Hoja de Respaldo`, 'Falta la "Hoja de Respaldo"\nSe ha detenido el copiado de datos.');
     return;
   }
 
@@ -149,12 +149,12 @@ function copySpecificRow() {
   rowDestination.setNumberFormat('@');
 
   sheetBackup.getRange(currentRow, 1)
-    .setValue('✏️')
+    .setValue(cellStateEmoji.COPIED)
     .setHorizontalAlignment('center');
   sheetBackup.setRowHeightsForced(currentRow, sheetBackup.getLastRow(), 21);
 
   showToast(
-    '✅ Copiado Finalizado',
+    `${messageStateEmoji.DONE} Copiado Finalizado`,
     `Se copió la fila ${currentRow} de la "Hoja de Respuestas" a la "Hoja de Respaldo".`
   );
 }
@@ -163,7 +163,7 @@ function createBackupSheet(dataConfigSheet) {
   let sheetBackup = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
 
   if (sheetBackup === null) {
-    let messageHeader = '⚠️ Creando respaldo';
+    let messageHeader = `${messageStateEmoji.WARNING} Creando respaldo`;
     let messageBody = 'Creando el respaldo con los datos de la "Hoja de Respuestas".';
     sheetBackup = SpreadsheetApp.getActiveSpreadsheet().insertSheet();
     sheetBackup.setName(dataConfigSheet.SHEET_BACKUP);
