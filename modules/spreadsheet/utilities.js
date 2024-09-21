@@ -87,6 +87,10 @@ function getConfigSheet() {
     IS_KINDER: {
       value: true,
       description: ''
+    },
+    ID_FOLDER_FORM: {
+      value: '',
+      description: 'Rellenar con la \'Id\' de la carpeta en donde se guardan los archivos de la hoja de respuestas'
     }
   };
 }
