@@ -24,10 +24,11 @@ function copyAllRows() {
 
   sheetDestination = sheetBackup.getRange(1, 2, sheetResponses.getLastRow(), sheetResponses.getLastColumn());
 
-  sheetSource.copyTo(sheetDestination);
+  sheetSource.copyValuesToRange(sheetBackup, 2, sheetResponses.getLastColumn(), 1, sheetResponses.getLastRow());
 
-  sheetDestination = sheetBackup.getRange(1, 2, sheetBackup.getMaxRows(), sheetBackup.getMaxColumns());
-  sheetDestination.setNumberFormat('@');
+  sheetBackup.getRange(1, 2, sheetBackup.getMaxRows(), sheetBackup.getMaxColumns()).setNumberFormat('@');
+  sheetBackup.getRange(2, 8, sheetBackup.getMaxRows()).setNumberFormat('dd/mm/yyyy');
+  sheetBackup.getRange(2, 2, sheetBackup.getMaxRows()).setNumberFormat('dd/mm/yyyy');
 
   const updatedSheetBackup = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
   updatedSheetBackup.getRange(1, 1).setValue(cellStateEmoji().HEADER);
@@ -72,13 +73,15 @@ function copyPendingRows() {
 
     rowSource.copyTo(rowDestination);
     rowDestination.setNumberFormat('@');
+    sheetBackup.getRange(currentRow, 2).setNumberFormat('dd/mm/yyyy');
+    sheetBackup.getRange(currentRow, 8).setNumberFormat('dd/mm/yyyy');
 
     dataCopied.push(currentRow);
   }
 
   const updatedSheetBackup = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
   for (let currentRow = dataCopied[0]; currentRow <= updatedSheetBackup.getLastRow(); currentRow++) {
-    updatedSheetBackup.getRange(2, 1, updatedSheetBackup.getLastRow() - 1, 1)
+    updatedSheetBackup.getRange(currentRow, 1)
       .setValue(cellStateEmoji().COPIED)
       .setHorizontalAlignment('center');
     updatedSheetBackup.setRowHeightsForced(currentRow, updatedSheetBackup.getLastRow(), 21);
@@ -147,6 +150,8 @@ function copySpecificRow() {
 
   rowSource.copyTo(rowDestination);
   rowDestination.setNumberFormat('@');
+  sheetBackup.getRange(currentRow, 2).setNumberFormat('dd/mm/yyyy');
+  sheetBackup.getRange(currentRow, 8).setNumberFormat('dd/mm/yyyy');
 
   sheetBackup.getRange(currentRow, 1)
     .setValue(cellStateEmoji().COPIED)
