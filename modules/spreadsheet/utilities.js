@@ -50,8 +50,8 @@ function cleanText(type, text) {
 }
 
 function formatDate(date) {
-  date = date ? new Date(date) : new Date();
-  return Utilities.formatDate(date, Session.getScriptTimeZone(), 'dd/MM/YYYY')
+  if (!(date instanceof Date) || isNaN(date)) return '';
+  return Utilities.formatDate(date, Session.getScriptTimeZone(), 'dd/MM/yyyy');
 }
 
 function formatComplicationsBirth(complicationsBirth, whatComplications) {
