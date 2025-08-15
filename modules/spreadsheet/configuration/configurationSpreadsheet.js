@@ -23,7 +23,21 @@ function createConfigSheet () {
       row++;
     }
 
-    messageBody = 'Se creó la hoja con los valores por defecto.';
+    messageBody = `Se creó la 'Hoja de Configuración' con los valores por defecto.`;
+    const messageBodyAlert = messageBody + `
+    \n⚠️ Recuerde rellenar todos los campos de la hoja. ⚠️
+    \n• Los campos importantes son:
+    - ID Carpeta A (ID_FOLDER_A: Donde se guardarán los documentos generados de la jornada de la mañana)
+    - ID Carpeta B (ID_FOLDER_B: Donde se guardarán los documentos generados de la jornada de la tarde)
+    - ID de la imagen (ID_IMAGE: Imagen del logo del jardín para el documento)
+    \n• Los campos que necesita revisar que estén correctos son:
+    - Hoja de Respuestas (SHEET_RESPONSES: Donde se guardarán los datos de los párvulos para generar los documentos)
+    - ¿Es Pre-Kinder o Kinder? (IS_KINDER: Esto indica el nivel educativo, se debe rellenar con FALSE si es Pre-Kinder o TRUE si es Kinder)
+    \n• Si necesita ayuda:
+    - Revise la documentación presente en la 'Hoja de Configuración' creada
+    - Contacte al desarrollador`;
+
+    showMessage(`${messageStateEmoji().DONE} Hoja de Configuración`, messageBodyAlert);
 
   } else {
     for (const key in configObject) {
