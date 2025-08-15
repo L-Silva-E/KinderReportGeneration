@@ -23,8 +23,7 @@ function createConfigSheet () {
       row++;
     }
 
-    messageBody = `Se creó la 'Hoja de Configuración' con los valores por defecto.`;
-    const messageBodyAlert = messageBody + `
+    messageBody = `Se creó la 'Hoja de Configuración' con los valores por defecto.
     \n⚠️ Recuerde rellenar todos los campos de la hoja. ⚠️
     \n• Los campos importantes son:
     - ID Carpeta A (ID_FOLDER_A: Donde se guardarán los documentos generados de la jornada de la mañana)
