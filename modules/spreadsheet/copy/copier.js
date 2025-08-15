@@ -9,9 +9,6 @@ function copyAllRows() {
     'Se está copiando las filas de la "Hoja de Respuestas" a la "Hoja de Respaldo".'
   );
 
-  //~ Se crea la "Hoja de Respaldo" en caso de no existir ~//
-  createBackupSheet(dataConfigSheet);
-
   //~ Se copian los valores de la "Hoja de Respuestas" a la "Hoja de Respaldo" ~//
   const sheetResponses = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_RESPONSES);
   const sheetBackup = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
@@ -162,17 +159,4 @@ function copySpecificRow() {
     `${messageStateEmoji().DONE} Copiado Finalizado`,
     `Se copió la fila ${currentRow} de la "Hoja de Respuestas" a la "Hoja de Respaldo".`
   );
-}
-
-function createBackupSheet(dataConfigSheet) {
-  let sheetBackup = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
-
-  if (sheetBackup === null) {
-    let messageHeader = `${messageStateEmoji().WARNING} Creando respaldo`;
-    let messageBody = 'Creando el respaldo con los datos de la "Hoja de Respuestas".';
-    sheetBackup = SpreadsheetApp.getActiveSpreadsheet().insertSheet();
-    sheetBackup.setName(dataConfigSheet.SHEET_BACKUP);
-
-    showToast(messageHeader, messageBody);
-  }
 }

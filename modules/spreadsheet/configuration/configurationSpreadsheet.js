@@ -69,4 +69,21 @@ function createConfigSheet () {
   sheetConfig.setColumnWidth(3, 750);
 
   showToast(`${messageStateEmoji().DONE} Hoja de Configuración`, messageBody);
+
+  //~ Se crea la "Hoja de Respaldo" en caso de no existir ~//
+  const dataConfigSheet = getDataConfigSheet();
+  createBackupSheet(dataConfigSheet);
+}
+
+function createBackupSheet(dataConfigSheet) {
+  let sheetBackup = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
+
+  if (sheetBackup === null) {
+    sheetBackup = SpreadsheetApp.getActiveSpreadsheet().insertSheet();
+    sheetBackup.setName(dataConfigSheet.SHEET_BACKUP);
+
+    showToast(`${messageStateEmoji().DONE} Hoja de Respaldo`, `Se creó la "Hoja de Respaldo" con los datos de la "Hoja de Respuestas".`);
+  } else {
+    showToast(`${messageStateEmoji().DONE} Hoja de Respaldo`, `La hoja ya existe, no se realizaron cambios.`);
+  }
 }
