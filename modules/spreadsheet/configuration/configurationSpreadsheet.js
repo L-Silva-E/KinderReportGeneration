@@ -46,12 +46,12 @@ function createConfigSheet () {
         flagChanged = true;
       }
 
-      if (configObject[key].value !== '' && sheetConfig.getRange(row, 2).getValue() !== configObject[key].value) {
+      if (sheetConfig.getRange(row, 2).getValue() === '') {
         sheetConfig.getRange(row, 2).setValue(configObject[key].value);
         flagChanged = true;
       }
 
-      if (configObject[key].description !== '' && sheetConfig.getRange(row, 3).getValue() !== configObject[key].description) {
+      if (sheetConfig.getRange(row, 3).getValue() === '') {
         sheetConfig.getRange(row, 3).setValue(configObject[key].description);
         flagChanged = true;
       }
@@ -60,7 +60,7 @@ function createConfigSheet () {
     }
 
     if (flagChanged) {
-      messageBody = 'Se actualizó la hoja con los valores por defecto.';
+      messageBody = 'Existían valores por defecto en blanco, por lo que se actualizó la hoja con los valores por defecto.';
     }
   }
 
