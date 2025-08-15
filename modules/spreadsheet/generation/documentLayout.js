@@ -189,9 +189,19 @@ function documentLayout(data, titleHeader, currentGrade, childFullName, textComp
           value: { text: data.section_3.childWellControl, style: 'ParagraphValue' }
         },
         {
-          breakLine: false,
+          breakLine: true,
           key:   { text: '¿Está en alguno de estos tratamientos de salud?', style: 'ParagraphKey' },
           value: { text: data.section_3.childIsTreatment, style: 'ParagraphValue' }
+        },
+        {
+          breakLine: true,
+          key:   { text: '¿Posee seguro de Salud Privado asociado a atención de urgencias en caso de accidente escolar?', style: 'ParagraphKey' },
+          value: { text: data.section_3.hasPrivateHealthAsociated, style: 'ParagraphValue' }
+        },
+        {
+          breakLine: false,
+          key:   { text: ' ', style: 'ParagraphKey' },
+          value: { text: data.section_3.whatPrivateHealthAsociated, style: 'ParagraphValue' }
         },
       ]
     },
@@ -713,7 +723,7 @@ function documentLayout(data, titleHeader, currentGrade, childFullName, textComp
         {
           breakLine: false,
           key:   { text: 'Fecha: ', style: 'EndDate' },
-          value: { text: formatDate(data.enrollment.date), style: 'EndDate' }
+          value: { text: data.enrollment.date, style: 'EndDate' }
         },
       ]
     }
