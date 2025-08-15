@@ -41,6 +41,18 @@ function validateConfigSheet(dataConfigSheet) {
     return false;
   }
 
+  if (
+    SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_RESPONSES) === null
+  ) {
+    showMessage(
+      `${messageStateEmoji().ERROR} Hoja de Respuestas`,
+      `No se encontró la "Hoja de Respuestas"
+      Verifique que el nombre esté correctamente escrito
+      Se ha detenido la ejecución.`
+    );
+    return false;
+  }
+
   return true;
 }
 
