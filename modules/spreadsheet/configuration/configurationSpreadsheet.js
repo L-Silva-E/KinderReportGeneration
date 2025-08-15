@@ -46,12 +46,12 @@ function createConfigSheet () {
         flagChanged = true;
       }
 
-      if (configObject[key].value !== '' && sheetConfig.getRange(row, 2).getValue() !== configObject[key].value) {
+      if (sheetConfig.getRange(row, 2).getValue() === '') {
         sheetConfig.getRange(row, 2).setValue(configObject[key].value);
         flagChanged = true;
       }
 
-      if (configObject[key].description !== '' && sheetConfig.getRange(row, 3).getValue() !== configObject[key].description) {
+      if (sheetConfig.getRange(row, 3).getValue() === '') {
         sheetConfig.getRange(row, 3).setValue(configObject[key].description);
         flagChanged = true;
       }
@@ -60,7 +60,7 @@ function createConfigSheet () {
     }
 
     if (flagChanged) {
-      messageBody = 'Se actualizó la hoja con los valores por defecto.';
+      messageBody = 'Existían valores por defecto en blanco, por lo que se actualizó la hoja con los valores por defecto.';
     }
   }
 
@@ -69,4 +69,21 @@ function createConfigSheet () {
   sheetConfig.setColumnWidth(3, 750);
 
   showToast(`${messageStateEmoji().DONE} Hoja de Configuración`, messageBody);
+
+  //~ Se crea la "Hoja de Respaldo" en caso de no existir ~//
+  const dataConfigSheet = getDataConfigSheet();
+  createBackupSheet(dataConfigSheet);
+}
+
+function createBackupSheet(dataConfigSheet) {
+  let sheetBackup = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(dataConfigSheet.SHEET_BACKUP);
+
+  if (sheetBackup === null) {
+    sheetBackup = SpreadsheetApp.getActiveSpreadsheet().insertSheet();
+    sheetBackup.setName(dataConfigSheet.SHEET_BACKUP);
+
+    showToast(`${messageStateEmoji().DONE} Hoja de Respaldo`, `Se creó la "Hoja de Respaldo" con los datos de la "Hoja de Respuestas".`);
+  } else {
+    showToast(`${messageStateEmoji().DONE} Hoja de Respaldo`, `La hoja ya existe, no se realizaron cambios.`);
+  }
 }
