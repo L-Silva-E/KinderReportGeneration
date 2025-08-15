@@ -74,19 +74,23 @@ function getConfigSheet() {
     },
     SHEET_BACKUP: {
       value: 'Respaldo',
-      description: ''
+      description: 'Hoja en donde se guardarán los datos de los párvulos para generar los documentos'
     },
     SHEET_CONFIG: {
       value: 'Configuración',
-      description: ''
+      description: 'Hoja en donde se guardarán los datos de configuración del proyecto (esta hoja)'
     },
     SHEET_RESPONSES: {
-      value: 'Form Responses 1',
-      description: ''
+      value: 'Respuestas de formulario 1',
+      description: 'Hoja en donde se guardarán las respuestas del formulario de Google'
     },
     IS_KINDER: {
       value: true,
-      description: ''
+      description: 'Indica si el nivel educativo es Kinder (TRUE) o Pre-Kinder (FALSE)'
+    },
+    DOCUMENTATION: {
+      value: 'https://docs.google.com/document/d/1LENmkrHumW2iaLcCeVFC2VjRPBYCYNGKJ2Im0kW3l4E/edit?usp=sharing',
+      description: 'Documentación del proyecto'
     }
   };
 }
