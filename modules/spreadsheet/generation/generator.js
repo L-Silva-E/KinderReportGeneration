@@ -3,7 +3,7 @@ function generateDocument(dataConfigSheet, data, level, type) {
   const titleHeader = 'Ficha de Antecedentes 20____';
   const currentGrade = level + ' - ' + type;
   const childFullName = data.section_1.fatherLastName.toUpperCase() + ' ' + data.section_1.motherLastName.toUpperCase() + ' ' + data.section_1.names.toUpperCase();
-  const textComplicationsBirth = formatComplicationsBirth(data.section_2.complicationsBirth, data.section_2.whatComplications);
+  const textComplicationsBirth = formatComplicationsBirth(data.section_3.complicationsBirth, data.section_3.whatComplications);
 
 
   //~ Destino y creación de Archivo base ~//
