@@ -1,4 +1,4 @@
-function documentLayout(data, titleHeader, currentGrade, childFullName, textComplicationsBirth) {
+function documentLayout(data, titleHeader, currentGrade, childFullName, textComplicationsBirth, textAllergies) {
   return [
     {
       configuration: {
@@ -154,14 +154,9 @@ function documentLayout(data, titleHeader, currentGrade, childFullName, textComp
           value: { text: textComplicationsBirth, style: 'ParagraphValue' }
         },
         {
-          breakLine: false,
-          key:   { text: '¿El párvulo/a es alérgico?', style: 'ParagraphKey' },
-          value: { text: data.section_3.childHasAllergies, style: 'ParagraphValue' }
-        },
-        {
           breakLine: true,
-          key:   { text: '¿Qué alergias presenta?', style: 'ParagraphKey' },
-          value: { text: data.section_3.whatAllergies, style: 'ParagraphValue' }
+          key:   { text: '¿El párvulo/a es alérgico?', style: 'ParagraphKey' },
+          value: { text: textAllergies, style: 'ParagraphValue' }
         },
         {
           breakLine: true,

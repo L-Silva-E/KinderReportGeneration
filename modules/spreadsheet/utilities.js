@@ -70,6 +70,10 @@ function formatComplicationsBirth(complicationsBirth, whatComplications) {
   return complicationsBirth === 'Sí' ? whatComplications : complicationsBirth;
 }
 
+function formatAllergies(allergies, whatAllergies) {
+  return allergies === 'Sí' ? whatAllergies : allergies;
+}
+
 function getConfigSheet() {
   return {
     ID_FOLDER_A: {
