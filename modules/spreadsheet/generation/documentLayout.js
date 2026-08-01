@@ -236,6 +236,11 @@ function documentLayout(data, titleHeader, currentGrade, childFullName, textComp
           value: { text: data.section_4.mother.age, style: 'ParagraphValue' }
         },
         {
+          breakLine: false,
+          key:   { text: 'Nacionalidad:', style: 'ParagraphKey' },
+          value: { text: data.section_4.mother.nationality, style: 'ParagraphValue' }
+        },
+        {
           breakLine: true,
           key:   { text: 'Estudios:', style: 'ParagraphKey' },
           value: { text: data.section_4.mother.study, style: 'ParagraphValue' }
@@ -321,6 +326,11 @@ function documentLayout(data, titleHeader, currentGrade, childFullName, textComp
           breakLine: false,
           key:   { text: 'Edad:', style: 'ParagraphKey' },
           value: { text: data.section_4.father.age, style: 'ParagraphValue' }
+        },
+        {
+          breakLine: false,
+          key:   { text: 'Nacionalidad:', style: 'ParagraphKey' },
+          value: { text: data.section_4.father.nationality, style: 'ParagraphValue' }
         },
         {
           breakLine: true,
